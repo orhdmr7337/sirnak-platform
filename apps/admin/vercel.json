@@ -1,5 +1,0 @@
-{
-  "name": "admin-platform",
-  "buildCommand": "cd ../.. && npm install && npm run build:all",
-  "outputDirectory": ".next"
-}
