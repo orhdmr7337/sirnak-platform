@@ -1,0 +1,10 @@
+[build]
+  command = "cd ../.. && npm ci --legacy-peer-deps && npm run build --workspace=apps/masaj"
+  publish = ".next"
+
+[functions]
+  directory = ".netlify/functions-internal"
+  node_bundler = "esbuild"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
