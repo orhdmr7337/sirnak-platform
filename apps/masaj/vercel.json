@@ -1,0 +1,5 @@
+{
+  "buildCommand": "npm run build --workspace=apps/masaj",
+  "installCommand": "npm ci --legacy-peer-deps",
+  "nodejs": "20.x"
+}
