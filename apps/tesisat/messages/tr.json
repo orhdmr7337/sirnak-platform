@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "hizmetler": "Hizmetler",
+    "bolgeler": "Bölgeler",
+    "yorumlar": "Yorumlar",
+    "iletisim": "İletişim",
+    "blog": "Blog",
+    "randevu": "Randevu Al",
+    "surec": "Süreç",
+    "galeri": "Galeri",
+    "sss": "SSS",
+    "hakkimizda": "Hakkımızda",
+    "hemenAra": "Hemen Ara"
+  },
+  "hero": {
+    "badge": "Çözüm Noktası",
+    "title": "Profesyonel Tesisat & Elektrik Hizmeti",
+    "description": "7/24 acil servis, uzman kadro, garantili işçilik",
+    "cta": "Hemen Ara",
+    "ctaSecondary": "Hizmetleri Keşfet"
+  },
+  "services": {
+    "title": "Hizmetlerimiz",
+    "subtitle": "İhtiyacınıza uygun profesyonel çözümler"
+  },
+  "faq": {
+    "title": "Sıkça Sorulan Sorular",
+    "subtitle": "Merak ettiklerinizin cevapları"
+  },
+  "contact": {
+    "title": "İletişim",
+    "heading": "Hemen Teklif Alın",
+    "description": "Formu doldurun, size en kısa sürede dönüş yapalım. Ya da doğrudan bizi arayın.",
+    "name": "Adınız Soyadınız",
+    "phone": "Telefon Numaranız",
+    "email": "E-posta (opsiyonel)",
+    "district": "İlçe Seçin",
+    "service": "Hizmet Seçin",
+    "message": "Mesajınız (opsiyonel)",
+    "submit": "Mesaj Gönder",
+    "sending": "Gönderiliyor...",
+    "sent": "Gönderildi!",
+    "error": "Tekrar Dene",
+    "info": "İletişim Bilgileri",
+    "workingHours": "7/24 Hizmet"
+  },
+  "footer": {
+    "description": "Şırnak'ta profesyonel tesisat ve elektrik hizmetleri. 7/24 acil servis.",
+    "quickLinks": "Hızlı Bağlantılar",
+    "services": "Hizmetler",
+    "copyright": "Tüm hakları saklıdır.",
+    "city": "Şırnak, Türkiye"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "success": "Başarılı",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki"
+  }
+}

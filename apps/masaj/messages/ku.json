@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "hizmetler": "Lêdikandin",
+    "bolgeler": "Navber",
+    "yorumlar": "Diovan",
+    "iletisim": "Ampêkêşin",
+    "blog": "Blog",
+    "randevu": "Randevû Biker",
+    "hakkimizda": "Der barê me",
+    "galeri": "Galerya"
+  },
+  "hero": {
+    "badge": "Uzmana Masajê ya Şırnakê",
+    "title": "Dokana Peydanesî",
+    "subtitle": "Rahatbûna bi Peydanesî, Pêşkêşiyê Profesyonel",
+    "description": "Di destê uzman de, bi çeroşê re nas bibin. Vêqatiya te û zîwana te nûve bikin.",
+    "cta": "Randevû Biker",
+    "ctaSecondary": "Lêdikandin binêre",
+    "scroll": "Binêre"
+  },
+  "services": {
+    "title": "Lêdikandinên me",
+    "subtitle": "Masaja we re grohî binêre",
+    "defaultDescription": "Xizmetê masaja profesyonel"
+  },
+  "faq": {
+    "title": "Pirsgirêkên gelek hatiye bersivdan",
+    "subtitle": "Piştrastkariyên we"
+  },
+  "contact": {
+    "title": "Ampêkêşin",
+    "heading": "Randevû Bikirin",
+    "name": "Navê Te *",
+    "phone": "Nimroja Te *",
+    "email": "E-posta (ixtiyarî)",
+    "service": "Xizmetê Hilbijêre",
+    "district": "Navçeyê Hilbijêre",
+    "message": "Pêcha Te (ixtiyarî)",
+    "submit": "Daxwaza Randevûyê Bişîne",
+    "sending": "Tê şînîn...",
+    "success": "Daxwaza Te Hatiye Qebûl Kirin!",
+    "successDescription": "Dema giştî ewê axivinê.",
+    "newRequest": "Daxwaza Nû Bişîne",
+    "error": "Çewtîkîyêk derket. Dîsa biceribîne.",
+    "nameRequired": "Nav û nimroj nebeser e.",
+    "phone": "Nimroj",
+    "emailLabel": "E-posta",
+    "address": "Navçe",
+    "workingHours": "Demên Karyê"
+  },
+  "footer": {
+    "description": "Xizmetê masaja profesyonel bi çeroşê re. Tenduristiya we û Sağlimiya we bo me gawî ye.",
+    "services": "Lêdikandin",
+    "contact": "Ampêkêşin",
+    "followUs": "Me bigirtin",
+    "copyright": "Hemû mafan têneparastin.",
+    "madeWith": "Bi evînê hatiye Kirkirin di Şırnakê de"
+  },
+  "about": {
+    "title": "Der barê me",
+    "subtitle": "Felsefeya Dokana Peydanesî"
+  },
+  "common": {
+    "loading": "Tê barkirin...",
+    "error": "Çewtîkîyêk derket",
+    "success": "Serketî",
+    "back": "Vegerîne",
+    "next": "Pêşve",
+    "previous": "Berê"
+  }
+}

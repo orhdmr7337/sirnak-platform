@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "hizmetler": "Lêdikandin",
+    "bolgeler": "Navber",
+    "yorumlar": "Diovan",
+    "iletisim": "Ampêkêşin",
+    "blog": "Blog",
+    "randevu": "Randevû Biker",
+    "surec": "Pêşveçûn",
+    "galeri": "Galerya",
+    "sss": "Pirsgirêk",
+    "hakkimizda": "Der barê me",
+    "hemenAra": "Vêêjake"
+  },
+  "hero": {
+    "badge": "Çözüm Noktası",
+    "title": "Pêşkêşiyên Profesyonel a Avêtin û Elektrikê",
+    "description": "7/24 xizmetê acîl, komeleke uzman, garantî ya kare-kirinê",
+    "cta": "Vêêjake",
+    "ctaSecondary": "Lêdikandin binêre"
+  },
+  "services": {
+    "title": "Lêdikandinên me",
+    "subtitle": "Pêşkêşiyên profesyonel bo bohtîyana we"
+  },
+  "faq": {
+    "title": "Pirsgirêkên gelek hatiye bersivdan",
+    "subtitle": "Bersivên piştrastkariyên we"
+  },
+  "contact": {
+    "title": "Ampêkêşin",
+    "heading": "Vêêja",
+    "description": "Formê bigirtin, dema giştî ewê axivinê. An jî dijêr me biqirin.",
+    "name": "Nav û Swasînê Te",
+    "phone": "Nimroja Te",
+    "email": "E-posta (ixtiyarî)",
+    "district": "Navçeyê Hilbijêre",
+    "service": "Xizmetê Hilbijêre",
+    "message": "Pêcha Te (ixtiyarî)",
+    "submit": "Pêşkêşiyê bişîne",
+    "sending": "Tê şînîn...",
+    "sent": "Şandî!",
+    "error": "Dîsa biceribîne",
+    "info": "Agahiyên Ampêkêşinê",
+    "workingHours": "7/24 Xizmet"
+  },
+  "footer": {
+    "description": "Di Şırnakê de pêşkêşiyên profesyonel a avêtin û elektrikê. 7/24 xizmetê acîl.",
+    "quickLinks": "Girêdên Bilez",
+    "services": "Lêdikandin",
+    "copyright": "Hemû mafan têneparastin.",
+    "city": "Şırnak, Tirkiye"
+  },
+  "common": {
+    "loading": "Tê barkirin...",
+    "error": "Çewtîkîyêk derket",
+    "success": "Serketî",
+    "back": "Vegerîne",
+    "next": "Pêşve",
+    "previous": "Berê"
+  }
+}

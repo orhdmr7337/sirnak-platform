@@ -1,0 +1,21 @@
+# Tesisat Redesign Tasks
+
+- [x] Create spec for tesisat redesign
+- [ ] Update globals.css with premium tokens and remove AI-looking styles
+- [ ] Update shared utility components (GlassCard, ScrollReveal, Lightbox)
+- [ ] Update HomeClient: remove SplashScreen, MouseFollower, FloatingTools, AmbientVideo
+- [ ] Redesign Header
+- [ ] Redesign VideoHero with trust badges
+- [ ] Redesign TrustStrip
+- [ ] Redesign Services cards
+- [ ] Redesign ProcessSection timeline
+- [ ] Redesign Gallery/Certificates/Documents grid and Lightbox
+- [ ] Redesign Districts
+- [ ] Redesign FaqSection accordion
+- [ ] Redesign Testimonials
+- [ ] Redesign ContactCTA form
+- [ ] Redesign InstagramLatestCard
+- [ ] Redesign Footer
+- [ ] Redesign WhatsAppButton and MobileActionBar
+- [ ] Redesign district detail page and not-found page
+- [ ] Build and fix errors

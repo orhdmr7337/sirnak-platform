@@ -1,0 +1,22 @@
+{
+  "name": "sirnak-platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "setup": "node -e \"const fs=require('fs');const env=fs.readFileSync('.env.local','utf8');['apps/tesisat','apps/masaj','apps/admin'].forEach(d=>{fs.mkdirSync(d,{recursive:true});fs.writeFileSync(d+'/.env.local',env)})\"",
+    "dev:tesisat": "npm run setup && npm run dev --workspace=apps/tesisat",
+    "dev:masaj": "npm run setup && npm run dev --workspace=apps/masaj",
+    "dev:admin": "npm run setup && npm run dev --workspace=apps/admin",
+    "dev:all": "npm run setup && concurrently \"npm run dev:tesisat\" \"npm run dev:masaj\" \"npm run dev:admin\"",
+    "build:all": "npm run build --workspaces"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.6.1",
+    "concurrently": "^10.0.5",
+    "postcss": "^8.5.28",
+    "tailwindcss": "^4.3.3"
+  }
+}

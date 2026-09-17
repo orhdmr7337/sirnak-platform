@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "hizmetler": "Services",
+    "bolgeler": "Districts",
+    "yorumlar": "Reviews",
+    "iletisim": "Contact",
+    "blog": "Blog",
+    "randevu": "Book Now",
+    "hakkimizda": "About Us",
+    "galeri": "Gallery"
+  },
+  "hero": {
+    "badge": "Şırnak's Massage Expert",
+    "title": "Doğal Dokunuş",
+    "subtitle": "Natural Relaxation, Professional Touch",
+    "description": "Meet expert hands with natural products. Revitalize your body and mind.",
+    "cta": "Book Now",
+    "ctaSecondary": "Explore Services",
+    "scroll": "Discover"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Find the Right Massage for You",
+    "defaultDescription": "Professional massage service"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "What You're Wondering About"
+  },
+  "contact": {
+    "title": "Contact",
+    "heading": "Book an Appointment",
+    "name": "Your Full Name *",
+    "phone": "Your Phone Number *",
+    "email": "Email (optional)",
+    "service": "Select Service",
+    "district": "Select District",
+    "message": "Your Message (optional)",
+    "submit": "Send Booking Request",
+    "sending": "Sending...",
+    "success": "Your Request Has Been Received!",
+    "successDescription": "We will contact you as soon as possible.",
+    "newRequest": "Send New Request",
+    "error": "An error occurred. Please try again.",
+    "nameRequired": "Name and phone are required.",
+    "phone": "Phone",
+    "emailLabel": "Email",
+    "address": "Address",
+    "workingHours": "Working Hours"
+  },
+  "footer": {
+    "description": "Professional massage service with natural products. Your health and comfort are important to us.",
+    "services": "Services",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "copyright": "All rights reserved.",
+    "madeWith": "Made with love in Şırnak"
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Our Natural Touch Philosophy"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  }
+}

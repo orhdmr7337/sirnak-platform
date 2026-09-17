@@ -1,0 +1,18 @@
+{
+  "name": "Çözüm Noktası Tesisat & Elektrik",
+  "short_name": "Çözüm Noktası",
+  "description": "Şırnak'ta 7/24 profesyonel tesisat ve elektrik hizmetleri",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    { "src": "/icons/icon-192.svg", "sizes": "192x192", "type": "image/svg+xml" },
+    { "src": "/icons/icon-512.svg", "sizes": "512x512", "type": "image/svg+xml" },
+    { "src": "/icons/icon-maskable.svg", "sizes": "512x512", "type": "image/svg+xml", "purpose": "maskable" }
+  ],
+  "categories": ["home", "business"],
+  "lang": "tr",
+  "dir": "ltr"
+}

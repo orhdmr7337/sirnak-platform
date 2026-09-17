@@ -1,0 +1,62 @@
+{
+  "nav": {
+    "hizmetler": "Services",
+    "bolgeler": "Districts",
+    "yorumlar": "Reviews",
+    "iletisim": "Contact",
+    "blog": "Blog",
+    "randevu": "Book Now",
+    "surec": "Process",
+    "galeri": "Gallery",
+    "sss": "FAQ",
+    "hakkimizda": "About Us",
+    "hemenAra": "Call Now"
+  },
+  "hero": {
+    "badge": "Çözüm Noktası",
+    "title": "Professional Plumbing & Electrical Service",
+    "description": "24/7 emergency service, expert team, guaranteed workmanship",
+    "cta": "Call Now",
+    "ctaSecondary": "Explore Services"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "Professional solutions tailored to your needs"
+  },
+  "faq": {
+    "title": "Frequently Asked Questions",
+    "subtitle": "Answers to what you're wondering"
+  },
+  "contact": {
+    "title": "Contact",
+    "heading": "Get a Quote Now",
+    "description": "Fill out the form and we'll get back to you as soon as possible. Or call us directly.",
+    "name": "Your Full Name",
+    "phone": "Your Phone Number",
+    "email": "Email (optional)",
+    "district": "Select District",
+    "service": "Select Service",
+    "message": "Your Message (optional)",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "sent": "Sent!",
+    "error": "Try Again",
+    "info": "Contact Information",
+    "workingHours": "24/7 Service"
+  },
+  "footer": {
+    "description": "Professional plumbing and electrical services in Şırnak. 24/7 emergency service.",
+    "quickLinks": "Quick Links",
+    "services": "Services",
+    "copyright": "All rights reserved.",
+    "city": "Şırnak, Turkey"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous"
+  }
+}

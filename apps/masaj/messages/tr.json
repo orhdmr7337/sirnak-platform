@@ -1,0 +1,71 @@
+{
+  "nav": {
+    "hizmetler": "Hizmetler",
+    "bolgeler": "Bölgeler",
+    "yorumlar": "Yorumlar",
+    "iletisim": "İletişim",
+    "blog": "Blog",
+    "randevu": "Randevu Al",
+    "hakkimizda": "Hakkımızda",
+    "galeri": "Galeri"
+  },
+  "hero": {
+    "badge": "Şırnak'ın Masaj Uzmanı",
+    "title": "Doğal Dokunuş",
+    "subtitle": "Doğal Rahatlama, Profesyonel Dokunuş",
+    "description": "Uzman ellerde, doğal ürünlerle tanışın. Vücudunuzu ve zihninizi yeniden canlandırın.",
+    "cta": "Randevu Al",
+    "ctaSecondary": "Hizmetleri Keşfet",
+    "scroll": "Keşfet"
+  },
+  "services": {
+    "title": "Hizmetlerimiz",
+    "subtitle": "Size Uygun Masajı Bulun",
+    "defaultDescription": "Profesyonel masaj hizmeti"
+  },
+  "faq": {
+    "title": "Sıkça Sorulan Sorular",
+    "subtitle": "Merak Ettikleriniz"
+  },
+  "contact": {
+    "title": "İletişim",
+    "heading": "Randevu Alın",
+    "name": "Adınız Soyadınız *",
+    "phone": "Telefon Numaranız *",
+    "email": "E-posta (opsiyonel)",
+    "service": "Hizmet Seçin",
+    "district": "İlçe Seçin",
+    "message": "Mesajınız (opsiyonel)",
+    "submit": "Randevu Talebi Gönder",
+    "sending": "Gönderiliyor...",
+    "success": "Talebiniz Alındı!",
+    "successDescription": "En kısa sürede sizinle iletişime geçeceğiz.",
+    "newRequest": "Yeni Talep Gönder",
+    "error": "Bir hata oluştu. Lütfen tekrar deneyin.",
+    "nameRequired": "Ad ve telefon zorunludur.",
+    "phone": "Telefon",
+    "emailLabel": "E-posta",
+    "address": "Adres",
+    "workingHours": "Çalışma Saatleri"
+  },
+  "footer": {
+    "description": "Doğal ürünlerle profesyonel masaj hizmeti. Sağlığınız ve rahatlığınız bizim için önemli.",
+    "services": "Hizmetler",
+    "contact": "İletişim",
+    "followUs": "Bizi Takip Edin",
+    "copyright": "Tüm hakları saklıdır.",
+    "madeWith": "Made with love in Şırnak"
+  },
+  "about": {
+    "title": "Hakkımızda",
+    "subtitle": "Doğal Dokunuş Felsefemiz"
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir hata oluştu",
+    "success": "Başarılı",
+    "back": "Geri",
+    "next": "İleri",
+    "previous": "Önceki"
+  }
+}
