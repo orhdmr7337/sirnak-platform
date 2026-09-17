@@ -1,4 +1,4 @@
-name: Deploy Apps to Vercel
+name: Deploy Apps to Netlify
 
 on:
   push:
@@ -8,55 +8,44 @@ env:
   NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
   NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
   SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
 
 jobs:
   deploy-admin:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20.x
       - run: npm ci --legacy-peer-deps
-      - run: npm run build --workspace=apps/admin
-      - uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_ADMIN }}
-          working-directory: ./apps/admin
-          production: true
+      - working-directory: apps/admin
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_ADMIN }}
+        run: npx netlify-cli deploy --prod --build
 
   deploy-masaj:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20.x
       - run: npm ci --legacy-peer-deps
-      - run: npm run build --workspace=apps/masaj
-      - uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_MASAJ }}
-          working-directory: ./apps/masaj
-          production: true
+      - working-directory: apps/masaj
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_MASAJ }}
+        run: npx netlify-cli deploy --prod --build
 
   deploy-tesisat:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20.x
       - run: npm ci --legacy-peer-deps
-      - run: npm run build --workspace=apps/tesisat
-      - uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_TESISAT }}
-          working-directory: ./apps/tesisat
-          production: true
+      - working-directory: apps/tesisat
+        env:
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID_TESISAT }}
+        run: npx netlify-cli deploy --prod --build
