@@ -11,6 +11,7 @@
     "dev:masaj": "npm run setup && npm run dev --workspace=apps/masaj",
     "dev:admin": "npm run setup && npm run dev --workspace=apps/admin",
     "dev:all": "npm run setup && concurrently \"npm run dev:tesisat\" \"npm run dev:masaj\" \"npm run dev:admin\"",
+    "build": "npm run build:all",
     "build:all": "npm run build --workspaces"
   },
   "devDependencies": {
