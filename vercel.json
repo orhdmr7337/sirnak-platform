@@ -1,5 +1,0 @@
-{
-  "buildCommand": "npm run build:all",
-  "installCommand": "npm ci --legacy-peer-deps",
-  "nodejs": "20.x"
-}
