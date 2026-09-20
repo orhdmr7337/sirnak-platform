@@ -67,7 +67,7 @@ export default async function RootLayout({
         <OfflineIndicator />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
         <LiveChat />
-        <CookieConsent />
+        <CookieConsent accentColor={site?.primary_color} />
         {site && <PWAInstall appName={site.name} themeColor={site.primary_color} />}
         <script
           dangerouslySetInnerHTML={{

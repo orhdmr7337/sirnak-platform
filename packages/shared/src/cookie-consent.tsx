@@ -1,47 +1,60 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useBottomBanner, CONSENT_KEY, CONSENT_EVENT } from "./floating";
 
-const CONSENT_KEY = "cookie-consent";
+interface CookieConsentProps {
+  /** Kabul butonu rengi (site ana rengi). Verilmezse site temasının yeşili kullanılır. */
+  accentColor?: string;
+}
 
-export function CookieConsent() {
+export function CookieConsent({ accentColor = "#6b8f71" }: CookieConsentProps) {
   const [visible, setVisible] = useState(false);
+  const { ref, bottom } = useBottomBanner(visible);
 
   useEffect(() => {
-    const consent = localStorage.getItem(CONSENT_KEY);
-    if (!consent) {
-      setVisible(true);
+    try {
+      if (!localStorage.getItem(CONSENT_KEY)) setVisible(true);
+    } catch {
+      // localStorage kapalıysa (gizli mod vb.) bandı göstermeyiz
     }
   }, []);
 
-  const handleAccept = () => {
-    localStorage.setItem(CONSENT_KEY, "accepted");
+  const answer = (value: "accepted" | "declined") => {
+    try {
+      localStorage.setItem(CONSENT_KEY, value);
+    } catch {
+      // yoksay
+    }
     setVisible(false);
-  };
-
-  const handleDecline = () => {
-    localStorage.setItem(CONSENT_KEY, "declined");
-    setVisible(false);
+    window.dispatchEvent(new Event(CONSENT_EVENT));
   };
 
   if (!visible) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-[9999] border-t border-white/10 bg-[#111] px-6 py-4 shadow-2xl">
-      <div className="mx-auto flex max-w-7xl flex-col items-center gap-4 sm:flex-row sm:justify-between">
-        <p className="text-center text-sm text-gray-400 sm:text-left">
+    <div
+      ref={ref}
+      role="dialog"
+      aria-label="Çerez tercihleri"
+      style={{ bottom }}
+      className="fixed left-2 right-2 z-[9999] rounded-2xl border border-white/10 bg-[#111]/95 p-3 shadow-2xl backdrop-blur md:left-0 md:right-0 md:rounded-none md:border-x-0 md:border-b-0 md:px-6 md:py-4"
+    >
+      <div className="mx-auto flex max-w-7xl flex-col gap-3 md:flex-row md:items-center md:justify-between">
+        <p className="text-xs leading-snug text-gray-300 md:text-sm md:text-gray-400">
           Bu site çerez kullanmaktadır. Kabul ediyor musunuz?
         </p>
-        <div className="flex gap-3">
+        <div className="flex gap-2 md:gap-3">
           <button
-            onClick={handleAccept}
-            className="rounded-lg bg-[#6b8f71] px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-[#5a7d60]"
+            onClick={() => answer("accepted")}
+            style={{ backgroundColor: accentColor }}
+            className="flex-1 rounded-xl px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-90 md:flex-none md:px-5"
           >
-            Kabul Ediyorum
+            Kabul Et
           </button>
           <button
-            onClick={handleDecline}
-            className="rounded-lg border border-white/10 px-5 py-2 text-sm font-medium text-gray-400 transition-colors hover:border-white/20 hover:text-white"
+            onClick={() => answer("declined")}
+            className="flex-1 rounded-xl border border-white/15 px-4 py-2.5 text-sm font-medium text-gray-300 transition-colors hover:border-white/30 hover:text-white md:flex-none md:px-5"
           >
             Reddet
           </button>

@@ -12,6 +12,7 @@ export function WhatsAppButton() {
   return (
     <a
       href={url}
+      style={{ marginBottom: "var(--float-h, 0px)" }}
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-24 right-5 z-40 w-14 h-14 rounded-full bg-[#25d366] flex items-center justify-center

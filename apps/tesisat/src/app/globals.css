@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* Ortak paket (çerez bandı, PWA, arama vb.) sınıfları da taransın */
+@source "../../../../packages/shared/src";
 
 @theme {
   --color-primary: #f97316;

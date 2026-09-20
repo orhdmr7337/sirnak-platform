@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
+import { useBottomBanner, CONSENT_KEY, CONSENT_EVENT } from "./floating";
 
 interface PWAInstallProps {
   appName: string;
@@ -12,6 +13,21 @@ export function PWAInstall({ appName, themeColor }: PWAInstallProps) {
   const [showInstall, setShowInstall] = useState(false);
   const [isIOS, setIsIOS] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
+  // Çerez bandıyla üst üste binmesin: çerez cevaplanmadan yükleme bandı gösterilmez.
+  const [consentDone, setConsentDone] = useState(false);
+
+  useEffect(() => {
+    const check = () => {
+      try {
+        setConsentDone(!!localStorage.getItem(CONSENT_KEY));
+      } catch {
+        setConsentDone(true);
+      }
+    };
+    check();
+    window.addEventListener(CONSENT_EVENT, check);
+    return () => window.removeEventListener(CONSENT_EVENT, check);
+  }, []);
 
   useEffect(() => {
     const dismissed = localStorage.getItem("pwa-install-dismissed");
@@ -51,13 +67,17 @@ export function PWAInstall({ appName, themeColor }: PWAInstallProps) {
     localStorage.setItem("pwa-install-dismissed", "true");
   }, []);
 
-  if (isDismissed || (!showInstall && !isIOS)) return null;
+  const visible = consentDone && !isDismissed && (showInstall || isIOS);
+  const { ref, bottom } = useBottomBanner(visible);
+
+  if (!visible) return null;
 
   if (isIOS) {
     return (
       <div
-        className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-[#1a1a1a] border-t border-gray-800"
-        style={{ borderTopColor: themeColor }}
+        ref={ref}
+        className="fixed left-0 right-0 z-50 p-4 bg-[#1a1a1a] border-t border-gray-800"
+        style={{ borderTopColor: themeColor, bottom }}
       >
         <div className="max-w-lg mx-auto flex items-center justify-between gap-3">
           <div className="flex-1 min-w-0">
@@ -82,8 +102,9 @@ export function PWAInstall({ appName, themeColor }: PWAInstallProps) {
 
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-[#1a1a1a] border-t"
-      style={{ borderTopColor: themeColor }}
+      ref={ref}
+      className="fixed left-0 right-0 z-50 p-4 bg-[#1a1a1a] border-t"
+      style={{ borderTopColor: themeColor, bottom }}
     >
       <div className="max-w-lg mx-auto flex items-center justify-between gap-3">
         <div className="flex-1 min-w-0">

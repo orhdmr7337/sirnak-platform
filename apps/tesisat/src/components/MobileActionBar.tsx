@@ -5,7 +5,7 @@ import { useSiteConfig, telHref } from "@sirnak/shared";
 export default function MobileActionBar() {
   const tel = telHref(useSiteConfig());
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/5 bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden">
+    <div data-mobile-bar className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/5 bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden">
       <div className="flex items-stretch">
         <a
           href={tel ?? undefined}

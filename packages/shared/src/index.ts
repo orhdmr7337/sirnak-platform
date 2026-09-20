@@ -25,6 +25,7 @@ export {
 export { GoogleAnalytics, trackPageView, trackEvent } from "./analytics";
 export { LiveChat } from "./live-chat";
 export { CookieConsent } from "./cookie-consent";
+export { useBottomBanner } from "./floating";
 export { searchSite, highlightMatch, debounce, normalizeTurkish } from "./search";
 export type { SearchResult } from "./search";
 export { SearchModal } from "./search-modal";
