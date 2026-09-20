@@ -1,4 +1,4 @@
-import { getDistricts, getSiteData, SiteProvider } from "@sirnak/shared";
+import { getDistricts, getSiteData, getSiteBySlug, telHref, SiteProvider } from "@sirnak/shared";
 import type { Metadata } from "next";
 import Link from "next/link";
 import Header from "@/components/Header";
@@ -8,21 +8,21 @@ import MobileActionBar from "@/components/MobileActionBar";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "İlçeler | Çözüm Noktası Tesisat",
-  description: "Şırnak ve tüm ilçelerinde profesyonel tesisat ve elektrik hizmetleri. Su kaçağı tespiti, petek temizliği, kombi bakımı. 7/24 acil servis.",
-  keywords: "Şırnak tesisat, Şırnak elektrik, Cizre tesisat, İdil tesisat, Silopi tesisat, Beytüşşebap tesisat, Uludere tesisat",
-  openGraph: {
-    title: "İlçeler | Çözüm Noktası Tesisat",
-    description: "Şırnak ve tüm ilçelerinde profesyonel tesisat hizmetleri.",
-    type: "website",
-    locale: "tr_TR",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const [site, districts] = await Promise.all([getSiteBySlug("tesisat"), getDistricts()]);
+  const name = site?.name ?? "";
+  const names = districts.map((d) => d.name);
+  return {
+    title: `İlçeler | ${name}`,
+    description: names.length ? `${name} hizmet bölgeleri: ${names.join(", ")}.` : undefined,
+    openGraph: { title: `İlçeler | ${name}`, type: "website", locale: "tr_TR" },
+  };
+}
 
 export default async function DistrictsPage() {
   const districts = await getDistricts();
   const data = await getSiteData("tesisat");
+  const tel = telHref(data?.site);
 
   if (!data) {
     return (
@@ -116,8 +116,9 @@ export default async function DistrictsPage() {
               7/24 acil servis desteği sunuyoruz.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {tel && (
               <a
-                href="tel:+905001234567"
+                href={tel}
                 className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-[#050505] font-semibold px-8 py-4 rounded-xl transition-all"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -125,6 +126,7 @@ export default async function DistrictsPage() {
                 </svg>
                 Hemen Ara
               </a>
+              )}
               <Link
                 href="/"
                 className="inline-flex items-center justify-center gap-2 glass-card glass-card-hover text-white font-semibold px-8 py-4 rounded-xl transition-all"

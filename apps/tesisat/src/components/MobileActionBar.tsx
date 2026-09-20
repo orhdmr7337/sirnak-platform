@@ -1,11 +1,14 @@
 "use client";
 
+import { useSiteConfig, telHref } from "@sirnak/shared";
+
 export default function MobileActionBar() {
+  const tel = telHref(useSiteConfig());
   return (
     <div className="fixed bottom-0 left-0 right-0 z-40 border-t border-white/5 bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden">
       <div className="flex items-stretch">
         <a
-          href="tel:+905001234567"
+          href={tel ?? undefined}
           className="flex flex-1 flex-col items-center justify-center gap-1 py-3 text-[#9a9ba1]"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -23,7 +26,7 @@ export default function MobileActionBar() {
           <span className="text-[10px] font-medium">Teklif Al</span>
         </a>
         <a
-          href="tel:+905001234567"
+          href={tel ?? undefined}
           className="flex flex-1 items-center justify-center gap-2 bg-primary py-3 text-[#050505]"
         >
           <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

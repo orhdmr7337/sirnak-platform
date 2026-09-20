@@ -4,12 +4,6 @@ import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useTrustItems } from "@sirnak/shared";
 
-const FALLBACK_TRUST = [
-  { id: "1", title: "7/24 Hizmet", description: "Her saat acil servis", icon: "clock" },
-  { id: "2", title: "Uzman Kadro", description: "Sertifikalı teknisyenler", icon: "shield" },
-  { id: "3", title: "Garantili İşçilik", description: "İşçilik garantisi", icon: "check" },
-  { id: "4", title: "Hızlı Müdahale", description: "30 dk'da adresinizde", icon: "zap" },
-];
 
 const iconMap: Record<string, string> = {
   clock: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z",
@@ -20,9 +14,11 @@ const iconMap: Record<string, string> = {
 
 export default function TrustStrip() {
   const trustItems = useTrustItems();
-  const items = trustItems.length > 0 ? trustItems : FALLBACK_TRUST;
+  const items = trustItems;
 
   const { ref, opacity, y } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section className="relative z-10 -mt-12 pb-8">

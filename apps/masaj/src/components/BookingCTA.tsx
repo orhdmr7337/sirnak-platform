@@ -80,6 +80,7 @@ export function BookingCTA() {
             transition={{ duration: 0.6, ease: [0.23, 1, 0.32, 1] }}
             className="lg:col-span-2 space-y-5"
           >
+            {site?.phone && (
             <motion.div
               whileHover={{ x: 5 }}
               className="glass-card p-5 flex items-start gap-4"
@@ -88,10 +89,12 @@ export function BookingCTA() {
               <div>
                 <div className="text-white font-medium">Telefon</div>
                 <a href={`tel:${site?.phone}`} className="text-[#c9a96e] text-sm">
-                  {site?.phone || "0555 123 45 67"}
+                  {site.phone}
                 </a>
               </div>
             </motion.div>
+            )}
+            {site?.email && (
             <motion.div
               whileHover={{ x: 5 }}
               className="glass-card p-5 flex items-start gap-4"
@@ -100,10 +103,12 @@ export function BookingCTA() {
               <div>
                 <div className="text-white font-medium">E-posta</div>
                 <a href={`mailto:${site?.email}`} className="text-gray-400 text-sm">
-                  {site?.email || "info@dogaldokunus.com"}
+                  {site.email}
                 </a>
               </div>
             </motion.div>
+            )}
+            {site?.address && (
             <motion.div
               whileHover={{ x: 5 }}
               className="glass-card p-5 flex items-start gap-4"
@@ -112,10 +117,12 @@ export function BookingCTA() {
               <div>
                 <div className="text-white font-medium">Adres</div>
                 <span className="text-gray-400 text-sm">
-                  {site?.address || "Şırnak Merkez"}
+                  {site.address}
                 </span>
               </div>
             </motion.div>
+            )}
+            {site?.working_hours && (
             <motion.div
               whileHover={{ x: 5 }}
               className="glass-card p-5 flex items-start gap-4"
@@ -124,10 +131,11 @@ export function BookingCTA() {
               <div>
                 <div className="text-white font-medium">Çalışma Saatleri</div>
                 <span className="text-gray-400 text-sm">
-                  {site?.working_hours || "Her gün 09:00 - 21:00"}
+                  {site.working_hours}
                 </span>
               </div>
             </motion.div>
+            )}
           </motion.div>
 
           {/* Form */}

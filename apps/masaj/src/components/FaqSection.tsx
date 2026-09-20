@@ -6,20 +6,16 @@ import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useFaqs } from "@sirnak/shared";
 import { ChevronDown } from "lucide-react";
 
-const FALLBACK_FAQS = [
-  { id: "1", question: "Masaj seansı ne kadar sürüyor?", answer: "Seans süresi 30 ile 90 dakika arasında değişmektedir. İlk görüşmede size en uygun süreyi birlikte belirliyoruz." },
-  { id: "2", question: "Hangi yağları kullanıyorsunuz?", answer: "%100 doğal ve organik yağlar kullanıyoruz. Lavanta, çam, portakal ve özel karışımlarımız mevcuttur." },
-  { id: "3", question: "Randevu iptali mümkün mü?", answer: "Randevunuzu en az 24 saat öncesinden iptal edebilirsiniz. Daha kısa sürede iptallerde ücret iadesi yapılamamaktadır." },
-  { id: "4", question: "Masaj sonrası nelere dikkat etmeliyim?", answer: "Seans sonrası bol su içmeniz, ağır aktivitelerden kaçınmanız ve dinlenmeniz önerilir." },
-];
 
 export function FaqSection() {
   const faqs = useFaqs();
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const items = faqs.length > 0 ? faqs : FALLBACK_FAQS;
+  const items = faqs;
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section id="sss" className="py-20 md:py-28 bg-gradient-to-b from-[#0a0f0a] via-[#0d140d] to-[#0a0f0a]">

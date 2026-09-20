@@ -5,6 +5,8 @@ import {
   getSiteData,
   getServiceBySlug,
   getAllServiceSlugs,
+  telHref,
+  whatsappHref,
 } from "@sirnak/shared";
 import type { Site, Service } from "@sirnak/shared";
 import { notFound } from "next/navigation";
@@ -51,9 +53,9 @@ export async function generateMetadata({
   const result = await getServicePageData(slug);
   if (!result) return { title: "Hizmet Bulunamadı" };
   const { site, service } = result;
-  const title = `${service.title} | ${site.name}`;
+  const title = service.title;
   const description =
-    service.description || `${service.title} - Şırnak'ta profesyonel masaj hizmeti.`;
+    service.description || `${service.title} - ${site.name}`;
   return {
     title,
     description,
@@ -78,14 +80,11 @@ export default async function ServiceDetailPage({
 
   const { site, service, relatedServices } = result;
 
-  const cleanPhone = (site.whatsapp || site.phone || "905551234567").replace(
-    /[^0-9]/g,
-    ""
-  );
-  const whatsappUrl = `https://wa.me/${cleanPhone}?text=${encodeURIComponent(
+  const whatsappUrl = whatsappHref(
+    site,
     `Merhaba, ${service.title} hizmeti hakkında bilgi almak istiyorum.`
-  )}`;
-  const phoneUrl = `tel:${site.phone || "+905551234567"}`;
+  );
+  const phoneUrl = telHref(site);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -96,10 +95,6 @@ export default async function ServiceDetailPage({
       "@type": "HealthAndBeautyBusiness",
       name: site.name,
       telephone: site.phone || undefined,
-    },
-    areaServed: {
-      "@type": "City",
-      name: "Şırnak",
     },
     offers: service.price_info
       ? {
@@ -174,6 +169,7 @@ export default async function ServiceDetailPage({
             </p>
 
             <div className="flex flex-wrap gap-4">
+              {whatsappUrl && (
               <a
                 href={whatsappUrl}
                 target="_blank"
@@ -189,6 +185,8 @@ export default async function ServiceDetailPage({
                 </svg>
                 WhatsApp ile Randevu Al
               </a>
+              )}
+              {phoneUrl && (
               <a
                 href={phoneUrl}
                 className="inline-flex items-center gap-2 rounded-xl border border-[#6b8f71]/30 bg-[#6b8f71]/10 px-6 py-3.5 text-sm font-semibold text-[#6b8f71] transition-all hover:bg-[#6b8f71]/20"
@@ -208,6 +206,7 @@ export default async function ServiceDetailPage({
                 </svg>
                 Hemen Ara
               </a>
+              )}
             </div>
           </div>
 

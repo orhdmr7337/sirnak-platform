@@ -14,7 +14,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   const post = await getBlogPostBySlug(data.site.id, params.slug);
   if (!post) return {};
   return {
-    title: `${post.title} | Doğal Dokunuş Masaj`,
+    title: post.title,
     description: post.excerpt || post.title,
     openGraph: {
       title: post.title,

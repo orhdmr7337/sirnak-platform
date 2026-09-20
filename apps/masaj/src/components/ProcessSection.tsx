@@ -7,18 +7,14 @@ import { Phone, UserCheck, Sparkles, ThumbsUp } from "lucide-react";
 
 const ICONS = [Phone, UserCheck, Sparkles, ThumbsUp];
 
-const FALLBACK_STEPS = [
-  { id: "1", title: "İletişime Geçin", description: "Bizi arayın veya web sitemizden randevu talebinde bulunun.", icon: "phone" },
-  { id: "2", title: "Danışmanlık", description: "Uzman ekibimiz ihtiyaçlarınızı değerlendirir.", icon: "user" },
-  { id: "3", title: "Masaj Seansı", description: "Uzman ellerde profesyonel masaj hizmeti alın.", icon: "sparkles" },
-  { id: "4", title: "Memnuniyet", description: "Sağlığınız ve mutluluğunuz için devam edin.", icon: "thumbs" },
-];
 
 export function ProcessSection() {
   const steps = useProcessSteps();
-  const items = steps.length > 0 ? steps : FALLBACK_STEPS;
+  const items = steps;
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section className="py-20 md:py-28">

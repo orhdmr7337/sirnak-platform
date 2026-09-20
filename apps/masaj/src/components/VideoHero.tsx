@@ -10,13 +10,6 @@ interface MediaItem {
   poster?: string;
 }
 
-const STOCK_MEDIA: MediaItem[] = [
-  { type: "image", src: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=1200&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=1200&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=1200&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=1200&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=1200&q=80&fm=webp" },
-];
 
 interface VideoHeroProps {
   media?: MediaItem[];
@@ -25,7 +18,7 @@ interface VideoHeroProps {
 export function VideoHero({ media }: VideoHeroProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const items = media && media.length > 0 ? media : STOCK_MEDIA;
+  const items = media ?? [];
 
   const advance = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % items.length);
@@ -33,6 +26,7 @@ export function VideoHero({ media }: VideoHeroProps) {
 
   useEffect(() => {
     const current = items[currentIndex];
+    if (!current) return;
     if (current.type === "video") {
       const timeout = setTimeout(advance, 15000);
       return () => clearTimeout(timeout);
@@ -142,7 +136,7 @@ export function VideoHero({ media }: VideoHeroProps) {
 
       {/* Video indicator */}
       {items[currentIndex]?.type === "video" && (
-        <div className="absolute top-6 right-6 z-10">
+        <div className="absolute hidden md:block md:top-24 md:right-6 z-10">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

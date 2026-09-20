@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useNavLinks, useSite } from "@sirnak/shared";
+import { useNavLinks, useSite, telHref } from "@sirnak/shared";
 import { SearchTrigger } from "@sirnak/shared";
 
 export default function Header() {
@@ -9,6 +9,7 @@ export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const navLinks = useNavLinks();
   const { site } = useSite();
+  const tel = telHref(site);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -43,11 +44,11 @@ export default function Header() {
         <a href="/" className="flex items-center gap-3">
           <img
             src="/images/logo-tesisat.svg"
-            alt="Çözüm Noktası"
+            alt={site.name}
             className="h-10 w-10"
           />
           <span className="font-semibold text-white" style={{ fontFamily: "var(--sc-font-display)" }}>
-            Çözüm Noktası
+            {site.name.split(" ").slice(0, 2).join(" ")}
           </span>
         </a>
 
@@ -62,8 +63,9 @@ export default function Header() {
             </a>
           ))}
           <SearchTrigger siteId={site.id} siteSlug="tesisat" primaryColor={site.primary_color} />
+          {tel && (
           <a
-            href="tel:+905001234567"
+            href={tel}
             className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-sm font-semibold text-[#050505] transition-all hover:bg-primary-dark"
           >
             <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -71,6 +73,7 @@ export default function Header() {
             </svg>
             Hemen Ara
           </a>
+          )}
         </nav>
 
         <button
@@ -103,8 +106,9 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
+            {tel && (
             <a
-              href="tel:+905001234567"
+              href={tel}
               className="mt-2 flex items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-[#050505]"
             >
               <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -112,6 +116,7 @@ export default function Header() {
               </svg>
               Hemen Ara
             </a>
+            )}
           </nav>
         </div>
       )}

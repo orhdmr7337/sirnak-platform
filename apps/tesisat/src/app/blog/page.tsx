@@ -6,7 +6,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog | Çözüm Noktası Tesisat & Elektrik",
+  title: "Blog",
   description: "Tesisat ve elektrik hakkında faydalı bilgiler, ipuçları ve güncel yazılar.",
 };
 

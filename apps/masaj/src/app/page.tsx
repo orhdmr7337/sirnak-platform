@@ -10,10 +10,7 @@ export default async function HomePage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-[#0a0f0a] text-white">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4" style={{ fontFamily: "Georgia, serif" }}>
-            Doğal Dokunuş Masaj
-          </h1>
-          <p className="text-gray-400">Site yükleniyor...</p>
+          <p className="text-gray-400">Yükleniyor...</p>
         </div>
       </div>
     );

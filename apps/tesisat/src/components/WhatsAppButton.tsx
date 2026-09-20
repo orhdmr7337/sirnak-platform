@@ -1,12 +1,12 @@
 "use client";
 
-import { useSiteConfig } from "@sirnak/shared";
+import { useSiteConfig, useSiteContent, whatsappHref } from "@sirnak/shared";
 
 export default function WhatsAppButton() {
   const site = useSiteConfig();
-  const phone = site.whatsapp || site.phone || "905001234567";
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
-  const url = `https://wa.me/${cleanPhone}?text=Merhaba%2C%20tesisat%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.`;
+  const { get } = useSiteContent();
+  const url = whatsappHref(site, get("cta", "whatsapp_message", ""));
+  if (!url) return null;
 
   return (
     <a

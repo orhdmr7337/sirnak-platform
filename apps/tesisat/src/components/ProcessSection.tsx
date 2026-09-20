@@ -4,12 +4,6 @@ import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useProcessSteps, useSiteContent } from "@sirnak/shared";
 
-const FALLBACK_STEPS = [
-  { id: "1", title: "Bize Ulaşın", description: "Telefonla veya WhatsApp ile iletişime geçin. 5 dakika içinde ekibimiz geri döner.", icon: "phone" },
-  { id: "2", title: "Yerinde Keşif", description: "Sertifikalı teknisyenlerimiz yerinde sorunu analiz eder ve en iyi çözümü önerir.", icon: "search" },
-  { id: "3", title: "Fiyat Teklifi", description: "Detaylı yazılı teklif sunulur. Gizli maliyetler olmaz, önceden bildirilen fiyat geçerli.", icon: "document" },
-  { id: "4", title: "Profesyonel Hizmet", description: "Hizmet tamamlandıktan sonra 1 yıl garantisi verilir. Memnun değilseniz, geri ödeme yapılır.", icon: "check" },
-];
 
 const stepIcons: Record<string, string> = {
   phone: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z",
@@ -21,12 +15,14 @@ const stepIcons: Record<string, string> = {
 export default function ProcessSection() {
   const processSteps = useProcessSteps();
   const { get } = useSiteContent();
-  const steps = processSteps.length > 0 ? processSteps : FALLBACK_STEPS;
+  const steps = processSteps;
 
   const title = get("process", "title", "Nasıl Çalışıyoruz?");
   const subtitle = get("process", "subtitle", "4 basit adımda profesyonel hizmet");
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (steps.length === 0) return null;
 
   return (
     <section id="surec" className="sc-section">

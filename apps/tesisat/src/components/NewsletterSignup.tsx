@@ -1,15 +1,17 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-
-const NEWSLETTER_KEY = "newsletter-submitted";
+import { useSiteConfig, submitContact } from "@sirnak/shared";
 
 export default function NewsletterSignup() {
   const [email, setEmail] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+  const [sending, setSending] = useState(false);
+  const site = useSiteConfig();
 
-  const handleSubmit = (e: FormEvent) => {
+  // Abonelik, `contact_submissions` tablosuna yazılır; admin panelinde "Mesajlar" altında görünür.
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
 
@@ -17,15 +19,25 @@ export default function NewsletterSignup() {
       setError("Geçerli bir e-posta adresi girin.");
       return;
     }
-
-    const existing = JSON.parse(localStorage.getItem(NEWSLETTER_KEY) || "[]");
-    if (existing.includes(email)) {
-      setSubmitted(true);
+    if (!site?.id) {
+      setError("Şu anda abonelik alınamıyor. Lütfen daha sonra tekrar deneyin.");
       return;
     }
 
-    existing.push(email);
-    localStorage.setItem(NEWSLETTER_KEY, JSON.stringify(existing));
+    setSending(true);
+    const { error: submitError } = await submitContact({
+      site_id: site.id,
+      name: "Bülten Aboneliği",
+      phone: "-",
+      email,
+      message: "Bülten aboneliği talebi",
+    });
+    setSending(false);
+
+    if (submitError) {
+      setError(submitError.message || "Bir hata oluştu. Lütfen tekrar deneyin.");
+      return;
+    }
     setSubmitted(true);
     setEmail("");
   };
@@ -70,6 +82,7 @@ export default function NewsletterSignup() {
             />
             <button
               type="submit"
+              disabled={sending}
               className="rounded-lg bg-[#4a90d9] px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-[#3a7bc8]"
             >
               Katıl

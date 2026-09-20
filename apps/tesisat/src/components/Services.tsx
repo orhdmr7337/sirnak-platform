@@ -4,14 +4,6 @@ import { motion } from "framer-motion";
 import { useScrollReveal, useParallax } from "@/hooks/useScrollAnimation";
 import { useServices, useSiteContent } from "@sirnak/shared";
 
-const FALLBACK_SERVICES = [
-  { id: "1", title: "Su Kaçağı Tespiti", slug: "su-kacagi", description: "Termal kamera ve akustik cihazlarla su kaçağı tespiti. Gizli kaçakları profesyonel yöntemlerle bulup çözüyoruz.", icon: "droplet" },
-  { id: "2", title: "Petek Temizliği", slug: "petek-temizligi", description: "Kombi ve radyatör petkelerini profesyonel şekilde temizleyip hava akışını restore ediyoruz.", icon: "flame" },
-  { id: "3", title: "Kombi Bakımı & Onarım", slug: "kombi-bakami", description: "Kombi servis, bakım, onarım ve yedek parça değişimi. 24/7 acil kombi arızaları.", icon: "thermometer" },
-  { id: "4", title: "Elektrik Kurulum & Onarım", slug: "elektrik-ariza", description: "Elektrik tesisatı, pano kurulumu, arıza giderme ve yangın güvenliği kontrolleri.", icon: "zap" },
-  { id: "5", title: "Tıkanıklık Açma", slug: "tikaniklik", description: "Robotik kamera ile tıkanıklığı görüp, hidrolik sistemle temizliyoruz. 100% başarı.", icon: "wrench" },
-  { id: "6", title: "Su Tesisatı Kurulum", slug: "su-tesisati", description: "Yeni su tesisatı kurulumu, pex boruları, yedek parça ve tam tamirat hizmetleri.", icon: "pipe" },
-];
 
 const iconPaths: Record<string, string> = {
   droplet: "M12 21c-4.97 0-9-4.03-9-9s4.03-9 9-9c1.53 0 2.97.38 4.24 1.06A9 9 0 0112 21z",
@@ -25,13 +17,15 @@ const iconPaths: Record<string, string> = {
 export default function Services() {
   const services = useServices();
   const { get } = useSiteContent();
-  const items = services.length > 0 ? services : FALLBACK_SERVICES;
+  const items = services;
 
   const sectionTitle = get("services", "title", "Hizmetlerimiz");
   const sectionSubtitle = get("services", "subtitle", "İhtiyacınıza uygun profesyonel çözümler");
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
   const { ref: gridRef, opacity: gridOpacity, y: gridY } = useParallax(30);
+
+  if (items.length === 0) return null;
 
   return (
     <section id="hizmetler" className="sc-section">

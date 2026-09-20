@@ -17,14 +17,6 @@ interface GalleryMedia {
   category?: string;
 }
 
-const FALLBACK_GALLERY: GalleryMedia[] = [
-  { id: "1", title: "Masaj Salonu", image_url: "https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=800&q=80&fm=webp", type: "image", label: "Salon", category: "gallery" },
-  { id: "2", title: "Yağlar", image_url: "https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?w=800&q=80&fm=webp", type: "image", label: "Ürünler", category: "gallery" },
-  { id: "3", title: "Aromaterapi", image_url: "https://images.unsplash.com/photo-1515377905703-c4788e51af15?w=800&q=80&fm=webp", type: "image", label: "Aromaterapi", category: "gallery" },
-  { id: "4", title: "Rahatlama", image_url: "https://images.unsplash.com/photo-1544161515-4ab6ce6db874?w=800&q=80&fm=webp", type: "image", label: "Relax", category: "gallery" },
-  { id: "5", title: "Taş Masajı", image_url: "https://images.unsplash.com/photo-1600334089648-b0d9d3028eb2?w=800&q=80&fm=webp", type: "image", label: "Sıcak Taş", category: "gallery" },
-  { id: "6", title: "Spa", image_url: "https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=800&q=80&fm=webp", type: "image", label: "Spa", category: "gallery" },
-];
 
 export function GallerySection() {
   const gallery = useGalleryItems();
@@ -36,13 +28,13 @@ export function GallerySection() {
         .map((g) => ({
           id: g.id,
           title: g.title,
-          image_url: g.image_url,
+          image_url: g.image_url ?? undefined,
           video_url: (g as any).video_url,
           type: (g as any).video_url ? "video" as const : "image" as const,
-          label: g.label,
+          label: g.label ?? undefined,
           category: g.category,
         }))
-    : FALLBACK_GALLERY;
+    : [];
 
   const open = (i: number) => setSelectedIndex(i);
   const close = () => setSelectedIndex(null);
@@ -52,6 +44,8 @@ export function GallerySection() {
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
 
   const selectedItem = selectedIndex !== null ? items[selectedIndex] : null;
+
+  if (items.length === 0) return null;
 
   return (
     <section id="galeri" className="py-20 md:py-28">
@@ -89,14 +83,24 @@ export function GallerySection() {
               className="relative aspect-[4/3] rounded-xl overflow-hidden group cursor-pointer"
             >
               {/* Thumbnail */}
-              <Image
-                src={item.image_url || `https://images.unsplash.com/photo-1540555700478-4be289fbec6d?w=800&q=80&fm=webp`}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                loading="lazy"
-              />
+              {item.image_url ? (
+                <Image
+                  src={item.image_url}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                />
+              ) : (
+                <video
+                  src={item.video_url}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
 
               {/* Video play icon */}
               {item.type === "video" && (

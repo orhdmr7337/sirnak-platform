@@ -1,4 +1,5 @@
-import { getDistricts, getSiteData, SiteProvider } from "@sirnak/shared";
+import { notFound } from "next/navigation";
+import { getDistricts, getSiteData, getSiteBySlug, telHref, SiteProvider } from "@sirnak/shared";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/Header";
@@ -8,21 +9,22 @@ import { MobileActionBar } from "@/components/MobileActionBar";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = {
-  title: "İlçeler | Doğal Dokunuş Masaj",
-  description: "Şırnak ve tüm ilçelerinde profesyonel masaj hizmetleri. Thai masajı, derin doku, sıcak taş, aromaterapi. Uzman masörler, doğal ürünler.",
-  keywords: "Şırnak masaj, Cizre masaj, İdil masaj, Silopi masaj, Beytüşşebap masaj, Uludere masaj",
-  openGraph: {
-    title: "İlçeler | Doğal Dokunuş Masaj",
-    description: "Şırnak ve tüm ilçelerinde profesyonel masaj hizmetleri.",
-    type: "website",
-    locale: "tr_TR",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const [site, districts] = await Promise.all([getSiteBySlug("masaj"), getDistricts()]);
+  const name = site?.name ?? "";
+  const names = districts.map((d) => d.name);
+  return {
+    title: `İlçeler | ${name}`,
+    description: names.length ? `${name} hizmet bölgeleri: ${names.join(", ")}.` : undefined,
+    openGraph: { title: `İlçeler | ${name}`, type: "website", locale: "tr_TR" },
+  };
+}
 
 export default async function DistrictsPage() {
   const districts = await getDistricts();
   const data = await getSiteData("masaj");
+  if (!data) notFound();
+  const tel = telHref(data?.site);
 
   return (
     <SiteProvider data={data}>
@@ -114,8 +116,9 @@ export default async function DistrictsPage() {
               Uzman masörlerimiz sizleri bekliyor.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {tel && (
               <a
-                href="tel:+905551234567"
+                href={tel}
                 className="inline-flex items-center justify-center gap-2 bg-[#6b8f71] hover:bg-[#5a7d60] text-white font-semibold px-8 py-4 rounded-xl transition-all"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -123,6 +126,7 @@ export default async function DistrictsPage() {
                 </svg>
                 Hemen Ara
               </a>
+              )}
               <Link
                 href="/"
                 className="inline-flex items-center justify-center gap-2 glass-card hover:border-[#6b8f71]/40 text-white font-semibold px-8 py-4 rounded-xl transition-all"

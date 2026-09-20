@@ -6,7 +6,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Blog | Doğal Dokunuş Masaj",
+  title: "Blog",
   description: "Masaj, wellness ve sağlıklı yaşam hakkında faydalı bilgiler ve güncel yazılar.",
 };
 

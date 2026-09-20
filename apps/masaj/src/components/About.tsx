@@ -3,17 +3,20 @@
 import { motion } from "framer-motion";
 import { useScrollReveal, useParallax } from "@/hooks/useScrollAnimation";
 import { useSiteContent } from "@sirnak/shared";
-import { Shield, Clock, Leaf, Award } from "lucide-react";
+import { Clock, Leaf, Award } from "lucide-react";
 
 export function About() {
   const { get } = useSiteContent();
 
-  const stats = [
-    { icon: Clock, value: get("about", "years", "5+"), label: "Yıl Deneyim" },
-    { icon: Award, value: get("about", "clients", "2000+"), label: "Mutlu Müşteri" },
-    { icon: Leaf, value: get("about", "products", "%100"), label: "Doğal Ürünler" },
-    { icon: Shield, value: get("about", "guarantee", "100%"), label: "Memnuniyet" },
-  ];
+  // Rakamlar ve metinler `site_content` (section: about) kaydından gelir.
+  const icons = [Clock, Award, Leaf];
+  const stats = [1, 2, 3]
+    .map((n, i) => ({
+      icon: icons[i],
+      value: get("about", `stat${n}_value`, ""),
+      label: get("about", `stat${n}_label`, ""),
+    }))
+    .filter((st) => st.value && st.label);
 
   const { ref: textRef, opacity: textOpacity, y: textY } = useScrollReveal();
   const { ref: statsRef, opacity: statsOpacity, y: statsY } = useParallax(20);
@@ -28,20 +31,19 @@ export function About() {
             style={{ opacity: textOpacity, y: textY }}
           >
             <span className="inline-block text-[#c9a96e] text-sm font-medium tracking-widest uppercase mb-4">
-              Hakkımızda
+              {get("about", "label", "")}
             </span>
             <h2
               className="text-3xl md:text-5xl font-bold text-white mb-6"
               style={{ fontFamily: "Georgia, serif" }}
             >
-              Doğal Dokunuş ile{" "}
-              <span className="text-[#6b8f71]">Yenilenin</span>
+              {get("about", "title", "")}
             </h2>
             <p className="text-gray-400 leading-relaxed mb-6">
-              {get("about", "description", "Doğal Dokunuş Masaj, Şırnak'ta uzun yıllara dayanan tecrübesiyle profesyonel masaj hizmeti sunmaktadır. Doğal ürünler ve uzman ellerde, vücudunuzun hak ettiği bakımı sağlıyoruz.")}
+              {get("about", "paragraph1", "")}
             </p>
             <p className="text-gray-400 leading-relaxed">
-              {get("about", "description2", "Her müşterimize özel, ihtiyaçlarına yönelik masaj programları uyguluyoruz. Sağlığınız ve rahatlığınız bizim için en önemli önceliktir.")}
+              {get("about", "paragraph2", "")}
             </p>
           </motion.div>
 
@@ -49,7 +51,7 @@ export function About() {
           <motion.div
             ref={statsRef}
             style={{ opacity: statsOpacity, y: statsY }}
-            className="grid grid-cols-2 gap-4"
+            className="grid grid-cols-2 sm:grid-cols-3 gap-4"
           >
             {stats.map((stat, index) => (
               <motion.div

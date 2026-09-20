@@ -111,8 +111,20 @@ export default function GeneralTab({
             <input name="working_hours" defaultValue={data.site.working_hours ?? ""} className={inputClass} />
           </div>
           <div>
+            <label className={labelClass}>E-posta</label>
+            <input name="email" type="email" defaultValue={data.site.email ?? ""} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Alan Adı (domain)</label>
+            <input name="domain" defaultValue={data.site.domain ?? ""} placeholder="ornek.com" className={inputClass} />
+          </div>
+          <div>
             <label className={labelClass}>Instagram Kullanıcı Adı</label>
             <input name="instagram_username" defaultValue={data.site.instagram_username ?? ""} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>TikTok Kullanıcı Adı</label>
+            <input name="tiktok_username" defaultValue={data.site.tiktok_username ?? ""} className={inputClass} />
           </div>
           <div>
             <label className={labelClass}>Meta Başlık</label>
@@ -121,6 +133,14 @@ export default function GeneralTab({
           <div>
             <label className={labelClass}>Meta Açıklama</label>
             <input name="meta_description" defaultValue={data.site.meta_description ?? ""} className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Anahtar Kelimeler</label>
+            <input name="meta_keywords" defaultValue={data.site.meta_keywords ?? ""} placeholder="virgülle ayırın" className={inputClass} />
+          </div>
+          <div>
+            <label className={labelClass}>Paylaşım Görseli (URL)</label>
+            <input name="og_image_url" defaultValue={data.site.og_image_url ?? ""} placeholder="https://..." className={inputClass} />
           </div>
           <div>
             <label className={labelClass}>Ana Renk</label>

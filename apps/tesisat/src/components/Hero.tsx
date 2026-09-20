@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useSiteContent, useGalleryItems, useMediaFiles } from "@sirnak/shared";
+import { useSiteConfig, useSiteContent, useMediaFiles, telHref } from "@sirnak/shared";
 import VideoHero from "./VideoHero";
 
 interface MediaItem {
@@ -10,13 +10,9 @@ interface MediaItem {
   poster?: string;
 }
 
-const FALLBACK_MEDIA: MediaItem[] = [
-  { type: "image", src: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1920&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=1920&q=80&fm=webp" },
-];
 
 export default function Hero() {
+  const site = useSiteConfig();
   const { get } = useSiteContent();
   const mediaFiles = useMediaFiles();
 
@@ -30,24 +26,27 @@ export default function Hero() {
       poster: undefined,
     }));
 
-  const slogan = get("hero", "slogan", "Profesyonel Tesisat & Elektrik Hizmeti");
-  const subtext = get("hero", "subtext", "7/24 acil servis, uzman kadro, garantili işçilik");
-  const ctaText = get("hero", "cta", "Hemen Ara");
-  const ctaSecondary = get("hero", "cta_secondary", "Hizmetleri Keşfet");
+  // Tüm metinler `site_content` (section: hero) kaydından gelir.
+  const badge = get("hero", "badge", "");
+  const slogan = get("hero", "slogan", "") || site?.slogan || "";
+  const subtext = get("hero", "description", "");
+  const ctaText = get("hero", "cta_call_label", "");
+  const ctaSecondary = get("hero", "cta_services_label", "");
+  const tel = telHref(site);
 
   return (
-    <VideoHero media={heroMedia.length > 0 ? heroMedia : FALLBACK_MEDIA}>
+    <VideoHero media={heroMedia}>
       <div className="max-w-3xl ml-auto pr-16 md:pr-32" data-sc-cue="0 0.8" data-sc-kinetic="words">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 0.75, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          <p
-            className="sc-label mb-4 text-primary text-sm tracking-widest font-bold italic uppercase"
-          >
-            ⚡ ÇÖZÜM NOKTASI
-          </p>
+          {badge && (
+            <p className="sc-label mb-4 text-primary text-sm tracking-widest font-bold italic uppercase">
+              {badge}
+            </p>
+          )}
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -100 }}
@@ -71,8 +70,9 @@ export default function Hero() {
           </p>
         </motion.div>
         <div className="flex flex-wrap gap-4">
+          {tel && ctaText && (
           <a
-            href="tel:+905001234567"
+            href={tel}
             className="group inline-flex items-center gap-2 rounded-xl bg-gradient-to-br from-primary to-[#e85a0f] px-8 py-4 text-sm font-bold italic text-[#050505] transition-all duration-300 hover:shadow-2xl hover:shadow-primary/50 hover:scale-110 active:scale-95"
           >
             <svg className="h-5 w-5 transition-transform group-hover:scale-125 group-hover:rotate-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -80,6 +80,7 @@ export default function Hero() {
             </svg>
             <span className="transition-all group-hover:tracking-wide">{ctaText}</span>
           </a>
+          )}
           <a
             href="#hizmetler"
             className="group inline-flex items-center gap-2 rounded-xl border-2 border-white/20 bg-white/5 backdrop-blur px-8 py-4 text-sm font-bold italic text-white transition-all duration-300 hover:border-primary/60 hover:bg-primary/10 hover:shadow-lg hover:shadow-primary/20 hover:scale-105 active:scale-95"

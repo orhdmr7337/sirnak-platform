@@ -1,4 +1,4 @@
-import { getDistrictBySlug, getSiteData, SiteProvider } from "@sirnak/shared";
+import { getDistrictBySlug, getDistricts, getSiteData, getSiteBySlug, buildJsonLd, telHref, whatsappHref, SiteProvider } from "@sirnak/shared";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -7,12 +7,11 @@ import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MobileActionBar } from "@/components/MobileActionBar";
 
-const DISTRICT_SLUGS = ["merkez", "cizre", "idil", "silopi", "beytussebap", "uludere"];
-
 export const revalidate = 300;
 
 export async function generateStaticParams() {
-  return DISTRICT_SLUGS.map((slug) => ({ slug }));
+  const districts = await getDistricts();
+  return districts.map((d) => ({ slug: d.slug }));
 }
 
 type Props = {
@@ -21,16 +20,16 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const district = await getDistrictBySlug(slug);
+  const [district, site] = await Promise.all([getDistrictBySlug(slug), getSiteBySlug("masaj")]);
   if (!district) return {};
+  const siteName = site?.name ?? "";
 
   return {
-    title: `${district.name} Masaj Hizmetleri | Doğal Dokunuş Masaj`,
-    description: district.description || `${district.name} bölgesinde profesyonel masaj hizmetleri. Thai masajı, derin doku, sıcak taş, aromaterapi. Uzman masörler, doğal ürünler.`,
-    keywords: `${district.name} masaj, ${district.name} masaj salonu, ${district.name} spa, ${district.name} thai masajı, ${district.name} derin doku masajı, Şırnak masaj`,
+    title: `${district.name} Masaj Hizmetleri`,
+    description: district.description || `${district.name} bölgesinde ${siteName} hizmetleri.`,
     openGraph: {
-      title: `${district.name} Masaj Hizmetleri | Doğal Dokunuş Masaj`,
-      description: district.description || `${district.name} bölgesinde profesyonel masaj hizmetleri.`,
+      title: `${district.name} Masaj Hizmetleri`,
+      description: district.description || `${district.name} bölgesinde ${siteName} hizmetleri.`,
       type: "website",
       locale: "tr_TR",
     },
@@ -46,44 +45,25 @@ export default async function DistrictPage({ params }: Props) {
   }
 
   const siteData = await getSiteData("masaj");
+  if (!siteData) notFound();
   const services = siteData?.services ?? [];
   const testimonials = (siteData?.testimonials ?? []).filter(
     (t) => !t.district || t.district === district.name
   );
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "HealthAndBeautyBusiness",
-    name: "Doğal Dokunuş Masaj",
-    description: `${district.name} bölgesinde profesyonel masaj hizmetleri.`,
-    telephone: "+90-555-123-4567",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: district.name,
-      addressRegion: district.region || "Şırnak",
-      addressCountry: "TR",
-    },
-    areaServed: {
-      "@type": "City",
-      name: district.name,
-    },
-    url: "https://masaj.sirnakplatform.com",
-    priceRange: "$$",
-    openingHoursSpecification: [
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-        opens: "09:00",
-        closes: "21:00",
-      },
-      {
-        "@type": "OpeningHoursSpecification",
-        dayOfWeek: ["Saturday", "Sunday"],
-        opens: "10:00",
-        closes: "20:00",
-      },
-    ],
-  };
+  const jsonLd = siteData
+    ? buildJsonLd({
+        site: siteData.site,
+        schemaType: "HealthAndBeautyBusiness",
+        services: siteData.services,
+        testimonials: siteData.testimonials,
+        faqs: [],
+        districts: [district],
+        socialLinks: siteData.socialLinks,
+      })[0]
+    : null;
+  const tel = telHref(siteData?.site);
+  const wa = whatsappHref(siteData?.site);
 
   return (
     <SiteProvider data={siteData}>
@@ -224,8 +204,9 @@ export default async function DistrictPage({ params }: Props) {
               Uzman masörlerimiz sizleri bekliyor.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {tel && (
               <a
-                href="tel:+905551234567"
+                href={tel}
                 className="inline-flex items-center justify-center gap-2 bg-[#6b8f71] hover:bg-[#5a7d60] text-white font-semibold px-8 py-4 rounded-xl transition-all"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -233,8 +214,10 @@ export default async function DistrictPage({ params }: Props) {
                 </svg>
                 Hemen Ara
               </a>
+              )}
+              {wa && (
               <a
-                href="https://wa.me/905551234567"
+                href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 glass-card hover:border-[#6b8f71]/40 text-white font-semibold px-8 py-4 rounded-xl transition-all"
@@ -244,6 +227,7 @@ export default async function DistrictPage({ params }: Props) {
                 </svg>
                 WhatsApp ile İletişim
               </a>
+              )}
             </div>
           </div>
         </section>
@@ -252,10 +236,12 @@ export default async function DistrictPage({ params }: Props) {
       <WhatsAppButton />
       <MobileActionBar />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
     </SiteProvider>
   );
 }

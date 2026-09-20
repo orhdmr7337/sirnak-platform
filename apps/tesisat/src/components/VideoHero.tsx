@@ -10,12 +10,6 @@ interface MediaItem {
   poster?: string;
 }
 
-const STOCK_MEDIA: MediaItem[] = [
-  { type: "image", src: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=1920&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=1920&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=1920&q=80&fm=webp" },
-  { type: "image", src: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=1920&q=80&fm=webp" },
-];
 
 interface VideoHeroProps {
   media?: MediaItem[];
@@ -25,7 +19,7 @@ interface VideoHeroProps {
 export default function VideoHero({ media, children }: VideoHeroProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const items = media && media.length > 0 ? media : STOCK_MEDIA;
+  const items = media ?? [];
 
   const advance = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % items.length);
@@ -33,6 +27,7 @@ export default function VideoHero({ media, children }: VideoHeroProps) {
 
   useEffect(() => {
     const current = items[currentIndex];
+    if (!current) return;
     if (current.type === "video") {
       // Video otomatik geçiş için süre
       const timeout = setTimeout(advance, 15000);
@@ -156,7 +151,7 @@ export default function VideoHero({ media, children }: VideoHeroProps) {
 
       {/* Video indicator */}
       {items[currentIndex]?.type === "video" && (
-        <div className="absolute top-6 right-6 z-20">
+        <div className="absolute hidden md:block md:top-24 md:right-6 z-20">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

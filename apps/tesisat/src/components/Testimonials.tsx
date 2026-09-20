@@ -4,12 +4,6 @@ import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useTestimonials, useSiteContent } from "@sirnak/shared";
 
-const FALLBACK_TESTIMONIALS = [
-  { id: "1", customer_name: "Ahmet Y.", district: "Şırnak Merkez", rating: 5, content: "Su kaçağını kırmadan buldular. Çok profesyonel bir ekip. Herkese tavsiye ederim." },
-  { id: "2", customer_name: "Fatma K.", district: "Cizre", rating: 5, content: "Kombi bakımı için çağırdım, çok memnun kaldım. Hem fiyat hem işçilik mükemmeldi." },
-  { id: "3", customer_name: "Mehmet S.", district: "İdil", rating: 5, content: "Petek temizliği sonrası evim çok ısındı. Emeğinize sağlık." },
-  { id: "4", customer_name: "Ayşe D.", district: "Silopi", rating: 4, content: "Elektrik arızası için gece geç saatte aradım, hemen geldiler. Teşekkürler." },
-];
 
 function StarRating({ rating }: { rating: number }) {
   return (
@@ -31,12 +25,14 @@ function StarRating({ rating }: { rating: number }) {
 export default function Testimonials() {
   const testimonials = useTestimonials();
   const { get } = useSiteContent();
-  const items = testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
+  const items = testimonials;
 
   const title = get("testimonials", "title", "Müşterilerimiz Ne Diyor?");
   const subtitle = get("testimonials", "subtitle", "Gerçek müşteri yorumları");
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section className="sc-section">

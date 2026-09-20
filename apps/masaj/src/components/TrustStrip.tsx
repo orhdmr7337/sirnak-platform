@@ -14,18 +14,14 @@ const ICON_MAP: Record<string, React.ElementType> = {
   star: Star,
 };
 
-const FALLBACK_ITEMS = [
-  { id: "1", title: "Uzman Kadro", description: "Sertifikalı ve deneyimli masörler", icon: "shield" },
-  { id: "2", title: "Doğal Ürünler", description: "%100 organik yağlar ve kremler", icon: "leaf" },
-  { id: "3", title: "Temiz Ortam", description: "Hijyenik ve konforlu mekan", icon: "award" },
-  { id: "4", title: "Esnek Saatler", description: "Her gün 09:00 - 21:00 arası", icon: "clock" },
-];
 
 export function TrustStrip() {
   const items = useTrustItems();
-  const display = items.length > 0 ? items : FALLBACK_ITEMS;
+  const display = items;
 
   const { ref, opacity, y } = useScrollReveal();
+
+  if (display.length === 0) return null;
 
   return (
     <section className="py-14 border-y border-[#2a3a2a]/50">

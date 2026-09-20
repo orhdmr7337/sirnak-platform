@@ -1,4 +1,4 @@
-import { getDistrictBySlug, getDistrictsWithServices, getSiteData, SiteProvider } from "@sirnak/shared";
+import { getDistrictBySlug, getDistricts, getSiteData, getSiteBySlug, buildJsonLd, telHref, whatsappHref, SiteProvider } from "@sirnak/shared";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -7,12 +7,11 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileActionBar from "@/components/MobileActionBar";
 
-const DISTRICT_SLUGS = ["merkez", "cizre", "idil", "silopi", "beytussebap", "uludere"];
-
 export const revalidate = 300;
 
 export async function generateStaticParams() {
-  return DISTRICT_SLUGS.map((slug) => ({ slug }));
+  const districts = await getDistricts();
+  return districts.map((d) => ({ slug: d.slug }));
 }
 
 type Props = {
@@ -21,16 +20,16 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const district = await getDistrictBySlug(slug);
+  const [district, site] = await Promise.all([getDistrictBySlug(slug), getSiteBySlug("tesisat")]);
   if (!district) return {};
+  const siteName = site?.name ?? "";
 
   return {
-    title: `${district.name} Tesisat Hizmetleri | Çözüm Noktası Tesisat`,
-    description: district.description || `${district.name} bölgesinde profesyonel tesisat ve elektrik hizmetleri. Su kaçağı tespiti, petek temizliği, kombi bakımı. 7/24 acil servis.`,
-    keywords: `${district.name} tesisat, ${district.name} elektrikçi, ${district.name} su kaçağı, ${district.name} petek temizliği, ${district.name} kombi bakımı, Şırnak tesisat`,
+    title: `${district.name} Tesisat Hizmetleri`,
+    description: district.description || `${district.name} bölgesinde ${siteName} hizmetleri.`,
     openGraph: {
-      title: `${district.name} Tesisat Hizmetleri | Çözüm Noktası Tesisat`,
-      description: district.description || `${district.name} bölgesinde profesyonel tesisat hizmetleri.`,
+      title: `${district.name} Tesisat Hizmetleri`,
+      description: district.description || `${district.name} bölgesinde ${siteName} hizmetleri.`,
       type: "website",
       locale: "tr_TR",
     },
@@ -46,31 +45,25 @@ export default async function DistrictPage({ params }: Props) {
   }
 
   const siteData = await getSiteData("tesisat");
+  if (!siteData) notFound();
   const services = siteData?.services ?? [];
   const testimonials = (siteData?.testimonials ?? []).filter(
     (t) => !t.district || t.district === district.name
   );
 
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "HomeAndConstructionBusiness",
-    name: "Çözüm Noktası Tesisat & Elektrik",
-    description: `${district.name} bölgesinde profesyonel tesisat ve elektrik hizmetleri.`,
-    telephone: "+90-500-123-4567",
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: district.name,
-      addressRegion: district.region || "Şırnak",
-      addressCountry: "TR",
-    },
-    areaServed: {
-      "@type": "City",
-      name: district.name,
-    },
-    url: "https://tesisat.sirnakplatform.com",
-    priceRange: "$$",
-    openingHours: "Mo-Su 00:00-23:59",
-  };
+  const jsonLd = siteData
+    ? buildJsonLd({
+        site: siteData.site,
+        schemaType: "HomeAndConstructionBusiness",
+        services: siteData.services,
+        testimonials: siteData.testimonials,
+        faqs: [],
+        districts: [district],
+        socialLinks: siteData.socialLinks,
+      })[0]
+    : null;
+  const tel = telHref(siteData?.site);
+  const wa = whatsappHref(siteData?.site);
 
   return (
     <SiteProvider data={siteData}>
@@ -195,8 +188,9 @@ export default async function DistrictPage({ params }: Props) {
               7/24 acil servis desteği sunuyoruz.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              {tel && (
               <a
-                href="tel:+905001234567"
+                href={tel}
                 className="inline-flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-[#050505] font-semibold px-8 py-4 rounded-xl transition-all"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -204,8 +198,10 @@ export default async function DistrictPage({ params }: Props) {
                 </svg>
                 Hemen Ara
               </a>
+              )}
+              {wa && (
               <a
-                href="https://wa.me/905001234567"
+                href={wa}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center gap-2 glass-card glass-card-hover text-white font-semibold px-8 py-4 rounded-xl transition-all"
@@ -215,6 +211,7 @@ export default async function DistrictPage({ params }: Props) {
                 </svg>
                 WhatsApp ile İletişim
               </a>
+              )}
             </div>
           </div>
         </section>
@@ -223,10 +220,12 @@ export default async function DistrictPage({ params }: Props) {
       <WhatsAppButton />
       <MobileActionBar />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      {jsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
     </SiteProvider>
   );
 }

@@ -1,9 +1,10 @@
 "use client";
 
-import { useSiteConfig, useServices, useNavLinks, useSocialLinks } from "@sirnak/shared";
+import { useSiteConfig, useSiteContent, useServices, useNavLinks, useSocialLinks } from "@sirnak/shared";
 
 export default function Footer() {
   const site = useSiteConfig();
+  const { get } = useSiteContent();
   const services = useServices();
   const navLinks = useNavLinks();
   const socialLinks = useSocialLinks();
@@ -29,16 +30,15 @@ export default function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <img
                 src="/images/logo-tesisat.svg"
-                alt="Çözüm Noktası"
+                alt={site.name}
                 className="h-10 w-10"
               />
               <span className="font-semibold text-white" style={{ fontFamily: "var(--sc-font-display)" }}>
-                Çözüm Noktası Tesisat
+                {site.name}
               </span>
             </div>
             <p className="mb-4 max-w-sm text-sm text-[#9a9ba1]">
-              {site.slogan ||
-                "Şırnak'ta profesyonel tesisat ve elektrik hizmetleri. 7/24 acil servis."}
+              {get("footer", "description", "") || site.slogan}
             </p>
             <div className="flex gap-3">
               {socialLinks.length > 0
@@ -131,8 +131,8 @@ export default function Footer() {
         </div>
 
         <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-white/5 pt-8 text-xs text-[#9a9ba1] sm:flex-row">
-          <p>&copy; {new Date().getFullYear()} Çözüm Noktası Tesisat & Elektrik. Tüm hakları saklıdır.</p>
-          <p>Şırnak, Türkiye</p>
+          <p>&copy; {new Date().getFullYear()} {site.name}. Tüm hakları saklıdır.</p>
+          {site.address && <p>{site.address}</p>}
         </div>
       </div>
     </footer>

@@ -91,7 +91,7 @@ export default function TestimonialsTab({ data, loadData, showMessage }: Testimo
           />
         ) : (
           <>
-            <div className="px-5 pt-4">
+            <div className="px-4 sm:px-5 pt-4">
               <FilterTabs<Filter>
                 value={filter}
                 onChange={setFilter}
@@ -146,7 +146,7 @@ export default function TestimonialsTab({ data, loadData, showMessage }: Testimo
                       <div className="flex items-center gap-1 shrink-0">
                         <button
                           onClick={() => toggleApproval(t)}
-                          className={`inline-flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-medium transition-colors ${
+                          className={`inline-flex items-center gap-1.5 h-9 sm:h-8 px-3 rounded-xl sm:rounded-lg text-xs font-medium transition-colors ${
                             t.approved
                               ? "text-warning-600 bg-warning-50 hover:bg-warning-100"
                               : "text-brand-700 bg-brand-50 hover:bg-brand-100"

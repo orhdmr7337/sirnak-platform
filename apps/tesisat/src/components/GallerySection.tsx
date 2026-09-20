@@ -16,14 +16,6 @@ interface GalleryMedia {
   category?: string;
 }
 
-const FALLBACK_GALLERY: GalleryMedia[] = [
-  { id: "1", title: "Su Kaçağı Tespiti", image_url: "https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80&fm=webp", type: "image", category: "gallery" },
-  { id: "2", title: "Petek Temizliği", image_url: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?w=600&q=80&fm=webp", type: "image", category: "gallery" },
-  { id: "3", title: "Kombi Bakımı", image_url: "https://images.unsplash.com/photo-1585704032915-c3400ca199e7?w=600&q=80&fm=webp", type: "image", category: "gallery" },
-  { id: "4", title: "Elektrik Arıza", image_url: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&q=80&fm=webp", type: "image", category: "gallery" },
-  { id: "5", title: "Tıkanıklık Açma", image_url: "https://images.unsplash.com/photo-1607472586893-edb57bdc0e39?w=600&q=80&fm=webp", type: "image", category: "gallery" },
-  { id: "6", title: "Su Tesisatı", image_url: "https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=600&q=80&fm=webp", type: "image", category: "gallery" },
-];
 
 export default function GallerySection() {
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -40,12 +32,12 @@ export default function GallerySection() {
         .map((g) => ({
           id: g.id,
           title: g.title,
-          image_url: g.image_url,
+          image_url: g.image_url ?? undefined,
           video_url: (g as any).video_url,
           type: (g as any).video_url ? "video" as const : "image" as const,
           category: g.category,
         }))
-    : FALLBACK_GALLERY;
+    : [];
 
   const open = (i: number) => setSelectedIndex(i);
   const close = () => setSelectedIndex(null);
@@ -55,6 +47,8 @@ export default function GallerySection() {
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
 
   const selectedItem = selectedIndex !== null ? items[selectedIndex] : null;
+
+  if (items.length === 0) return null;
 
   return (
     <section id="galeri" className="sc-section">
@@ -90,14 +84,24 @@ export default function GallerySection() {
               className="group relative aspect-square overflow-hidden rounded-2xl"
             >
               {/* Thumbnail */}
-              <Image
-                src={item.image_url || `https://images.unsplash.com/photo-1621905251189-08b45d6a269e?w=600&q=80&fm=webp`}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                loading="lazy"
-              />
+              {item.image_url ? (
+                <Image
+                  src={item.image_url}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 33vw"
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  loading="lazy"
+                />
+              ) : (
+                <video
+                  src={item.video_url}
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
 
               {/* Video play icon */}
               {item.type === "video" && (

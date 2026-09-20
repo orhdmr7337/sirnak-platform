@@ -55,7 +55,7 @@ export function Header() {
             className="text-white font-semibold text-lg hidden sm:block"
             style={{ fontFamily: "Georgia, serif" }}
           >
-            {site?.name?.split(" ").slice(0, 2).join(" ") || "Doğal Dokunuş"}
+            {site?.name?.split(" ").slice(0, 2).join(" ")}
           </span>
         </button>
 

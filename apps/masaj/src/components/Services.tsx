@@ -16,21 +16,15 @@ const ICON_MAP: Record<string, React.ElementType> = {
   default: Sparkles,
 };
 
-const FALLBACK_SERVICES = [
-  { id: "1", title: "Klasik Masaj", slug: "klasik-masaj", description: "Vücutteki kas gerginliğini gideren, kan dolaşımını hızlandıran geleneksel masaj tekniği.", icon: "sparkles", price_info: "200₺'den başlayan fiyatlarla" },
-  { id: "2", title: "Derin Doku Masajı", slug: "derin-doku", description: "Derin kas tabakalarına etki eden, kronik ağrıları hafifleten yoğun masaj.", icon: "zap", price_info: "300₺'den başlayan fiyatlarla" },
-  { id: "3", title: "Aromaterapi Masajı", slug: "aromaterapi", description: "Doğal yağlarla yapılan, hem bedeni hem zihni rahatlatan masaj.", icon: "flower", price_info: "280₺'den başlayan fiyatlarla" },
-  { id: "4", title: "Sıcak Taş Masajı", slug: "sicak-tas", description: "Isıtılmış volkanik taşlarla yapılan, kas derinliklerine etki eden masaj.", icon: "wind", price_info: "350₺'den başlayan fiyatlarla" },
-  { id: "5", title: "Medikal Masaj", slug: "medikal", description: "Tıbbi gerekliliklere yönelik, rehabilitasyon amaçlı uzman masajı.", icon: "droplets", price_info: "Fiyat için arayın" },
-  { id: "6", title: "Masaj Paketi", slug: "paket", description: "Kapsamlı masaj deneyimi paketleri ile tam gün rahatlama.", icon: "heart", price_info: "Özel fiyatlar" },
-];
 
 export function Services() {
   const services = useServices();
-  const items = services.length > 0 ? services : FALLBACK_SERVICES;
+  const items = services;
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
   const { ref: gridRef, opacity: gridOpacity, y: gridY } = useParallax(30);
+
+  if (items.length === 0) return null;
 
   return (
     <section id="hizmetler" className="py-20 md:py-28 bg-gradient-to-b from-[#0a0f0a] via-[#0d140d] to-[#0a0f0a]">

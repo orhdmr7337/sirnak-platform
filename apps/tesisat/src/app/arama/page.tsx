@@ -1,10 +1,11 @@
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { searchSite, highlightMatch, getSiteBySlug, getSiteData, SiteProvider } from "@sirnak/shared";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
-  title: "Arama Sonuçları | Çözüm Noktası Tesisat",
+  title: "Arama Sonuçları",
   description: "Şırnak tesisat hizmetleri, blog yazıları ve bölgelerinde arama yapın.",
 };
 
@@ -18,6 +19,7 @@ export default async function AramaPage({ searchParams }: PageProps) {
 
   const site = await getSiteBySlug("tesisat");
   const data = await getSiteData("tesisat");
+  if (!data) notFound();
   const results = query.length >= 2 && site ? await searchSite(site.id, query, { limit: 30 }) : [];
 
   const groupedResults = results.reduce<Record<string, typeof results>>((acc, r) => {

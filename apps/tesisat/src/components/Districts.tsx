@@ -4,24 +4,18 @@ import { motion } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useDistricts, useSiteContent } from "@sirnak/shared";
 
-const FALLBACK_DISTRICTS = [
-  { id: "1", name: "Şırnak Merkez", slug: "merkez", region: "Şırnak" },
-  { id: "2", name: "Cizre", slug: "cizre", region: "Şırnak" },
-  { id: "3", name: "İdil", slug: "idil", region: "Şırnak" },
-  { id: "4", name: "Silopi", slug: "silopi", region: "Şırnak" },
-  { id: "5", name: "Beytüşşebap", slug: "beytussebap", region: "Şırnak" },
-  { id: "6", name: "Uludere", slug: "uludere", region: "Şırnak" },
-];
 
 export default function Districts() {
   const districts = useDistricts();
   const { get } = useSiteContent();
-  const items = districts.length > 0 ? districts : FALLBACK_DISTRICTS;
+  const items = districts;
 
   const title = get("districts", "title", "Hizmet Bölgelerimiz");
   const subtitle = get("districts", "subtitle", "Şırnak ve tüm ilçelerinde hizmetinizdeyiz");
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section className="sc-section">

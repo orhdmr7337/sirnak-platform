@@ -9,10 +9,10 @@ import { ReactNode } from "react";
    ============================================================ */
 
 export const inputClass =
-  "h-10 w-full px-3 bg-surface-50 border border-surface-200 rounded-lg text-sm text-surface-900 placeholder:text-surface-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 hover:border-surface-300 transition-all duration-200";
+  "h-12 sm:h-10 w-full px-3.5 sm:px-3 bg-surface-50 border border-surface-200 rounded-xl sm:rounded-lg text-sm text-surface-900 placeholder:text-surface-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 hover:border-surface-300 transition-all duration-200";
 
 export const textareaClass =
-  "w-full px-3 py-2.5 bg-surface-50 border border-surface-200 rounded-lg text-sm text-surface-900 placeholder:text-surface-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 hover:border-surface-300 transition-all duration-200 resize-y";
+  "w-full px-3.5 sm:px-3 py-2.5 bg-surface-50 border border-surface-200 rounded-xl sm:rounded-lg text-sm text-surface-900 placeholder:text-surface-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 hover:border-surface-300 transition-all duration-200 resize-y";
 
 export const labelClass = "block text-xs font-medium text-surface-500 mb-1.5";
 
@@ -29,7 +29,7 @@ interface SectionProps {
 export function Section({ icon, title, subtitle, actions, children }: SectionProps) {
   return (
     <section className="bg-white rounded-2xl border border-surface-200/80 shadow-xs overflow-hidden">
-      <div className="px-5 py-4 border-b border-surface-100 flex flex-wrap items-center justify-between gap-3">
+      <div className="px-4 sm:px-5 py-3.5 sm:py-4 border-b border-surface-100 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
           {icon && (
             <div className="w-9 h-9 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0">
@@ -41,7 +41,7 @@ export function Section({ icon, title, subtitle, actions, children }: SectionPro
             {subtitle && <p className="text-xs text-surface-400 mt-0.5">{subtitle}</p>}
           </div>
         </div>
-        {actions && <div className="flex items-center gap-2 shrink-0">{actions}</div>}
+        {actions && <div className="flex flex-wrap items-center gap-2 max-w-full">{actions}</div>}
       </div>
       {children}
     </section>
@@ -65,7 +65,7 @@ export function BtnPrimary({ children, onClick, disabled, type = "button", class
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-1.5 h-9 px-4 bg-brand-600 text-white rounded-lg text-xs font-semibold hover:bg-brand-700 disabled:opacity-60 transition-all active:scale-[0.98] shadow-sm ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 h-12 sm:h-9 px-5 sm:px-4 bg-brand-600 text-white rounded-xl sm:rounded-lg text-xs font-semibold hover:bg-brand-700 disabled:opacity-60 transition-all active:scale-[0.98] shadow-sm ${className}`}
     >
       {children}
     </button>
@@ -78,7 +78,7 @@ export function BtnSecondary({ children, onClick, disabled, type = "button", cla
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-1.5 h-9 px-4 bg-white text-surface-700 border border-surface-200 rounded-lg text-xs font-medium hover:bg-surface-50 hover:border-surface-300 disabled:opacity-60 transition-all active:scale-[0.98] ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 h-12 sm:h-9 px-5 sm:px-4 bg-white text-surface-700 border border-surface-200 rounded-xl sm:rounded-lg text-xs font-medium hover:bg-surface-50 hover:border-surface-300 disabled:opacity-60 transition-all active:scale-[0.98] ${className}`}
     >
       {children}
     </button>
@@ -91,7 +91,7 @@ export function BtnDanger({ children, onClick, disabled, type = "button", classN
       type={type}
       onClick={onClick}
       disabled={disabled}
-      className={`inline-flex items-center justify-center gap-1.5 h-9 px-4 bg-danger-500 text-white rounded-lg text-xs font-semibold hover:bg-danger-600 disabled:opacity-60 transition-all active:scale-[0.98] shadow-sm ${className}`}
+      className={`inline-flex items-center justify-center gap-1.5 h-12 sm:h-9 px-5 sm:px-4 bg-danger-500 text-white rounded-xl sm:rounded-lg text-xs font-semibold hover:bg-danger-600 disabled:opacity-60 transition-all active:scale-[0.98] shadow-sm ${className}`}
     >
       {children}
     </button>
@@ -102,8 +102,8 @@ export function BtnDanger({ children, onClick, disabled, type = "button", classN
 
 export function IconBtnEdit({ onClick, title = "Düzenle" }: { onClick: () => void; title?: string }) {
   return (
-    <button onClick={onClick} title={title} className="p-2 text-surface-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors">
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <button onClick={onClick} title={title} className="p-2.5 sm:p-2 text-surface-400 hover:text-brand-600 hover:bg-brand-50 rounded-xl sm:rounded-lg transition-colors">
+      <svg className="w-[18px] h-[18px] sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487z" />
       </svg>
     </button>
@@ -112,8 +112,8 @@ export function IconBtnEdit({ onClick, title = "Düzenle" }: { onClick: () => vo
 
 export function IconBtnDelete({ onClick, title = "Sil" }: { onClick: () => void; title?: string }) {
   return (
-    <button onClick={onClick} title={title} className="p-2 text-surface-400 hover:text-danger-500 hover:bg-danger-50 rounded-lg transition-colors">
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
+    <button onClick={onClick} title={title} className="p-2.5 sm:p-2 text-surface-400 hover:text-danger-500 hover:bg-danger-50 rounded-xl sm:rounded-lg transition-colors">
+      <svg className="w-[18px] h-[18px] sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
       </svg>
     </button>
@@ -122,8 +122,8 @@ export function IconBtnDelete({ onClick, title = "Sil" }: { onClick: () => void;
 
 export function IconBtnUp({ onClick, disabled }: { onClick: () => void; disabled?: boolean }) {
   return (
-    <button onClick={onClick} disabled={disabled} title="Yukarı taşı" className="p-2 text-surface-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors disabled:opacity-30 disabled:pointer-events-none">
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+    <button onClick={onClick} disabled={disabled} title="Yukarı taşı" className="p-2.5 sm:p-2 text-surface-400 hover:text-brand-600 hover:bg-brand-50 rounded-xl sm:rounded-lg transition-colors disabled:opacity-30 disabled:pointer-events-none">
+      <svg className="w-[18px] h-[18px] sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
       </svg>
     </button>
@@ -132,8 +132,8 @@ export function IconBtnUp({ onClick, disabled }: { onClick: () => void; disabled
 
 export function IconBtnDown({ onClick, disabled }: { onClick: () => void; disabled?: boolean }) {
   return (
-    <button onClick={onClick} disabled={disabled} title="Aşağı taşı" className="p-2 text-surface-400 hover:text-brand-600 hover:bg-brand-50 rounded-lg transition-colors disabled:opacity-30 disabled:pointer-events-none">
-      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+    <button onClick={onClick} disabled={disabled} title="Aşağı taşı" className="p-2.5 sm:p-2 text-surface-400 hover:text-brand-600 hover:bg-brand-50 rounded-xl sm:rounded-lg transition-colors disabled:opacity-30 disabled:pointer-events-none">
+      <svg className="w-[18px] h-[18px] sm:w-4 sm:h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
       </svg>
     </button>
@@ -173,22 +173,24 @@ export function Modal({ open, title, onClose, children, footer, maxWidth = "max-
   return (
     <div className="fixed inset-0 z-50">
       <div className="absolute inset-0 bg-surface-950/40 backdrop-blur-sm animate-fadeIn" onClick={onClose} />
-      <div className="absolute inset-0 flex items-center justify-center p-4">
-        <div className={`bg-white rounded-2xl shadow-xl border border-surface-200 w-full ${maxWidth} animate-scaleIn`}>
-          <div className="px-5 py-4 border-b border-surface-100 flex items-center justify-between">
-            <h3 className="text-sm font-semibold text-surface-900">{title}</h3>
+      <div className="absolute inset-0 flex items-end sm:items-center justify-center p-0 sm:p-4">
+        <div className={`bg-white sm:rounded-2xl rounded-t-2xl shadow-xl border border-surface-200 w-full sm:${maxWidth} max-h-[92dvh] animate-slideUp sm:animate-scaleIn flex flex-col`}>
+          <div className="sm:hidden mx-auto mt-2 h-1 w-10 rounded-full bg-surface-300 shrink-0" />
+          <div className="px-5 py-3 sm:py-4 border-b border-surface-100 flex items-center justify-between shrink-0">
+            <h3 className="text-base sm:text-sm font-semibold text-surface-900">{title}</h3>
             <button
               onClick={onClose}
-              className="p-1.5 text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-lg transition-colors"
+              aria-label="Kapat"
+              className="w-11 h-11 sm:w-auto sm:h-auto sm:p-2 flex items-center justify-center text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-xl sm:rounded-lg transition-colors"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
-          <div className="p-5 space-y-4 max-h-[65vh] overflow-y-auto">{children}</div>
+          <div className="p-5 space-y-4 overflow-y-auto overscroll-contain flex-1">{children}</div>
           {footer && (
-            <div className="px-5 py-3.5 border-t border-surface-100 flex items-center justify-end gap-2 bg-surface-50/50 rounded-b-2xl">
+            <div className="px-5 pt-3.5 pb-[calc(0.875rem+env(safe-area-inset-bottom))] sm:pb-3.5 border-t border-surface-100 flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-2 bg-surface-50/50 sm:rounded-b-2xl shrink-0 [&>button]:w-full sm:[&>button]:w-auto">
               {footer}
             </div>
           )}
@@ -214,13 +216,13 @@ export function PublishedToggle({
       className="flex items-center gap-2.5 group"
     >
       <span
-        className={`relative w-9 h-5 rounded-full transition-colors duration-200 ${
+        className={`relative w-11 sm:w-9 h-6 sm:h-5 rounded-full transition-colors duration-200 ${
           checked ? "bg-brand-500" : "bg-surface-300"
         }`}
       >
         <span
-          className={`absolute top-0.5 w-4 h-4 bg-white rounded-full shadow transition-all duration-200 ${
-            checked ? "left-[18px]" : "left-0.5"
+          className={`absolute top-0.5 w-5 sm:w-4 h-5 sm:h-4 bg-white rounded-full shadow transition-all duration-200 ${
+            checked ? "left-[22px] sm:left-[18px]" : "left-0.5"
           }`}
         />
       </span>
@@ -240,7 +242,7 @@ interface EmptyProps {
 
 export function Empty({ icon, title, description, action }: EmptyProps) {
   return (
-    <div className="py-14 text-center">
+    <div className="py-10 sm:py-14 text-center px-4">
       {icon && (
         <div className="w-12 h-12 mx-auto rounded-2xl bg-surface-100 text-surface-400 flex items-center justify-center mb-3">
           {icon}
@@ -263,12 +265,12 @@ interface FilterTabsProps<T extends string> {
 
 export function FilterTabs<T extends string>({ value, onChange, options }: FilterTabsProps<T>) {
   return (
-    <div className="flex items-center gap-1 bg-surface-100 rounded-lg p-1 w-fit">
+    <div className="flex items-center gap-1 bg-surface-100 rounded-xl sm:rounded-lg p-1 w-full sm:w-fit overflow-x-auto scrollbar-hide">
       {options.map((o) => (
         <button
           key={o.id}
           onClick={() => onChange(o.id)}
-          className={`px-3.5 py-1.5 rounded-md text-xs font-medium transition-all ${
+          className={`px-4 h-10 sm:h-auto sm:py-1.5 rounded-lg sm:rounded-md text-xs font-medium transition-all whitespace-nowrap flex-shrink-0 ${
             value === o.id ? "bg-white text-surface-900 shadow-sm" : "text-surface-500 hover:text-surface-700"
           }`}
         >

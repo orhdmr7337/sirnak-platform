@@ -96,9 +96,9 @@ export default function LoginClient() {
       </div>
 
       {/* Right Panel - Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-5 sm:p-8">
         <div className={`w-full max-w-sm transition-all duration-700 delay-200 ${mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <div className="lg:hidden flex items-center gap-3 mb-12">
+          <div className="lg:hidden flex items-center gap-3 mb-10">
             <div className="w-11 h-11 rounded-xl bg-brand-600 flex items-center justify-center">
               <span className="text-base font-bold text-white">Ş</span>
             </div>

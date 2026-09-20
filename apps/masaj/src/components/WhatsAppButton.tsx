@@ -1,15 +1,13 @@
 "use client";
 
-import { useSiteConfig } from "@sirnak/shared";
+import { useSiteConfig, useSiteContent, whatsappHref } from "@sirnak/shared";
 
 export function WhatsAppButton() {
   const site = useSiteConfig();
 
-  const phone = site?.whatsapp || site?.phone;
-  if (!phone) return null;
-
-  const cleanPhone = phone.replace(/[^0-9]/g, "");
-  const url = `https://wa.me/${cleanPhone}?text=${encodeURIComponent("Merhaba, randevu almak istiyorum.")}`;
+  const { get } = useSiteContent();
+  const url = whatsappHref(site, get("cta", "whatsapp_message", ""));
+  if (!url) return null;
 
   return (
     <a

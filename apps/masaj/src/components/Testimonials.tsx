@@ -5,18 +5,14 @@ import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useTestimonials } from "@sirnak/shared";
 import { Star, Quote } from "lucide-react";
 
-const FALLBACK_TESTIMONIALS = [
-  { id: "1", customer_name: "Ayşe Y.", district: "Şırnak Merkez", rating: 5, content: "Harika bir deneyimdi. Masörler gerçekten uzman ve alanlarında çok başarılılar. Kesinlikle tekrar geleceğim." },
-  { id: "2", customer_name: "Mehmet K.", district: "Cizre", rating: 5, content: "Uzun süredir sırt ağrısı çekiyordum. Derin doku masajı sayesinde çok rahatladım. Çok teşekkür ederim." },
-  { id: "3", customer_name: "Fatma A.", district: "Silopi", rating: 4, content: "Ortam çok temiz ve rahat. Aromaterapi masajı muhteşemdi. Herkese tavsiye ederim." },
-  { id: "4", customer_name: "Ali R.", district: "Şırnak Merkez", rating: 5, content: "Profesyonel hizmet ve samimi bir ortam. Masajdan sonra kendimi yeniden doğmuş gibi hissettim." },
-];
 
 export function Testimonials() {
   const testimonials = useTestimonials();
-  const items = testimonials.length > 0 ? testimonials : FALLBACK_TESTIMONIALS;
+  const items = testimonials;
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section id="yorumlar" className="py-20 md:py-28">

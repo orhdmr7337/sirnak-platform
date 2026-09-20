@@ -1,10 +1,11 @@
 "use client";
 
-import { useSiteConfig, useServices, useSocialLinks } from "@sirnak/shared";
+import { useSiteConfig, useSiteContent, useServices, useSocialLinks } from "@sirnak/shared";
 import { Phone, Mail, MapPin, Clock, Heart } from "lucide-react";
 
 export function Footer() {
   const site = useSiteConfig();
+  const { get } = useSiteContent();
   const services = useServices();
   const socialLinks = useSocialLinks();
 
@@ -21,15 +22,15 @@ export function Footer() {
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#6b8f71] to-[#4a6b4f] flex items-center justify-center">
                 <span className="text-white font-bold text-lg" style={{ fontFamily: "Georgia, serif" }}>
-                  {site?.name?.charAt(0) || "D"}
+                  {site?.name?.charAt(0)}
                 </span>
               </div>
               <span className="text-white font-semibold" style={{ fontFamily: "Georgia, serif" }}>
-                {site?.name || "Doğal Dokunuş"}
+                {site?.name}
               </span>
             </div>
             <p className="text-gray-500 text-sm leading-relaxed">
-              {site?.tagline || "Doğal ürünlerle profesyonel masaj hizmeti. Sağlığınız ve rahatlığınız bizim için önemli."}
+              {get("footer", "description", "") || site?.tagline}
             </p>
           </div>
 
@@ -81,10 +82,12 @@ export function Footer() {
                   <span>{site.address}</span>
                 </li>
               )}
+              {site?.working_hours && (
               <li className="flex items-center gap-2 text-gray-500 text-sm">
                 <Clock className="w-4 h-4 text-[#6b8f71]" />
-                <span>{site?.working_hours || "Her gün 09:00 - 21:00"}</span>
+                <span>{site.working_hours}</span>
               </li>
+              )}
             </ul>
           </div>
 
@@ -125,7 +128,7 @@ export function Footer() {
       <div className="border-t border-[#2a3a2a]/30">
         <div className="max-w-7xl mx-auto px-6 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
           <p className="text-gray-600 text-xs">
-            &copy; {new Date().getFullYear()} {site?.name || "Doğal Dokunuş Masaj"}. Tüm hakları saklıdır.
+            &copy; {new Date().getFullYear()} {site?.name}. Tüm hakları saklıdır.
           </p>
           <p className="text-gray-600 text-xs flex items-center gap-1">
             Made with <Heart className="w-3 h-3 text-[#6b8f71]" /> in Şırnak

@@ -5,13 +5,6 @@ import { useServiceFinderOptions, useServices } from "@sirnak/shared";
 import { useInView } from "@/hooks/useInView";
 import { Search, ChevronDown } from "lucide-react";
 
-const FALLBACK_OPTIONS = [
-  { id: "1", need_label: "Sırt ağrım var", recommended_service_slug: "derin-doku" },
-  { id: "2", need_label: "Rahatlamak istiyorum", recommended_service_slug: "klasik-masaj" },
-  { id: "3", need_label: "Stresimi atmak istiyorum", recommended_service_slug: "aromaterapi" },
-  { id: "4", need_label: "Uyku problemi yaşıyorum", recommended_service_slug: "aromaterapi" },
-  { id: "5", need_label: "Spor sonrası iyileşme", recommended_service_slug: "derin-doku" },
-];
 
 export function ServiceFinder() {
   const options = useServiceFinderOptions();
@@ -20,7 +13,7 @@ export function ServiceFinder() {
   const [selected, setSelected] = useState("");
   const [result, setResult] = useState("");
 
-  const items = options.length > 0 ? options : FALLBACK_OPTIONS;
+  const items = options;
 
   const handleChange = (slug: string) => {
     setSelected(slug);
@@ -35,6 +28,8 @@ export function ServiceFinder() {
       setResult("Size uygun masajı bulmak için bizi arayın.");
     }
   };
+
+  if (items.length === 0) return null;
 
   return (
     <section className="py-16 relative">

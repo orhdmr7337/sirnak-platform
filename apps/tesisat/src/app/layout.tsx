@@ -2,7 +2,14 @@ import type { Metadata } from "next";
 import { Instrument_Sans } from "next/font/google";
 import "./globals.css";
 import SmoothScrollProvider from "@/components/SmoothScrollProvider";
-import { GoogleAnalytics, LiveChat, CookieConsent, PWAInstall, OfflineIndicator } from "@sirnak/shared";
+import {
+  GoogleAnalytics,
+  LiveChat,
+  CookieConsent,
+  PWAInstall,
+  OfflineIndicator,
+} from "@sirnak/shared";
+import { getSiteData, buildJsonLd, buildSiteMetadata } from "@sirnak/shared/src/server";
 
 const instrumentSans = Instrument_Sans({
   subsets: ["latin"],
@@ -10,70 +17,58 @@ const instrumentSans = Instrument_Sans({
   variable: "--font-instrument-sans",
 });
 
-export const metadata: Metadata = {
-  title: "Çözüm Noktası Tesisat & Elektrik | Şırnak",
-  description:
-    "Şırnak'ta profesyonel tesisat ve elektrik hizmetleri. Su kaçağı tespiti, petek temizliği, kombi bakımı, elektrik arıza giderme. 7/24 acil servis.",
-  keywords:
-    "tesisat, elektrik, su kaçağı, petek temizliği, kombi, Şırnak, tesisatçı, elektrikçi",
-  openGraph: {
-    title: "Çözüm Noktası Tesisat & Elektrik | Şırnak",
-    description:
-      "Şırnak'ta profesyonel tesisat ve elektrik hizmetleri. 7/24 acil servis.",
-    type: "website",
-    locale: "tr_TR",
-  },
-};
+export const revalidate = 300;
 
-const schemaData = {
-  "@context": "https://schema.org",
-  "@type": "HomeAndConstructionBusiness",
-  name: "Çözüm Noktası Tesisat & Elektrik",
-  description:
-    "Şırnak'ta profesyonel tesisat ve elektrik hizmetleri.",
-  telephone: "+90-500-123-4567",
-  address: {
-    "@type": "PostalAddress",
-    addressLocality: "Şırnak",
-    addressCountry: "TR",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: 37.52,
-    longitude: 42.49,
-  },
-  url: "https://tesisat.sirnak platform.com",
-  priceRange: "$$",
-  openingHours: "Mo-Su 00:00-23:59",
-  areaServed: ["Şırnak", "Cizre", "İdil", "Silopi", "Beytüşşebap"],
-};
+// Başlık, açıklama, anahtar kelimeler, OG görseli, alan adı: hepsi `sites` tablosundan.
+export async function generateMetadata(): Promise<Metadata> {
+  const data = await getSiteData("tesisat");
+  if (!data) return {};
+  return buildSiteMetadata(data.site) as Metadata;
+}
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const data = await getSiteData("tesisat");
+  const site = data?.site;
+  const jsonLd = data
+    ? buildJsonLd({
+        site: data.site,
+        schemaType: "HomeAndConstructionBusiness",
+        services: data.services,
+        testimonials: data.testimonials,
+        faqs: data.faqs,
+        districts: data.districts,
+        socialLinks: data.socialLinks,
+      })
+    : [];
+
   return (
     <html lang="tr" className={`${instrumentSans.variable} relative overflow-x-hidden`}>
       <head>
         <GoogleAnalytics />
-        <link rel="manifest" href="/manifest.json" />
-        <meta name="theme-color" content="#f97316" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        {site?.favicon_url && <link rel="icon" href={site.favicon_url} />}
+        {site?.primary_color && <meta name="theme-color" content={site.primary_color} />}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
-        <link rel="preconnect" href="https://images.unsplash.com" />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        />
+        {jsonLd.map((schema, i) => (
+          <script
+            key={i}
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        ))}
       </head>
       <body className="relative bg-[#050505] text-[#f4f2ef] antialiased font-sans">
         <OfflineIndicator />
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
         <LiveChat />
         <CookieConsent />
-        <PWAInstall appName="Çözüm Noktası" themeColor="#f97316" />
+        {site && <PWAInstall appName={site.name} themeColor={site.primary_color} />}
         <script
           dangerouslySetInnerHTML={{
             __html: `if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('/sw.js')})}`,

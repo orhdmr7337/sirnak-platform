@@ -1,50 +1,28 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { getSiteBySlug, getAllServiceSlugs, getDistricts, getBlogPosts, siteBaseUrl } from "@sirnak/shared";
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://masaj.sirnakplatform.com";
+export const revalidate = 3600;
 
+// Tüm adresler veritabanındaki hizmet / ilçe / blog kayıtlarından üretilir.
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const site = await getSiteBySlug("masaj");
+  const base = siteBaseUrl(site);
+  if (!site || !base) return [];
+
+  const [serviceSlugs, districts, posts] = await Promise.all([
+    getAllServiceSlugs(site.id),
+    getDistricts(),
+    getBlogPosts(site.id),
+  ]);
+
+  const now = new Date();
   return [
-    {
-      url: baseUrl,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
-    },
-    {
-      url: `${baseUrl}#hizmetler`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
-      url: `${baseUrl}#tarama`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    },
-    {
-      url: `${baseUrl}#hakkimizda`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
-    {
-      url: `${baseUrl}#yorumlar`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.6,
-    },
-    {
-      url: `${baseUrl}#sss`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    },
-    {
-      url: `${baseUrl}#iletisim`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
-    },
+    { url: base, lastModified: now, changeFrequency: "weekly", priority: 1 },
+    { url: `${base}/hizmetler`, lastModified: now, changeFrequency: "weekly", priority: 0.9 },
+    ...serviceSlugs.map(({ slug }) => ({ url: `${base}/hizmetler/${slug}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.8 })),
+    { url: `${base}/ilceler`, lastModified: now, changeFrequency: "monthly", priority: 0.7 },
+    ...districts.map((d) => ({ url: `${base}/ilceler/${d.slug}`, lastModified: now, changeFrequency: "monthly" as const, priority: 0.6 })),
+    { url: `${base}/blog`, lastModified: now, changeFrequency: "weekly", priority: 0.6 },
+    ...posts.map((p) => ({ url: `${base}/blog/${p.slug}`, lastModified: new Date(p.updated_at), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 }

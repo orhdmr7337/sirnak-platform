@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 
 interface SplashScreenProps {
   onComplete: () => void;
+  title?: string;
+  subtitle?: string;
 }
 
 const PARTICLE_CONFIG = [
@@ -18,7 +20,8 @@ const PARTICLE_CONFIG = [
   { x: 35, y: 70, endY: 30, duration: 4.0, delay: 0.7 },
 ];
 
-export default function SplashScreen({ onComplete }: SplashScreenProps) {
+export default function SplashScreen({ onComplete, title = "", subtitle = "" }: SplashScreenProps) {
+  const [first, ...rest] = title.split(" ");
   const [phase, setPhase] = useState<"logo" | "text" | "exit">("logo");
 
   useEffect(() => {
@@ -92,10 +95,10 @@ export default function SplashScreen({ onComplete }: SplashScreenProps) {
                 className="text-4xl md:text-5xl font-bold text-white mb-2"
                 style={{ fontFamily: "Georgia, serif" }}
               >
-                Doğal <span className="text-[#c9a96e]">Dokunuş</span>
+                {first}{rest.length > 0 && <> <span className="text-[#c9a96e]">{rest.join(" ")}</span></>}
               </h1>
               <p className="text-[#6b8f71] text-lg tracking-widest uppercase">
-                Masaj & Wellness
+                {subtitle}
               </p>
             </motion.div>
 

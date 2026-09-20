@@ -8,9 +8,9 @@ import { MapPin } from "lucide-react";
 export function Districts() {
   const districts = useDistricts();
 
-  if (districts.length === 0) return null;
-
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (districts.length === 0) return null;
 
   return (
     <section className="py-16">

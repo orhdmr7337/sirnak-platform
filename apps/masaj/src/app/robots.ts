@@ -1,19 +1,12 @@
-import { MetadataRoute } from "next";
+import type { MetadataRoute } from "next";
+import { getSiteBySlug, siteBaseUrl } from "@sirnak/shared";
 
-export default function robots(): MetadataRoute.Robots {
+export const revalidate = 3600;
+
+export default async function robots(): Promise<MetadataRoute.Robots> {
+  const base = siteBaseUrl(await getSiteBySlug("masaj"));
   return {
-    rules: [
-      {
-        userAgent: "*",
-        allow: "/",
-        disallow: ["/api/", "/admin/", "/_next/"],
-      },
-      {
-        userAgent: "Googlebot",
-        allow: "/",
-        disallow: ["/api/"],
-      },
-    ],
-    sitemap: "https://masaj.sirnakplatform.com/sitemap.xml",
+    rules: [{ userAgent: "*", allow: "/", disallow: ["/api/", "/_next/"] }],
+    sitemap: base ? `${base}/sitemap.xml` : undefined,
   };
 }

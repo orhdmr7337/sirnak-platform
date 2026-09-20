@@ -5,24 +5,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useScrollReveal } from "@/hooks/useScrollAnimation";
 import { useFaqs, useSiteContent } from "@sirnak/shared";
 
-const FALLBACK_FAQS = [
-  { id: "1", question: "Su kaçağı tespiti nasıl yapılıyor?", answer: "Termal kamera ve akustik dinleme cihazları ile duvarları kırmadan su kaçağını tespit ediyoruz. Bu yöntem %99 doğru sonuç verir ve evinizi tahrip etmez. Kaçağın konumunu tam belirledikten sonra, gerekli tamiratleri yapıyoruz." },
-  { id: "2", question: "Garanti veriyor musunuz?", answer: "Evet, tüm işçilik hizmetlerimiz 1-2 yıl arasında garantili. Yapılan işten memnun değilseniz, geri gelip ücretsiz olarak düzeltiyoruz. Yedek parçaların garantisi ise sağlayıcının belirlendiği süredir geçerli." },
-  { id: "3", question: "Acil durumlarda ne kadar sürede geliyorsunuz?", answer: "7/24 hizmet vermekteyiz. Patlayan boru, su taşması gibi acil durumlarda, çağrıdan itibaren maksimum 30 dakika içinde adresinizdeyiz. Gece çağrıları için ek ücret olmaz." },
-  { id: "4", question: "Hangi bölgelere hizmet veriyorsunuz?", answer: "Şırnak merkez ve tüm ilçelere (Cizre, İdil, Silopi, Beytüşşebap vb.) hizmet veriyoruz. Belirttiğiniz adrese giderek hizmet sunuyoruz. Sınır dışındaki bölgeler için özel tarifeler uygulanır." },
-  { id: "5", question: "Ödeme seçenekleri nelerdir?", answer: "Nakit, kredi kartı (taksit seçeneği ile), banka havale ve EFT ile ödeme yapabilirsiniz. Belirli işler için taksit imkanı vardır. Finansal ürünler için kredi kartı faizi müşteri tarafından ödenir." },
-];
 
 export default function FaqSection() {
   const [openId, setOpenId] = useState<string | null>(null);
   const faqs = useFaqs();
   const { get } = useSiteContent();
 
-  const items = faqs.length > 0 ? faqs : FALLBACK_FAQS;
+  const items = faqs;
   const title = get("faq", "title", "Sıkça Sorulan Sorular");
   const subtitle = get("faq", "subtitle", "Merak ettiklerinizin cevapları");
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
+
+  if (items.length === 0) return null;
 
   return (
     <section id="sss" className="sc-section">

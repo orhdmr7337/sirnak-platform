@@ -62,7 +62,7 @@ export default function InstagramTab({
         title="Instagram Kuyruğu"
         subtitle="Gönderileri burada hazırlayın"
       >
-        <div className="p-5 grid md:grid-cols-[1fr_220px] gap-5">
+        <div className="p-4 sm:p-5 grid md:grid-cols-[1fr_220px] gap-4 sm:gap-5">
           <form onSubmit={queuePost} className="space-y-4">
             <div>
               <div className="flex items-center justify-between">
@@ -148,8 +148,8 @@ export default function InstagramTab({
         title="Yüklenen Görseller"
         subtitle="Galeri & Medya sekmesinden yükledikleriniz"
       >
-        <div className="p-5">
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-3">
+        <div className="p-4 sm:p-5">
+          <div className="grid grid-cols-3 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3">
             {posts.map((post) => (
               <button
                 key={post.id}

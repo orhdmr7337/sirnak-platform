@@ -144,7 +144,7 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
         ) : (
           <div className="divide-y divide-surface-100">
             {data.services.map((service, index) => (
-              <div key={service.id} className="px-5 py-3.5 flex items-center justify-between hover:bg-surface-50/60 transition-colors">
+              <div key={service.id} className="px-4 sm:px-5 py-3 sm:py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 hover:bg-surface-50/60 transition-colors">
                 <div className="flex items-center gap-3 min-w-0">
                   <div className="w-8 h-8 rounded-lg bg-surface-100 flex items-center justify-center shrink-0 text-xs font-semibold text-surface-500">
                     {index + 1}
@@ -160,7 +160,7 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-0.5 shrink-0">
+                <div className="flex items-center justify-end gap-1 sm:gap-0.5 shrink-0 -mb-1 sm:mb-0 pt-1 sm:pt-0 border-t border-surface-100 sm:border-0">
                   <IconBtnUp onClick={() => move(index, -1)} disabled={index === 0} />
                   <IconBtnDown onClick={() => move(index, 1)} disabled={index === data.services.length - 1} />
                   <IconBtnEdit onClick={() => openEdit(service)} />

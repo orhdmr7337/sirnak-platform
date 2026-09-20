@@ -235,7 +235,7 @@ export default function GalleryTab({ data, loadData, showMessage }: GalleryTabPr
           }
         >
           {/* Filtre */}
-          <div className="px-5 pt-4 flex items-center gap-2 flex-wrap">
+          <div className="px-4 sm:px-5 pt-4 flex flex-wrap items-center gap-2">
             <FilterTabs<MediaFilter>
               value={mediaFilter}
               onChange={setMediaFilter}
@@ -252,11 +252,11 @@ export default function GalleryTab({ data, loadData, showMessage }: GalleryTabPr
             )}
           </div>
 
-          <div className="p-5">
+          <div className="p-4 sm:p-5">
             {filteredMedia.length > 0 ? (
               viewMode === "grid" ? (
                 /* GRID GÖRÜNÜM */
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3">
                   {filteredMedia.map((media) => {
                     const isVideo = media.file_type === "video";
                     const isSelected = selectedIds.has(media.id);
@@ -394,9 +394,9 @@ export default function GalleryTab({ data, loadData, showMessage }: GalleryTabPr
             </label>
           }
         >
-          <div className="p-5">
+          <div className="p-4 sm:p-5">
             {galleryItems.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 sm:gap-3">
                 {galleryItems.map((item) => (
                   <div key={item.id} className="relative group rounded-xl overflow-hidden border border-surface-200">
                     <img src={item.image_url ?? "/images/placeholder.svg"} alt={item.title} className="w-full h-32 object-cover" />
