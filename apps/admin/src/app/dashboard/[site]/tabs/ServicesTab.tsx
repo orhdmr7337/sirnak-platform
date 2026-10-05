@@ -230,7 +230,7 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
           <textarea value={form.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={3} className={textareaClass} />
         </div>
         <div>
-          <label className={labelClass}>Sayfa Metni (Google için uzun açıklama)</label>
+          <label className={labelClass}>Sayfa Metni (boş bırakılırsa sitedeki hazır metin kullanılır)</label>
           <textarea
             value={form.content ?? ""}
             onChange={(e) => set("content", e.target.value)}

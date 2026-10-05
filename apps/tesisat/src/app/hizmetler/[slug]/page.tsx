@@ -10,10 +10,11 @@ import {
   siteBaseUrl,
   buildBreadcrumbJsonLd,
 } from "@sirnak/shared";
-import type { Site, Service } from "@sirnak/shared";
+import type { Site, Service, ServiceFaq } from "@sirnak/shared";
 import { notFound } from "next/navigation";
 import { seoCopy, withPhone } from "@/lib/seo-copy";
 import { ServiceContent, serviceFaqJsonLd } from "@/components/ServiceContent";
+import defaultContent from "@/content/service-content.json";
 
 export const revalidate = 300;
 
@@ -89,7 +90,11 @@ export default async function ServiceDetailPage({
     { name: "Hizmetler", path: "/hizmetler" },
     { name: service.title, path: `/hizmetler/${service.slug}` },
   ]);
-  const faqJsonLd = serviceFaqJsonLd(service.faqs);
+  // Admin panelinden yazılan metin varsa o, yoksa koddaki varsayılan metin kullanılır.
+  const fallback = (defaultContent as Record<string, { content: string; faqs: ServiceFaq[] }>)[service.slug];
+  const pageContent = service.content?.trim() ? service.content : fallback?.content;
+  const pageFaqs = service.faqs?.length ? service.faqs : fallback?.faqs ?? [];
+  const faqJsonLd = serviceFaqJsonLd(pageFaqs);
 
   const whatsappUrl = whatsappHref(
     site,
@@ -267,7 +272,7 @@ export default async function ServiceDetailPage({
         </div>
       </section>
 
-      <ServiceContent content={service.content} faqs={service.faqs} />
+      <ServiceContent content={pageContent} faqs={pageFaqs} />
 
       {/* Related Services */}
       {relatedServices.length > 0 && (
