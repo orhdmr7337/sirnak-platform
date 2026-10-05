@@ -35,7 +35,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         schemaType: "HealthAndBeautyBusiness",
         services: data.services,
         testimonials: data.testimonials,
-        faqs: data.faqs,
+        // Genel SSS yalnızca ana sayfada (app/page.tsx) basılır; hizmet sayfalarının kendi SSS'si var.
+        faqs: [],
         districts: data.districts,
         socialLinks: data.socialLinks,
       })

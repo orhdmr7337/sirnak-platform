@@ -181,3 +181,17 @@ export function joinTr(items: string[]): string {
   if (items.length <= 1) return items.join("");
   return `${items.slice(0, -1).join(", ")} ve ${items[items.length - 1]}`;
 }
+
+/** Genel SSS için FAQPage; sayfada tek FAQPage olsun diye yalnızca ana sayfada kullanılır. */
+export function buildFaqJsonLd(faqs: Faq[]) {
+  if (!faqs.length) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({
+      "@type": "Question",
+      name: f.question,
+      acceptedAnswer: { "@type": "Answer", text: f.answer },
+    })),
+  };
+}

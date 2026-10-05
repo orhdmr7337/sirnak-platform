@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getSiteData } from "@sirnak/shared";
+import { getSiteData, buildFaqJsonLd } from "@sirnak/shared";
 import MasajClient from "@/components/MasajClient";
 
 export const revalidate = 300;
@@ -19,5 +19,12 @@ export default async function HomePage() {
     );
   }
 
-  return <MasajClient data={data} />;
+  const faqLd = buildFaqJsonLd(data.faqs);
+
+  return (
+    <>
+      {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
+      <MasajClient data={data} />
+    </>
+  );
 }

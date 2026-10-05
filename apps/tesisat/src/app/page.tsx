@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getSiteData } from "@sirnak/shared";
+import { getSiteData, buildFaqJsonLd } from "@sirnak/shared";
 import { SiteProvider } from "@sirnak/shared";
 import Hero from "@/components/Hero";
 import Header from "@/components/Header";
@@ -35,8 +35,11 @@ export default async function TesisatPage() {
     );
   }
 
+  const faqLd = buildFaqJsonLd(data.faqs);
+
   return (
     <SiteProvider data={data}>
+      {faqLd && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }} />}
       <Header />
       <main>
         <Hero />
