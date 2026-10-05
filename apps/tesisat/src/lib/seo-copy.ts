@@ -10,7 +10,7 @@ export const seoCopy = {
   districtSubtitle: "7/24 Tesisat, Elektrik ve Acil Arıza Hizmeti",
   districtIntro: (district: string, siteName: string, services: string[], hours?: string | null) =>
     [
-      `${district} ve çevresinde tesisat, elektrik ve acil arıza işleriniz için ${siteName} olarak hizmet veriyoruz.` +
+      `${district} ve çevresinde tesisat, elektrik ve acil arıza işleriniz için ${siteName} olarak aracımızla adresinize geliyoruz.` +
         (services.length ? ` ${joinTr(services)} hizmetlerini ${district} genelinde ev ve iş yerlerinde yerinde yapıyoruz.` : ""),
       `${district} içinde su kaçağı, tıkanıklık ya da elektrik arızası gibi bekletilmemesi gereken bir sorununuz varsa bizi arayın veya WhatsApp'tan konum atın, adresinize usta yönlendirelim.` +
         (hours ? ` Çalışma saatlerimiz: ${hours}.` : ""),

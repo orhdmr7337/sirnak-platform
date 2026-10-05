@@ -239,7 +239,7 @@ export default async function DistrictPage({ params }: Props) {
             </h2>
             <p className="text-[#9a9ba1] mb-8 max-w-xl mx-auto">
               Profesyonel masaj hizmetleri için hemen randevu alın.
-              Uzman masörlerimiz sizleri bekliyor.
+              Randevu verdiğiniz saatte adresinize geliyoruz.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               {tel && (

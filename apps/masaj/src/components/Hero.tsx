@@ -14,7 +14,7 @@ export function Hero() {
   const site = useSiteConfig();
   const { get } = useSiteContent();
   const badge = get("hero", "badge", "");
-  // Google için anahtar kelimeli başlık satırı ("Şırnak Masaj Salonu"); H1'in içinde küçük satır olarak durur.
+  // Google için anahtar kelimeli başlık satırı ("Şırnak Fıtıkçı & Eve Gelen Masör"); H1'in içinde küçük satır olarak durur.
   const seoHeading = get("hero", "seo_heading", "");
   const description = get("hero", "description", "");
   const slogan = get("hero", "slogan", "") || site?.slogan || "";
