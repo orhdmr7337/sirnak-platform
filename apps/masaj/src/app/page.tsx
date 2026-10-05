@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import { getSiteData } from "@sirnak/shared";
 import MasajClient from "@/components/MasajClient";
 
 export const revalidate = 300;
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function HomePage() {
   const data = await getSiteData("masaj");

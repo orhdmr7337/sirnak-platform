@@ -14,6 +14,8 @@ export function Hero() {
   const site = useSiteConfig();
   const { get } = useSiteContent();
   const badge = get("hero", "badge", "");
+  // Google için anahtar kelimeli başlık satırı ("Şırnak Masaj Salonu"); H1'in içinde küçük satır olarak durur.
+  const seoHeading = get("hero", "seo_heading", "");
   const description = get("hero", "description", "");
   const slogan = get("hero", "slogan", "") || site?.slogan || "";
   const ctaCall = get("hero", "cta_call_label", "");
@@ -58,6 +60,11 @@ export function Hero() {
             className="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
             style={{ fontFamily: "Georgia, serif" }}
           >
+            {seoHeading && (
+              <span className="block text-[#8ab891] text-sm md:text-base font-medium tracking-widest uppercase mb-3">
+                {seoHeading}
+              </span>
+            )}
             {title}
             {slogan && (
               <span className="block text-[#c9a96e] text-2xl md:text-3xl mt-2 font-normal">{slogan}</span>

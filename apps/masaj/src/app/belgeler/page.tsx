@@ -5,7 +5,10 @@ import BelgelerView from "@/components/BelgelerView";
 
 export const revalidate = 300;
 
-export const metadata: Metadata = { title: "Hakkımızda & Belgeler" };
+export const metadata: Metadata = {
+  title: "Hakkımızda & Belgeler",
+  alternates: { canonical: "/belgeler" },
+};
 
 // Tüm içerik veritabanından gelir: `site_content` (about, values, team, certificates) ve `sites`.
 export default async function BelgelerPage() {

@@ -7,9 +7,12 @@ import {
   getAllServiceSlugs,
   telHref,
   whatsappHref,
+  siteBaseUrl,
+  buildBreadcrumbJsonLd,
 } from "@sirnak/shared";
 import type { Site, Service } from "@sirnak/shared";
 import { notFound } from "next/navigation";
+import { seoCopy } from "@/lib/seo-copy";
 
 export const revalidate = 300;
 
@@ -35,7 +38,7 @@ async function getServicePageData(slug: string) {
   const relatedServices = (data?.services ?? []).filter(
     (s) => s.id !== service.id
   );
-  return { site, service, relatedServices };
+  return { site, service, relatedServices, districts: data?.districts ?? [] };
 }
 
 export async function generateStaticParams() {
@@ -53,12 +56,13 @@ export async function generateMetadata({
   const result = await getServicePageData(slug);
   if (!result) return { title: "Hizmet Bulunamadı" };
   const { site, service } = result;
-  const title = service.title;
+  const title = seoCopy.serviceTitle(service.title);
   const description =
-    service.description || `${service.title} - ${site.name}`;
+    service.description || `${title} - ${site.name}`;
   return {
     title,
     description,
+    alternates: { canonical: `/hizmetler/${service.slug}` },
     openGraph: {
       title,
       description,
@@ -78,7 +82,12 @@ export default async function ServiceDetailPage({
   const result = await getServicePageData(slug);
   if (!result) notFound();
 
-  const { site, service, relatedServices } = result;
+  const { site, service, relatedServices, districts } = result;
+  const breadcrumb = buildBreadcrumbJsonLd(siteBaseUrl(site), [
+    { name: "Ana Sayfa", path: "/" },
+    { name: "Hizmetler", path: "/hizmetler" },
+    { name: service.title, path: `/hizmetler/${service.slug}` },
+  ]);
 
   const whatsappUrl = whatsappHref(
     site,
@@ -90,6 +99,7 @@ export default async function ServiceDetailPage({
     "@context": "https://schema.org",
     "@type": "Service",
     name: service.title,
+    areaServed: districts.map((d) => d.name),
     description: service.description || undefined,
     provider: {
       "@type": "HomeAndConstructionBusiness",
@@ -115,6 +125,12 @@ export default async function ServiceDetailPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      {breadcrumb && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+        />
+      )}
 
       {/* Header */}
       <div className="border-b border-white/5">
@@ -126,7 +142,7 @@ export default async function ServiceDetailPage({
             {site.name}
           </Link>
           <Link
-            href="/#hizmetler"
+            href="/hizmetler"
             className="text-sm text-[#9a9ba1] transition-colors hover:text-white"
           >
             ← Tüm Hizmetler
@@ -174,7 +190,7 @@ export default async function ServiceDetailPage({
               className="mb-4 text-4xl font-bold text-white md:text-5xl"
               style={{ fontFamily: "var(--sc-font-display)" }}
             >
-              {service.title}
+              {seoCopy.serviceTitle(service.title)}
             </h1>
 
             {service.price_info && (
@@ -301,6 +317,25 @@ export default async function ServiceDetailPage({
                     {related.price_info}
                   </p>
                 )}
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
+      {/* Service Areas */}
+      {districts.length > 0 && (
+        <section className="mx-auto max-w-7xl px-6 pb-24">
+          <h2 className="mb-6 text-2xl font-bold text-white">
+            {seoCopy.serviceAreasHeading(service.title)}
+          </h2>
+          <div className="flex flex-wrap gap-3">
+            {districts.map((d) => (
+              <Link
+                key={d.id}
+                href={`/ilceler/${d.slug}`}
+                className="glass-card rounded-full px-4 py-2 text-sm text-[#9a9ba1] transition-colors hover:text-white"
+              >
+                {d.name} {service.title}
               </Link>
             ))}
           </div>

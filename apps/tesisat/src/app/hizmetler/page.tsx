@@ -6,7 +6,7 @@ import { seoCopy } from "@/lib/seo-copy";
 export const revalidate = 300;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const data = await getSiteData("masaj");
+  const data = await getSiteData("tesisat");
   const names = (data?.services ?? []).map((s) => s.title);
   return {
     title: seoCopy.servicesTitle,
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 // Hizmet adı, açıklama ve fiyat bilgisi doğrudan `services` tablosundan gelir.
 export default async function HizmetlerPage() {
-  const data = await getSiteData("masaj");
+  const data = await getSiteData("tesisat");
   if (!data) return null;
 
   const { site, services } = data;
@@ -25,20 +25,20 @@ export default async function HizmetlerPage() {
   const wa = whatsappHref(site);
 
   return (
-    <div className="min-h-screen bg-[#0a0f0a]">
-      <div className="border-b border-[#2a3a2a]">
+    <div className="min-h-screen bg-[#050505]">
+      <div className="border-b border-[#1f1f1f]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-lg font-bold text-white transition-colors hover:text-[#c9a96e]">
+          <Link href="/" className="text-lg font-bold text-white transition-colors hover:text-[#f97316]">
             {site.name}
           </Link>
-          <Link href="/" className="text-sm text-[#999] transition-colors hover:text-[#c9a96e]">
+          <Link href="/" className="text-sm text-[#999] transition-colors hover:text-[#f97316]">
             ← Ana Sayfa
           </Link>
         </div>
       </div>
 
       <section className="px-6 py-16 text-center md:py-24">
-        <h1 className="mb-4 text-4xl font-bold text-[#f4f2ef] md:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
+        <h1 className="mb-4 text-4xl font-bold text-[#f4f2ef] md:text-5xl">
           {seoCopy.servicesTitle}
         </h1>
         {site.tagline && <p className="mx-auto max-w-2xl text-lg text-[#999]">{site.tagline}</p>}
@@ -53,21 +53,21 @@ export default async function HizmetlerPage() {
               <Link
                 key={service.id}
                 href={`/hizmetler/${service.slug}`}
-                className="group flex flex-col rounded-lg border border-[#2a3a2a] bg-gradient-to-br from-[#6b8f71]/10 to-transparent p-6 transition-all hover:-translate-y-1 hover:border-[#c9a96e]/50"
+                className="group flex flex-col rounded-lg border border-[#1f1f1f] bg-gradient-to-br from-[#f97316]/10 to-transparent p-6 transition-all hover:-translate-y-1 hover:border-[#f97316]/50"
               >
-                <h2 className="mb-2 text-lg font-semibold text-[#f4f2ef] transition-colors group-hover:text-[#c9a96e]">
+                <h2 className="mb-2 text-lg font-semibold text-[#f4f2ef] transition-colors group-hover:text-[#f97316]">
                   {service.title}
                 </h2>
                 {service.description && (
                   <p className="mb-4 flex-1 text-sm text-[#999]">{service.description}</p>
                 )}
-                <div className="mt-auto flex items-center justify-between border-t border-[#2a3a2a] pt-4">
+                <div className="mt-auto flex items-center justify-between border-t border-[#1f1f1f] pt-4">
                   {service.price_info ? (
-                    <p className="text-lg font-bold text-[#c9a96e]">{service.price_info}</p>
+                    <p className="text-lg font-bold text-[#f97316]">{service.price_info}</p>
                   ) : (
                     <span />
                   )}
-                  <span className="text-sm font-medium text-[#8ab891]">Detay →</span>
+                  <span className="text-sm font-medium text-[#f97316]">Detay →</span>
                 </div>
               </Link>
             ))}
@@ -78,12 +78,12 @@ export default async function HizmetlerPage() {
       {(tel || wa) && (
         <section className="px-6 pb-20 text-center">
           <div className="mx-auto max-w-2xl">
-            <h2 className="mb-4 text-3xl font-bold text-[#f4f2ef]" style={{ fontFamily: "Georgia, serif" }}>
-              Randevu Almak İçin
+            <h2 className="mb-4 text-3xl font-bold text-[#f4f2ef]">
+              Hemen Usta Çağırın
             </h2>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               {tel && (
-                <a href={tel} className="rounded-lg bg-[#6b8f71] px-8 py-3 font-semibold text-white transition-colors hover:bg-[#5a7a60]">
+                <a href={tel} className="rounded-lg bg-[#f97316] px-8 py-3 font-semibold text-white transition-colors hover:bg-[#ea580c]">
                   Hemen Ara
                 </a>
               )}
@@ -92,7 +92,7 @@ export default async function HizmetlerPage() {
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-[#c9a96e] px-8 py-3 font-semibold text-[#c9a96e] transition-colors hover:bg-[#c9a96e]/10"
+                  className="rounded-lg border border-[#f97316] px-8 py-3 font-semibold text-[#f97316] transition-colors hover:bg-[#f97316]/10"
                 >
                   WhatsApp
                 </a>

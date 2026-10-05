@@ -1,6 +1,7 @@
 import { getDistricts, getSiteData, getSiteBySlug, telHref, SiteProvider } from "@sirnak/shared";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { seoCopy } from "@/lib/seo-copy";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -13,9 +14,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const name = site?.name ?? "";
   const names = districts.map((d) => d.name);
   return {
-    title: `İlçeler | ${name}`,
+    title: seoCopy.districtsTitle,
     description: names.length ? `${name} hizmet bölgeleri: ${names.join(", ")}.` : undefined,
-    openGraph: { title: `İlçeler | ${name}`, type: "website", locale: "tr_TR" },
+    alternates: { canonical: "/ilceler" },
+    openGraph: { title: seoCopy.districtsTitle, type: "website", locale: "tr_TR" },
   };
 }
 

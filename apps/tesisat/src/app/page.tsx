@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { getSiteData } from "@sirnak/shared";
 import { SiteProvider } from "@sirnak/shared";
 import Hero from "@/components/Hero";
@@ -18,6 +19,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileActionBar from "@/components/MobileActionBar";
 
 export const revalidate = 300;
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 export default async function TesisatPage() {
   const data = await getSiteData("tesisat");

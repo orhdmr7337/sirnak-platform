@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Arama Sonuçları",
+  robots: { index: false, follow: true },
   description: "Şırnak tesisat hizmetleri, blog yazıları ve bölgelerinde arama yapın.",
 };
 
