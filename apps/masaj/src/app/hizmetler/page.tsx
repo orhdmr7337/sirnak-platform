@@ -41,7 +41,7 @@ export default async function HizmetlerPage() {
         <h1 className="mb-4 text-4xl font-bold text-[#f4f2ef] md:text-5xl" style={{ fontFamily: "Georgia, serif" }}>
           {seoCopy.servicesTitle}
         </h1>
-        {site.tagline && <p className="mx-auto max-w-2xl text-lg text-[#999]">{site.tagline}</p>}
+        <p className="mx-auto max-w-2xl text-lg text-[#999]">{seoCopy.servicesIntro}</p>
       </section>
 
       <section className="mx-auto max-w-6xl px-6 pb-16">

@@ -17,7 +17,13 @@ export function withPhone(title: string, phone?: string | null): string {
 // başlıklarında ve H1'lerde birebir geçsin diye tek yerde tutulur.
 // İşletme seyyar çalışır (salon yok); metinler "adresinize geliyoruz" üzerine kuruludur.
 export const seoCopy = {
-  servicesTitle: "Şırnak'ta Eve Gelen Masaj Hizmetleri",
+  servicesTitle: "Şırnak Masaj Fiyatları ve Hizmetleri",
+  servicesIntro:
+    "Tüm masajları evinize gelerek uyguluyoruz. Fiyatlar seansın süresine ve uygulamaya göre değişir; net ücret randevu sırasında söylenir.",
+  priceFaq: (service: string, price: string) => ({
+    q: `Şırnak'ta ${service.toLocaleLowerCase("tr-TR")} fiyatı ne kadar?`,
+    a: `${service} için fiyatlarımız ${price} arasındadır. Net ücret seansın süresine göre randevu sırasında söylenir.`,
+  }),
   districtsTitle: "Şırnak İlçelerinde Eve Gelen Masör",
   districtTitle: (district: string) => `${district} Eve Gelen Masör & Fıtıkçı`,
   districtH1: (district: string) => `${district} Eve Gelen Masaj`,

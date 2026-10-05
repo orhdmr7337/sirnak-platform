@@ -93,7 +93,9 @@ export default async function ServiceDetailPage({
   // Admin panelinden yazılan metin varsa o, yoksa koddaki varsayılan metin kullanılır.
   const fallback = (defaultContent as Record<string, { content: string; faqs: ServiceFaq[] }>)[service.slug];
   const pageContent = service.content?.trim() ? service.content : fallback?.content;
-  const pageFaqs = service.faqs?.length ? service.faqs : fallback?.faqs ?? [];
+  const baseFaqs = service.faqs?.length ? service.faqs : fallback?.faqs ?? [];
+  // "şırnak ... fiyatı" aramaları için fiyat sorusu, fiyat bilgisi girilmişse en başa eklenir.
+  const pageFaqs = service.price_info ? [seoCopy.priceFaq(service.title, service.price_info), ...baseFaqs] : baseFaqs;
   const faqJsonLd = serviceFaqJsonLd(pageFaqs);
 
   const whatsappUrl = whatsappHref(
