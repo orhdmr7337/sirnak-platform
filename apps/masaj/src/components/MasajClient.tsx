@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
-import { SiteProvider, contentBySection } from "@sirnak/shared";
+import { SiteProvider } from "@sirnak/shared";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
@@ -19,7 +18,6 @@ import NewsletterSignup from "@/components/NewsletterSignup";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { MobileActionBar } from "@/components/MobileActionBar";
-import SplashScreen from "@/components/SplashScreen";
 
 import type { PublicSiteData } from "@sirnak/shared";
 
@@ -28,17 +26,8 @@ interface MasajClientProps {
 }
 
 export default function MasajClient({ data }: MasajClientProps) {
-  const [showSplash, setShowSplash] = useState(true);
-  const splash = contentBySection(data.siteContent).splash ?? {};
-
-  const handleSplashComplete = useCallback(() => {
-    setShowSplash(false);
-  }, []);
-
   return (
     <>
-      {showSplash && <SplashScreen onComplete={handleSplashComplete} title={splash.title} subtitle={splash.subtitle} />}
-      
       <SiteProvider data={data}>
         <Header />
         <main>

@@ -28,6 +28,8 @@ export default function Hero() {
 
   // Tüm metinler `site_content` (section: hero) kaydından gelir.
   const badge = get("hero", "badge", "");
+  // Google için anahtar kelimeli başlık ("Şırnak Tesisatçı & Elektrikçi"). Boşsa slogan H1 olur.
+  const seoHeading = get("hero", "seo_heading", "");
   const slogan = get("hero", "slogan", "") || site?.slogan || "";
   const subtext = get("hero", "description", "");
   const ctaText = get("hero", "cta_call_label", "");
@@ -53,12 +55,22 @@ export default function Hero() {
           animate={{ opacity: 0.75, x: 0 }}
           transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
         >
-          <h1
-            className="text-2xl md:text-4xl font-black italic mb-5 leading-tight text-white"
-            style={{ letterSpacing: "-0.02em" }}
-          >
-            {slogan}
-          </h1>
+          {seoHeading && (
+            <h1 className="mb-3 text-white/90 text-sm md:text-base tracking-widest font-bold uppercase">
+              {seoHeading}
+            </h1>
+          )}
+          {(() => {
+            const SloganTag = seoHeading ? "p" : "h1";
+            return (
+              <SloganTag
+                className="text-2xl md:text-4xl font-black italic mb-5 leading-tight text-white"
+                style={{ letterSpacing: "-0.02em" }}
+              >
+                {slogan}
+              </SloganTag>
+            );
+          })()}
         </motion.div>
         <motion.div
           initial={{ opacity: 0, x: -100 }}

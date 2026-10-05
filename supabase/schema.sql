@@ -105,7 +105,7 @@ INSERT INTO services (site_id, title, slug, description, icon, sort_order)
 SELECT s.id, v.title, v.slug, v.description, v.icon, v.sort_order
 FROM sites s
 CROSS JOIN (VALUES
-  ('Tıkanıklık Açma', 'kaniklik-acma', 'Lavabo, tuvalet, kanal tıkanıklıklarını profesyonel ekipmanlarla açıyoruz.', 'Droplets', 1),
+  ('Tıkanıklık Açma', 'tikaniklik-acma', 'Lavabo, tuvalet, kanal tıkanıklıklarını profesyonel ekipmanlarla açıyoruz.', 'Droplets', 1),
   ('Su Tesisatı', 'su-tesisati', 'Su kaçağı tespiti, boru döşeme, tesisat yenileme ve tamirat.', 'Wrench', 2),
   ('Elektrik Arızası', 'elektrik-arizasi', 'Elektrik kesintisi, kısa devre, sigorta arızası, kablo döşeme.', 'Zap', 3),
   ('Kombi Bakımı', 'kombi-bakimi', 'Kombi yıllık bakımı, petek temizliği, ısıtma sistemi kontrolü.', 'Thermometer', 4),
@@ -172,7 +172,7 @@ SELECT id, 'Ahmet Y.', 'Şırnak Merkez', 5, 'Su kaçağı sorunumu 30 dakikada 
 UNION ALL
 SELECT id, 'Elif S.', 'Cizre', 5, 'Kombi bakımı için geldiler, çok temiz ve düzenli çalıştılar.', 'kombi-bakimi', true FROM sites WHERE slug = 'tesisat'
 UNION ALL
-SELECT id, 'Mehmet A.', 'İdil', 5, 'Tıkanıklık açma konusunda gerçekten ustaymışlar. Tavsiye ederim.', 'kaniklik-acma', true FROM sites WHERE slug = 'tesisat'
+SELECT id, 'Mehmet A.', 'İdil', 5, 'Tıkanıklık açma konusunda gerçekten ustaymışlar. Tavsiye ederim.', 'tikaniklik-acma', true FROM sites WHERE slug = 'tesisat'
 UNION ALL
 SELECT id, 'Ayşe K.', 'Silopi', 5, 'Elektrik arızası gece yarısıydı, hemen gelip hallettiler.', 'elektrik-arizasi', true FROM sites WHERE slug = 'tesisat';
 
@@ -368,7 +368,7 @@ INSERT INTO service_finder_options (site_id, need_label, recommended_service_slu
 SELECT s.id, v.need_label, v.recommended_service_slug, v.sort_order
 FROM sites s
 CROSS JOIN (VALUES
-  ('Su veya gider sorunu', 'kaniklik-acma', 1),
+  ('Su veya gider sorunu', 'tikaniklik-acma', 1),
   ('Sıcak su / ısıtma sorunu', 'kombi-bakimi', 2),
   ('Elektrik kesintisi veya arıza', 'elektrik-arizasi', 3),
   ('Doğalgaz veya ocak bağlantısı', 'dogalgaz-tesisati', 4)

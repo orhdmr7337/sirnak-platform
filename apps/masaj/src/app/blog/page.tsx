@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Blog",
   description: "Masaj, wellness ve sağlıklı yaşam hakkında faydalı bilgiler ve güncel yazılar.",
+  alternates: { canonical: "/blog" },
 };
 
 export const revalidate = 300;

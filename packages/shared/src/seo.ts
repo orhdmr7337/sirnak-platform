@@ -136,7 +136,8 @@ export function buildSiteMetadata(site: Site) {
     keywords,
     authors: [{ name: site.name }],
     metadataBase: base ? new URL(base) : undefined,
-    alternates: base ? { canonical: "/" } : undefined,
+    // Canonical burada verilmez: kök layout'taki değer tüm alt sayfalara miras kalır
+    // ve hepsini ana sayfanın kopyası gibi gösterir. Her sayfa kendi yolunu bildirir.
     icons: site.favicon_url ? { icon: site.favicon_url } : undefined,
     openGraph: {
       type: "website" as const,
@@ -154,5 +155,29 @@ export function buildSiteMetadata(site: Site) {
       images: site.og_image_url ? [site.og_image_url] : undefined,
     },
     robots: { index: true, follow: true },
+    verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+      ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+      : undefined,
   };
+}
+
+/** Sayfa yolu listesinden BreadcrumbList üretir. Adres bilinmiyorsa null. */
+export function buildBreadcrumbJsonLd(base: string | null, items: { name: string; path: string }[]) {
+  if (!base) return null;
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      item: it.path === "/" ? base : `${base}${it.path}`,
+    })),
+  };
+}
+
+/** "a, b ve c" biçiminde Türkçe liste. */
+export function joinTr(items: string[]): string {
+  if (items.length <= 1) return items.join("");
+  return `${items.slice(0, -1).join(", ")} ve ${items[items.length - 1]}`;
 }

@@ -1,7 +1,8 @@
-import { getDistrictBySlug, getDistricts, getSiteData, getSiteBySlug, buildJsonLd, telHref, whatsappHref, SiteProvider } from "@sirnak/shared";
+import { getDistrictBySlug, getDistricts, getSiteData, getSiteBySlug, buildJsonLd, buildBreadcrumbJsonLd, siteBaseUrl, telHref, whatsappHref, SiteProvider } from "@sirnak/shared";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { seoCopy } from "@/lib/seo-copy";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
@@ -23,16 +24,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const [district, site] = await Promise.all([getDistrictBySlug(slug), getSiteBySlug("tesisat")]);
   if (!district) return {};
   const siteName = site?.name ?? "";
+  const title = seoCopy.districtTitle(district.name);
+  const description = seoCopy.districtIntro(district.name, siteName, [])[0];
 
   return {
-    title: `${district.name} Tesisat Hizmetleri`,
-    description: district.description || `${district.name} bölgesinde ${siteName} hizmetleri.`,
-    openGraph: {
-      title: `${district.name} Tesisat Hizmetleri`,
-      description: district.description || `${district.name} bölgesinde ${siteName} hizmetleri.`,
-      type: "website",
-      locale: "tr_TR",
-    },
+    title,
+    description,
+    alternates: { canonical: `/ilceler/${district.slug}` },
+    openGraph: { title, description, type: "website", locale: "tr_TR" },
   };
 }
 
@@ -62,6 +61,19 @@ export default async function DistrictPage({ params }: Props) {
         socialLinks: siteData.socialLinks,
       })[0]
     : null;
+  const base = siteBaseUrl(siteData.site);
+  const breadcrumb = buildBreadcrumbJsonLd(base, [
+    { name: "Ana Sayfa", path: "/" },
+    { name: "İlçeler", path: "/ilceler" },
+    { name: district.name, path: `/ilceler/${district.slug}` },
+  ]);
+  const otherDistricts = siteData.districts.filter((d) => d.id !== district.id);
+  const intro = seoCopy.districtIntro(
+    district.name,
+    siteData.site.name,
+    services.map((s) => s.title),
+    siteData.site.working_hours
+  );
   const tel = telHref(siteData?.site);
   const wa = whatsappHref(siteData?.site);
 
@@ -83,16 +95,21 @@ export default async function DistrictPage({ params }: Props) {
             </Link>
 
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              {district.name}
+              {seoCopy.districtH1(district.name)}
             </h1>
             <p className="text-xl text-[#9a9ba1] mb-4">
-              Tesisat & Elektrik Hizmetleri
+              {seoCopy.districtSubtitle}
             </p>
             {district.description && (
-              <p className="text-[#9a9ba1] max-w-2xl mx-auto">
+              <p className="text-[#9a9ba1] max-w-2xl mx-auto mb-4">
                 {district.description}
               </p>
             )}
+            {intro.map((text, i) => (
+              <p key={i} className="text-[#9a9ba1] max-w-2xl mx-auto mb-4 leading-relaxed">
+                {text}
+              </p>
+            ))}
           </div>
         </section>
 
@@ -108,9 +125,10 @@ export default async function DistrictPage({ params }: Props) {
 
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
-                <div
+                <Link
                   key={service.id}
-                  className="glass-card glass-card-hover p-6 rounded-xl"
+                  href={`/hizmetler/${service.slug}`}
+                  className="block glass-card glass-card-hover p-6 rounded-xl"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
                     <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -121,7 +139,7 @@ export default async function DistrictPage({ params }: Props) {
                   {service.description && (
                     <p className="text-sm text-[#9a9ba1]">{service.description}</p>
                   )}
-                </div>
+                </Link>
               ))}
             </div>
           </div>
@@ -177,6 +195,26 @@ export default async function DistrictPage({ params }: Props) {
           </section>
         )}
 
+        {/* Other Districts */}
+        {otherDistricts.length > 0 && (
+          <section className="py-12 px-6">
+            <div className="max-w-4xl mx-auto text-center">
+              <h2 className="text-2xl font-bold text-white mb-6">Hizmet Verdiğimiz Diğer İlçeler</h2>
+              <div className="flex flex-wrap justify-center gap-3">
+                {otherDistricts.map((d) => (
+                  <Link
+                    key={d.id}
+                    href={`/ilceler/${d.slug}`}
+                    className="glass-card px-4 py-2 rounded-full text-sm text-[#9a9ba1] hover:text-white transition-colors"
+                  >
+                    {seoCopy.districtH1(d.name)}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* CTA Section */}
         <section className="py-16 px-6">
           <div className="max-w-4xl mx-auto text-center">
@@ -224,6 +262,12 @@ export default async function DistrictPage({ params }: Props) {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      )}
+      {breadcrumb && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
         />
       )}
     </SiteProvider>
