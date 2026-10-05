@@ -149,7 +149,8 @@ INSERT INTO districts (name, slug, description) VALUES
   ('İdil', 'idil', 'İdil ilçesinde güvenilir ve konforlu hizmet.'),
   ('Silopi', 'silopi', 'Silopi ilçesinde zamanında ve kaliteli hizmet.'),
   ('Beytüşşebap', 'beytussebap', 'Beytüşşebap ilçesinde uzman kadroyla hizmet.'),
-  ('Uludere', 'uludere', 'Uludere ilçesinde kesintisiz hizmet.');
+  ('Uludere', 'uludere', 'Uludere ilçesinde kesintisiz hizmet.'),
+  ('Güçlükonak', 'guclukonak', 'Güçlükonak ilçesi ve köylerinde güvenilir hizmet.');
 
 -- ============================================
 -- TESTIMONIALS
