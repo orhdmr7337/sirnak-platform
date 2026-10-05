@@ -71,7 +71,7 @@ export default async function DistrictPage({ params }: Props) {
   const intro = seoCopy.districtIntro(
     district.name,
     siteData.site.name,
-    services.map((s) => s.title),
+    services.slice(0, 6).map((s) => s.title),
     siteData.site.working_hours
   );
   const tel = telHref(siteData?.site);
