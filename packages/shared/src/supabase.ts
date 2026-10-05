@@ -59,6 +59,14 @@ export interface Service {
   price_info: string | null;
   sort_order: number;
   published: boolean;
+  /** Uzun sayfa metni; biçim için `parseContentBlocks`. */
+  content?: string | null;
+  faqs?: ServiceFaq[] | null;
+}
+
+export interface ServiceFaq {
+  q: string;
+  a: string;
 }
 
 export interface District {

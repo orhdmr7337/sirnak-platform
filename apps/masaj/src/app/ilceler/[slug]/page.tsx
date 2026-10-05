@@ -2,7 +2,7 @@ import { getDistrictBySlug, getDistricts, getSiteData, getSiteBySlug, buildJsonL
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { seoCopy } from "@/lib/seo-copy";
+import { seoCopy, withPhone } from "@/lib/seo-copy";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description = seoCopy.districtIntro(district.name, siteName, [])[0];
 
   return {
-    title,
+    title: { absolute: withPhone(title, site?.phone) },
     description,
     alternates: { canonical: `/ilceler/${district.slug}` },
     openGraph: { title, description, type: "website", locale: "tr_TR" },

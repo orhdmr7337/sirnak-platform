@@ -12,7 +12,8 @@ import {
 } from "@sirnak/shared";
 import type { Site, Service } from "@sirnak/shared";
 import { notFound } from "next/navigation";
-import { seoCopy } from "@/lib/seo-copy";
+import { seoCopy, withPhone } from "@/lib/seo-copy";
+import { ServiceContent, serviceFaqJsonLd } from "@/components/ServiceContent";
 
 export const revalidate = 300;
 
@@ -60,7 +61,7 @@ export async function generateMetadata({
   const description =
     service.description || `${title} - ${site.name}`;
   return {
-    title,
+    title: { absolute: withPhone(title, site.phone) },
     description,
     alternates: { canonical: `/hizmetler/${service.slug}` },
     openGraph: {
@@ -88,6 +89,7 @@ export default async function ServiceDetailPage({
     { name: "Hizmetler", path: "/hizmetler" },
     { name: service.title, path: `/hizmetler/${service.slug}` },
   ]);
+  const faqJsonLd = serviceFaqJsonLd(service.faqs);
 
   const whatsappUrl = whatsappHref(
     site,
@@ -102,7 +104,7 @@ export default async function ServiceDetailPage({
     areaServed: districts.map((d) => d.name),
     description: service.description || undefined,
     provider: {
-      "@type": "HomeAndConstructionBusiness",
+      "@type": "Plumber",
       name: site.name,
       telephone: site.phone || undefined,
     },
@@ -129,6 +131,12 @@ export default async function ServiceDetailPage({
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+        />
+      )}
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       )}
 
@@ -258,6 +266,8 @@ export default async function ServiceDetailPage({
           )}
         </div>
       </section>
+
+      <ServiceContent content={service.content} faqs={service.faqs} />
 
       {/* Related Services */}
       {relatedServices.length > 0 && (

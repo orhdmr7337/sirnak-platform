@@ -69,3 +69,41 @@ export interface ValueItem {
   title: string;
   description?: string;
 }
+
+export type ContentBlock =
+  | { type: "h2"; text: string }
+  | { type: "p"; text: string }
+  | { type: "ul"; items: string[] };
+
+/**
+ * Admin panelinden yazılan düz metni bloklara ayırır:
+ * "## Başlık" ara başlık, "- madde" liste, boş satır paragraf sonu.
+ */
+export function parseContentBlocks(content?: string | null): ContentBlock[] {
+  const blocks: ContentBlock[] = [];
+  let para: string[] = [];
+  let list: string[] = [];
+  const flush = () => {
+    if (para.length) blocks.push({ type: "p", text: para.join(" ") });
+    if (list.length) blocks.push({ type: "ul", items: list });
+    para = [];
+    list = [];
+  };
+  for (const raw of (content ?? "").split(/\r?\n/)) {
+    const line = raw.trim();
+    if (!line) {
+      flush();
+    } else if (line.startsWith("## ")) {
+      flush();
+      blocks.push({ type: "h2", text: line.slice(3).trim() });
+    } else if (line.startsWith("- ")) {
+      if (para.length) flush();
+      list.push(line.slice(2).trim());
+    } else {
+      if (list.length) flush();
+      para.push(line);
+    }
+  }
+  flush();
+  return blocks;
+}

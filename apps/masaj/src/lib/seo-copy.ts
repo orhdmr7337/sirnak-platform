@@ -1,4 +1,17 @@
-import { joinTr } from "@sirnak/shared";
+import { joinTr, phoneDigits } from "@sirnak/shared";
+
+/** "+905442167009" -> "0544 216 70 09"; çözülemezse boş. */
+export function phoneTr(phone?: string | null): string {
+  const d = phoneDigits(phone).replace(/^90/, "");
+  if (d.length !== 10) return "";
+  return `0${d.slice(0, 3)} ${d.slice(3, 6)} ${d.slice(6, 8)} ${d.slice(8)}`;
+}
+
+/** Arama sonucunda numara görünsün diye başlığın sonuna eklenir. */
+export function withPhone(title: string, phone?: string | null): string {
+  const tel = phoneTr(phone);
+  return tel ? `${title} | ☎ ${tel}` : title;
+}
 
 // Google'da aranan ifadeler ("şırnak fıtıkçı", "cizre eve gelen masör") sayfa
 // başlıklarında ve H1'lerde birebir geçsin diye tek yerde tutulur.

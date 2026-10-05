@@ -1,6 +1,7 @@
 export { supabase, contentBySection, contentValue, createContentMap, contentValueFromMap } from "./supabase";
 export { getSiteBySlug, getSiteData, submitContact, getContactSubmissions, getBlogPosts, getBlogPostBySlug, getAllBlogPosts, getDistricts, getDistrictBySlug, getDistrictsWithServices, getServiceBySlug, getAllServiceSlugs } from "./data";
-export { phoneDigits, telHref, whatsappHref, siteBaseUrl, contentList } from "./site-utils";
+export { phoneDigits, telHref, whatsappHref, siteBaseUrl, contentList, parseContentBlocks } from "./site-utils";
+export type { ContentBlock } from "./site-utils";
 export type { CertificateItem, TeamMember, ValueItem } from "./site-utils";
 export { buildJsonLd, buildSiteMetadata, buildBreadcrumbJsonLd, joinTr } from "./seo";
 export { checkRateLimit, getRateLimitInfo } from "./rate-limiter";
@@ -37,6 +38,7 @@ export type {
   Site,
   SocialLink,
   Service,
+  ServiceFaq,
   District,
   Testimonial,
   ContactSubmission,

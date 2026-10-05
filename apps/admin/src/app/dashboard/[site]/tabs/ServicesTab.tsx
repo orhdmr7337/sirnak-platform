@@ -2,7 +2,23 @@
 
 import { useState } from "react";
 import type { AdminSiteData } from "../types";
-import type { Service } from "@sirnak/shared";
+import type { Service, ServiceFaq } from "@sirnak/shared";
+
+// SSS düz metin olarak düzenlenir: her soru-cevap çifti boş satırla ayrılır,
+// ilk satır soru, kalan satırlar cevap.
+function faqsToText(faqs?: ServiceFaq[] | null): string {
+  return (faqs ?? []).map((f) => `${f.q}\n${f.a}`).join("\n\n");
+}
+
+function textToFaqs(text: string): ServiceFaq[] {
+  return text
+    .split(/\n\s*\n/)
+    .map((block) => {
+      const [q, ...rest] = block.trim().split("\n");
+      return { q: (q ?? "").trim(), a: rest.join(" ").trim() };
+    })
+    .filter((f) => f.q && f.a);
+}
 import { createRecord, updateRecord, deleteRecord } from "../actions";
 import {
   Section,
@@ -32,6 +48,7 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
   const [editing, setEditing] = useState<Service | null>(null);
   const [form, setForm] = useState<Partial<Service>>({});
   const [saving, setSaving] = useState(false);
+  const [faqText, setFaqText] = useState("");
 
   const openCreate = () => {
     setEditing({ id: "new" } as Service);
@@ -44,12 +61,16 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
       icon: "",
       price_info: "",
       description: "",
+      content: "",
+      faqs: [],
     });
+    setFaqText("");
   };
 
   const openEdit = (service: Service) => {
     setEditing(service);
     setForm({ ...service });
+    setFaqText(faqsToText(service.faqs));
   };
 
   const save = async () => {
@@ -59,7 +80,7 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
     }
     setSaving(true);
     try {
-      const payload = { ...form };
+      const payload = { ...form, faqs: textToFaqs(faqText) };
       // slug boşsa başlıktan üret
       if (!payload.slug?.trim() && payload.title) {
         payload.slug = payload.title
@@ -202,11 +223,33 @@ export default function ServicesTab({ data, loadData, showMessage }: ServicesTab
         </div>
         <div>
           <label className={labelClass}>İkon (Lucide adı)</label>
-          <input value={form.icon ?? ""} onChange={(e) => set("icon", e.target.value)} className={inputClass} placeholder="Örn: Wrench" />
+          <input value={form.icon ?? ""} onChange={(e) => set("icon", e.target.value)} className={inputClass} placeholder="Örn: droplet, wrench, flame, heart" />
         </div>
         <div>
           <label className={labelClass}>Açıklama</label>
           <textarea value={form.description ?? ""} onChange={(e) => set("description", e.target.value)} rows={3} className={textareaClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Sayfa Metni (Google için uzun açıklama)</label>
+          <textarea
+            value={form.content ?? ""}
+            onChange={(e) => set("content", e.target.value)}
+            rows={10}
+            className={textareaClass}
+            placeholder={"## Ara başlık\nParagraf metni...\n\n- Madde 1\n- Madde 2"}
+          />
+          <p className="mt-1 text-xs text-gray-500">&quot;## &quot; ile başlayan satır ara başlık, &quot;- &quot; ile başlayan satır madde olur. Paragrafları boş satırla ayırın.</p>
+        </div>
+        <div>
+          <label className={labelClass}>Sık Sorulan Sorular</label>
+          <textarea
+            value={faqText}
+            onChange={(e) => setFaqText(e.target.value)}
+            rows={8}
+            className={textareaClass}
+            placeholder={"Soru?\nCevap.\n\nİkinci soru?\nCevap."}
+          />
+          <p className="mt-1 text-xs text-gray-500">Her soruda ilk satır soru, alt satır cevap. Soruları boş satırla ayırın.</p>
         </div>
         <PublishedToggle checked={form.published ?? false} onChange={(v) => set("published", v)} />
       </Modal>
