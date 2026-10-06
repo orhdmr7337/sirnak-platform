@@ -31,3 +31,48 @@ export const seoCopy = {
   serviceTitle: (service: string) => `Şırnak ${service}`,
   serviceAreasHeading: (service: string) => `${service} Hizmeti Verdiğimiz İlçeler`,
 };
+
+/** Türkçe bulunma eki: "Cizre'de", "Beytüşşebap'ta", "Şırnak Merkez'de". */
+export function locative(name: string): string {
+  const lower = name.toLocaleLowerCase("tr-TR");
+  const vowels = lower.match(/[aeıioöuü]/g);
+  const last = vowels ? vowels[vowels.length - 1] : "e";
+  const back = "aıou".includes(last);
+  const hard = "fstkçşhp".includes(lower[lower.length - 1]);
+  return `${name}'${hard ? "t" : "d"}${back ? "a" : "e"}`;
+}
+
+/** İlçe + hizmet sayfası açılan (sitemap'e giren) en çok aranan hizmetler. */
+export const LOCAL_SERVICE_SLUGS = [
+  "tikaniklik-acma",
+  "gider-acma",
+  "wc-tikanikligi-acma",
+  "su-kacagi-tespiti",
+  "kombi-bakimi",
+  "kombi-tamiri",
+  "petek-temizligi",
+  "su-tesisati",
+];
+
+export const localCopy = {
+  title: (district: string, service: string) => `${district} ${service} 7/24`,
+  h1: (district: string, service: string) => `${district} ${service}`,
+  intro: (district: string, service: string, siteName: string) => [
+    `${locative(district)} ${service.toLocaleLowerCase("tr-TR")} için ${siteName} olarak aracımız ve ekipmanımızla adresinize geliyoruz. Sorunu yerinde tespit edip mümkün olan en kısa sürede, kırmadan ve temiz şekilde çözmeye çalışıyoruz.`,
+    `${district} genelinde ev, apartman ve iş yerlerinde çalışıyoruz. Acil durumlarda 7/24 arayabilir ya da WhatsApp'tan konum atarak ustamızı çağırabilirsiniz.`,
+  ],
+  faqs: (district: string, service: string) => [
+    {
+      q: `${locative(district)} ${service.toLocaleLowerCase("tr-TR")} hizmeti veriyor musunuz?`,
+      a: `Evet. ${district} genelindeki tüm mahallelere aracımızla geliyor, ${service.toLocaleLowerCase("tr-TR")} işini yerinde yapıyoruz.`,
+    },
+    {
+      q: `${locative(district)} ${service.toLocaleLowerCase("tr-TR")} fiyatı ne kadar?`,
+      a: "Fiyat işin büyüklüğüne göre değişir. WhatsApp'tan fotoğraf veya video gönderirseniz ön bilgi veririz; net ücret yerinde görüldükten sonra, işe başlamadan önce konuşulur.",
+    },
+    {
+      q: `${district} için gece veya hafta sonu gelir misiniz?`,
+      a: "Evet, acil işler için 7/24 ulaşabilirsiniz.",
+    },
+  ],
+};

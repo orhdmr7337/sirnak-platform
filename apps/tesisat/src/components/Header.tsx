@@ -18,14 +18,14 @@ export default function Header() {
   }, []);
 
   const defaultLinks = [
-    { label: "Hizmetler", href: "#hizmetler" },
-    { label: "Süreç", href: "#surec" },
-    { label: "Galeri", href: "#galeri" },
-    { label: "SSS", href: "#sss" },
+    { label: "Hizmetler", href: "/#hizmetler" },
+    { label: "Süreç", href: "/#surec" },
+    { label: "Galeri", href: "/#galeri" },
+    { label: "SSS", href: "/#sss" },
     { label: "Blog", href: "/blog" },
     { label: "Belgeler", href: "/belgeler" },
     { label: "Hakkımızda", href: "/about" },
-    { label: "İletişim", href: "#iletisim" },
+    { label: "İletişim", href: "/#iletisim" },
   ];
 
   const links = navLinks.length > 0

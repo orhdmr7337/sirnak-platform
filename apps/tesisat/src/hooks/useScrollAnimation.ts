@@ -16,9 +16,10 @@ export function useScrollAnimation(options?: ScrollAnimationOptions) {
     offset: (options?.offset as any) || ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.95, 1, 1, 0.95]);
-  const y = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [60, 0, 0, -60]);
+  // İçerik ekrana girer girmez okunur olsun; yukarı kayarken tekrar soluklaşmasın (mobilde boş ekran etkisi).
+  const opacity = useTransform(scrollYProgress, [0, 0.12, 1], [0.35, 1, 1]);
+  const scale = useTransform(scrollYProgress, [0, 0.12, 1], [0.98, 1, 1]);
+  const y = useTransform(scrollYProgress, [0, 0.12, 1], [30, 0, 0]);
 
   return { ref, scrollYProgress, opacity, scale, y };
 }
@@ -41,11 +42,11 @@ export function useScrollReveal() {
 
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start 0.85", "start 0.15"],
+    offset: ["start 1", "start 0.7"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 1], [0, 1]);
-  const y = useTransform(scrollYProgress, [0, 1], [80, 0]);
+  const opacity = useTransform(scrollYProgress, [0, 1], [0.35, 1]);
+  const y = useTransform(scrollYProgress, [0, 1], [30, 0]);
 
   return { ref, opacity, y };
 }

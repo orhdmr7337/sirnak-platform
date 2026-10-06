@@ -1,6 +1,33 @@
 "use client";
 
 import { useSiteConfig, useSiteContent, useServices, useNavLinks, useSocialLinks } from "@sirnak/shared";
+import { Globe, Play as YoutubeIcon } from "lucide-react";
+
+type IconProps = { className?: string; "aria-label"?: string };
+const InstagramIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} {...p}>
+    <rect x="3" y="3" width="18" height="18" rx="5" />
+    <circle cx="12" cy="12" r="4" />
+    <circle cx="17.5" cy="6.5" r="1" fill="currentColor" />
+  </svg>
+);
+const TiktokIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
+    <path d="M16.6 5.82A4.28 4.28 0 0 1 15.54 3h-3.09v12.4a2.59 2.59 0 1 1-2.59-2.59c.27 0 .53.04.77.11V9.77a5.68 5.68 0 1 0 4.91 5.63V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3a4.28 4.28 0 0 1-3.24-1.48z" />
+  </svg>
+);
+const FacebookIcon = (p: IconProps) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
+    <path d="M14 8h3V4h-3a4 4 0 0 0-4 4v2H8v4h2v8h4v-8h3l1-4h-4V8a0 0 0 0 1 0 0z" />
+  </svg>
+);
+
+const SOCIAL_ICONS: Record<string, (p: IconProps) => React.ReactElement> = {
+  instagram: InstagramIcon,
+  tiktok: TiktokIcon,
+  facebook: FacebookIcon,
+  youtube: YoutubeIcon as unknown as (p: IconProps) => React.ReactElement,
+};
 
 export default function Footer() {
   const site = useSiteConfig();
@@ -50,9 +77,10 @@ export default function Footer() {
                       rel="noopener noreferrer"
                       className="flex h-9 w-9 items-center justify-center rounded-lg border border-white/5 text-[#9a9ba1] transition-colors hover:border-primary/20 hover:text-primary"
                     >
-                      <span className="text-xs font-bold">
-                        {s.platform.charAt(0).toUpperCase()}
-                      </span>
+                      {(() => {
+                        const Icon = SOCIAL_ICONS[s.platform.toLowerCase()] ?? (Globe as unknown as (p: IconProps) => React.ReactElement);
+                        return <Icon className="h-4 w-4" aria-label={s.platform} />;
+                      })()}
                     </a>
                   ))
                 : site.instagram_username && (

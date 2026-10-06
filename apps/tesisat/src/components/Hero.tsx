@@ -38,7 +38,7 @@ export default function Hero() {
 
   return (
     <VideoHero media={heroMedia}>
-      <div className="max-w-3xl ml-auto pr-16 md:pr-32" data-sc-cue="0 0.8" data-sc-kinetic="words">
+      <div className="max-w-3xl ml-auto pr-2 md:pr-32" data-sc-cue="0 0.8" data-sc-kinetic="words">
         <motion.div
           initial={{ opacity: 0, x: -100 }}
           animate={{ opacity: 0.75, x: 0 }}

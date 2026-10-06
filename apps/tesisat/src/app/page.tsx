@@ -3,9 +3,9 @@ import { getSiteData, buildFaqJsonLd } from "@sirnak/shared";
 import { SiteProvider } from "@sirnak/shared";
 import Hero from "@/components/Hero";
 import Header from "@/components/Header";
-import TrustStrip from "@/components/TrustStrip";
-import Services from "@/components/Services";
-import ServiceFinder from "@/components/ServiceFinder";
+import QuickActions from "@/components/QuickActions";
+import WhatWeDo from "@/components/WhatWeDo";
+import WhyUs from "@/components/WhyUs";
 import ProcessSection from "@/components/ProcessSection";
 import GallerySection from "@/components/GallerySection";
 import FaqSection from "@/components/FaqSection";
@@ -13,7 +13,6 @@ import Testimonials from "@/components/Testimonials";
 import ContactCTA from "@/components/ContactCTA";
 import Districts from "@/components/Districts";
 import InstagramEmbed from "@/components/InstagramEmbed";
-import NewsletterSignup from "@/components/NewsletterSignup";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import MobileActionBar from "@/components/MobileActionBar";
@@ -43,17 +42,16 @@ export default async function TesisatPage() {
       <Header />
       <main>
         <Hero />
-        <TrustStrip />
-        <Services />
-        <ServiceFinder />
-        <ProcessSection />
+        <QuickActions />
+        <WhatWeDo />
+        <WhyUs />
         <GallerySection />
+        <ProcessSection />
         <Testimonials />
+        <ContactCTA />
         <FaqSection />
         <Districts />
-        <ContactCTA />
         <InstagramEmbed />
-        <NewsletterSignup />
       </main>
       <Footer />
       <WhatsAppButton />

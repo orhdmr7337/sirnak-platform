@@ -14,7 +14,7 @@ export default function WhatsAppButton() {
       style={{ marginBottom: "var(--float-h, 0px)" }}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-24 right-5 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/20 transition-all hover:scale-110 hover:shadow-xl hover:shadow-[#25D366]/30 md:bottom-8"
+      className="fixed bottom-24 right-5 z-50 hidden h-14 md:flex w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-lg shadow-[#25D366]/20 transition-all hover:scale-110 hover:shadow-xl hover:shadow-[#25D366]/30 md:bottom-8"  
       aria-label="WhatsApp ile iletişime geçin"
     >
       <svg className="h-7 w-7" fill="currentColor" viewBox="0 0 24 24">

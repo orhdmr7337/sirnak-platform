@@ -347,7 +347,7 @@ export default async function ServiceDetailPage({
             {districts.map((d) => (
               <Link
                 key={d.id}
-                href={`/ilceler/${d.slug}`}
+                href={`/ilceler/${d.slug}/${service.slug}`}
                 className="glass-card rounded-full px-4 py-2 text-sm text-[#9a9ba1] transition-colors hover:text-white"
               >
                 {d.name} {service.title}

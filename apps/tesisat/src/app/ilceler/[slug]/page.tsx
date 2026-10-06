@@ -127,7 +127,7 @@ export default async function DistrictPage({ params }: Props) {
               {services.map((service) => (
                 <Link
                   key={service.id}
-                  href={`/hizmetler/${service.slug}`}
+                  href={`/ilceler/${district.slug}/${service.slug}`}
                   className="block glass-card glass-card-hover p-6 rounded-xl"
                 >
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4">
