@@ -51,11 +51,9 @@ export default async function RootLayout({
       <head>
         <GoogleAnalytics />
         <link rel="manifest" href="/manifest.webmanifest" />
-        {site?.favicon_url && <link rel="icon" href={site.favicon_url} />}
         {site?.primary_color && <meta name="theme-color" content={site.primary_color} />}
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="apple-touch-icon" href="/icons/icon-192.svg" />
         {jsonLd.map((schema, i) => (
           <script
             key={i}
