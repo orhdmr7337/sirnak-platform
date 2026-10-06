@@ -107,3 +107,20 @@ export function parseContentBlocks(content?: string | null): ContentBlock[] {
   flush();
   return blocks;
 }
+
+/** Form bilgilerinden işletmeye gidecek WhatsApp mesajını hazırlar. */
+export function bookingMessage(
+  heading: string,
+  f: { name: string; phone: string; service?: string; district?: string; message?: string }
+): string {
+  return [
+    `Merhaba, siteden ${heading}:`,
+    `Ad: ${f.name}`,
+    `Telefon: ${f.phone}`,
+    f.service ? `Hizmet: ${f.service}` : "",
+    f.district ? `İlçe: ${f.district}` : "",
+    f.message ? `Not: ${f.message}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useSiteConfig, useServices, useDistricts, submitContact } from "@sirnak/shared";
+import { useSiteConfig, useServices, useDistricts, submitContact, whatsappHref, bookingMessage } from "@sirnak/shared";
 
 export default function ContactCTA() {
   const site = useSiteConfig();
@@ -21,12 +21,22 @@ export default function ContactCTA() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setStatus("sending");
-    const { error } = await submitContact({
-      site_id: site.id,
-      ...form,
-    });
-    setStatus(error ? "error" : "sent");
+    const wa = whatsappHref(
+      site,
+      bookingMessage("servis talebi", {
+        ...form,
+        service: services.find((s) => s.slug === form.service_slug)?.title,
+      })
+    );
+    // Kayıt admin panelinde de dursun; müşteriyi bekletmemek için sonucu beklenmez.
+    submitContact({ site_id: site.id, ...form }).catch(() => {});
+    if (!wa) {
+      setStatus("error");
+      return;
+    }
+    setStatus("sent");
+    // Talep doğrudan ustanın WhatsApp'ına, hazır mesajla gider.
+    window.location.href = wa;
   };
 
   return (
@@ -42,8 +52,8 @@ export default function ContactCTA() {
               Hemen Teklif Alın
             </h2>
             <p className="mx-auto mt-4 max-w-xl text-[#9a9ba1]">
-              Formu doldurun, size en kısa sürede dönüş yapalım. Ya da
-              doğrudan bizi arayın.
+              Formu doldurun, talebiniz WhatsApp üzerinden doğrudan ustamıza
+              ulaşsın. Ya da hemen bizi arayın.
             </p>
           </div>
 
@@ -126,10 +136,10 @@ export default function ContactCTA() {
                 {status === "sending"
                   ? "⏳ Gönderiliyor..."
                   : status === "sent"
-                    ? "✓ Gönderildi!"
+                    ? "✓ WhatsApp açılıyor…"
                     : status === "error"
                       ? "Tekrar Dene"
-                      : "Mesaj Gönder"}
+                      : "WhatsApp ile Gönder"}
               </button>
             </form>
 

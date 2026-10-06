@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollReveal, useParallax } from "@/hooks/useScrollAnimation";
-import { useSiteConfig, useServices, useDistricts, submitContact } from "@sirnak/shared";
+import { useSiteConfig, useServices, useDistricts, submitContact, whatsappHref, bookingMessage } from "@sirnak/shared";
 import { Send, Phone, Mail, MapPin, Clock, CheckCircle } from "lucide-react";
 
 export function BookingCTA() {
@@ -29,24 +29,24 @@ export function BookingCTA() {
       setError("Ad ve telefon zorunludur.");
       return;
     }
-    setSending(true);
     setError("");
-    try {
-      const result = await submitContact({
-        site_id: site?.id || "",
+    const wa = whatsappHref(
+      site,
+      bookingMessage("randevu talebi", {
         ...form,
-      });
-      if (result.error) {
-        setError("Bir hata oluştu. Lütfen tekrar deneyin.");
-      } else {
-        setSent(true);
-        setForm({ name: "", phone: "", email: "", district: "", service_slug: "", message: "" });
-      }
-    } catch {
-      setError("Bir hata oluştu.");
-    } finally {
-      setSending(false);
+        service: services.find((s) => s.slug === form.service_slug)?.title,
+      })
+    );
+    // Kayıt admin panelinde de dursun; müşteriyi bekletmemek için sonucu beklenmez.
+    submitContact({ site_id: site?.id || "", ...form }).catch(() => {});
+    if (!wa) {
+      setError("WhatsApp numarası bulunamadı, lütfen telefonla arayın.");
+      return;
     }
+    setSent(true);
+    setForm({ name: "", phone: "", email: "", district: "", service_slug: "", message: "" });
+    // Randevu doğrudan ustanın WhatsApp'ına, hazır mesajla gider.
+    window.location.href = wa;
   };
 
   const { ref: titleRef, opacity: titleOpacity, y: titleY } = useScrollReveal();
@@ -161,10 +161,10 @@ export function BookingCTA() {
                   className="text-2xl font-bold text-white mb-2"
                   style={{ fontFamily: "Georgia, serif" }}
                 >
-                  Talebiniz Alındı!
+                  WhatsApp Açılıyor…
                 </h3>
                 <p className="text-gray-400 mb-6">
-                  En kısa sürede sizinle iletişime geçeceğiz.
+                  Mesajınız hazır, WhatsApp&apos;ta <strong>Gönder</strong>&apos;e basmanız yeterli.
                 </p>
                 <button
                   onClick={() => setSent(false)}
@@ -244,7 +244,7 @@ export function BookingCTA() {
                     disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <Send className="w-5 h-5" />
-                  {sending ? "Gönderiliyor..." : "Randevu Talebi Gönder"}
+                  {sending ? "Gönderiliyor..." : "WhatsApp ile Randevu Al"}
                 </motion.button>
               </form>
             )}

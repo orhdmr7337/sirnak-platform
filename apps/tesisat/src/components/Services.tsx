@@ -17,7 +17,9 @@ const iconPaths: Record<string, string> = {
 export default function Services() {
   const services = useServices();
   const { get } = useSiteContent();
-  const items = services;
+  // Ana sayfada ilk 9 hizmet kart olarak, kalanlar link olarak gösterilir (hepsi tek tıkla erişilebilir kalır).
+  const items = services.slice(0, 9);
+  const more = services.slice(9);
 
   const sectionTitle = get("services", "title", "Hizmetlerimiz");
   const sectionSubtitle = get("services", "subtitle", "İhtiyacınıza uygun profesyonel çözümler");
@@ -57,7 +59,7 @@ export default function Services() {
               viewport={{ once: true, margin: "-50px" }}
               transition={{
                 duration: 0.6,
-                delay: index * 0.1,
+                delay: Math.min(index, 5) * 0.1,
                 ease: [0.23, 1, 0.32, 1],
               }}
             >
@@ -111,6 +113,28 @@ export default function Services() {
             </motion.div>
           ))}
         </motion.div>
+
+        {more.length > 0 && (
+          <div className="mt-10 text-center">
+            <div className="flex flex-wrap justify-center gap-2">
+              {more.map((service) => (
+                <a
+                  key={service.id}
+                  href={`/hizmetler/${service.slug}`}
+                  className="rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm text-[#9a9ba1] transition-colors hover:border-primary/50 hover:text-white"
+                >
+                  {service.title}
+                </a>
+              ))}
+            </div>
+            <a
+              href="/hizmetler"
+              className="mt-6 inline-block text-sm font-semibold text-primary hover:underline"
+            >
+              Tüm hizmetleri gör →
+            </a>
+          </div>
+        )}
       </div>
     </section>
   );
