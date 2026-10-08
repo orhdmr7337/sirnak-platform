@@ -54,7 +54,19 @@ export default function GalleryTab({ data, loadData, showMessage }: GalleryTabPr
     if (!file) return;
     setUploading(true);
     try {
-      await uploadMediaDirect(data.site.id, type === "video" ? "video" : "image", file);
+      const result = await uploadMediaDirect(data.site.id, type === "video" ? "video" : "image", file);
+      // Fotoğraflar sitede yalnızca Galeri bölümünde gösterilir; bunun için galeri kaydı da açılır.
+      if (type === "image") {
+        await createRecord("gallery_items", {
+          site_id: data.site.id,
+          title: file.name.replace(/\.[^/.]+$/, ""),
+          label: "gallery",
+          category: "gallery",
+          image_url: result.url,
+          published: true,
+          sort_order: galleryItems.length + 1,
+        });
+      }
       showMessage(type === "video" ? "Video yüklendi" : "Görsel yüklendi");
       loadData();
     } catch (err: any) {

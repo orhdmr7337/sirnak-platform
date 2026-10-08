@@ -24,15 +24,11 @@ export function Hero() {
   const title = [1, 2, 3].map((n) => get("hero", `title_line${n}`, "")).filter(Boolean).join(" ") || site?.name || "";
   const mediaFiles = useMediaFiles();
 
-  // Medya dosyalarından hero medyası oluştur
+  // Hero yalnızca videoları gösterir. Panelden yüklenen fotoğraflar alttaki Galeri bölümünde çıkar.
   const heroMedia: MediaItem[] = mediaFiles
-    .filter((m) => m.file_type === "video" || m.file_type === "image")
+    .filter((m) => m.file_type === "video")
     .sort((a, b) => a.sort_order - b.sort_order)
-    .map((m) => ({
-      type: m.file_type === "video" ? "video" as const : "image" as const,
-      src: m.public_url,
-      poster: m.file_type === "video" ? m.public_url : undefined,
-    }));
+    .map((m) => ({ type: "video" as const, src: m.public_url, poster: m.public_url }));
 
   const scrollTo = (id: string) => {
     document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
