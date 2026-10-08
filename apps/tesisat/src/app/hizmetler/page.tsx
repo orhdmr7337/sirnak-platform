@@ -28,10 +28,10 @@ export default async function HizmetlerPage() {
     <div className="min-h-screen bg-[#050505]">
       <div className="border-b border-[#1f1f1f]">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-lg font-bold text-white transition-colors hover:text-[#f97316]">
+          <Link href="/" className="text-lg font-bold text-white transition-colors hover:text-primary">
             {site.name}
           </Link>
-          <Link href="/" className="text-sm text-[#999] transition-colors hover:text-[#f97316]">
+          <Link href="/" className="text-sm text-[#999] transition-colors hover:text-primary">
             ← Ana Sayfa
           </Link>
         </div>
@@ -53,9 +53,9 @@ export default async function HizmetlerPage() {
               <Link
                 key={service.id}
                 href={`/hizmetler/${service.slug}`}
-                className="group flex flex-col rounded-lg border border-[#1f1f1f] bg-gradient-to-br from-[#f97316]/10 to-transparent p-6 transition-all hover:-translate-y-1 hover:border-[#f97316]/50"
+                className="group flex flex-col rounded-lg border border-[#1f1f1f] bg-gradient-to-br from-primary/10 to-transparent p-6 transition-all hover:-translate-y-1 hover:border-primary/50"
               >
-                <h2 className="mb-2 text-lg font-semibold text-[#f4f2ef] transition-colors group-hover:text-[#f97316]">
+                <h2 className="mb-2 text-lg font-semibold text-[#f4f2ef] transition-colors group-hover:text-primary">
                   {service.title}
                 </h2>
                 {service.description && (
@@ -63,11 +63,11 @@ export default async function HizmetlerPage() {
                 )}
                 <div className="mt-auto flex items-center justify-between border-t border-[#1f1f1f] pt-4">
                   {service.price_info ? (
-                    <p className="text-lg font-bold text-[#f97316]">{service.price_info}</p>
+                    <p className="text-lg font-bold text-primary">{service.price_info}</p>
                   ) : (
                     <span />
                   )}
-                  <span className="text-sm font-medium text-[#f97316]">Detay →</span>
+                  <span className="text-sm font-medium text-primary">Detay →</span>
                 </div>
               </Link>
             ))}
@@ -83,7 +83,7 @@ export default async function HizmetlerPage() {
             </h2>
             <div className="flex flex-col justify-center gap-4 sm:flex-row">
               {tel && (
-                <a href={tel} className="rounded-lg bg-[#f97316] px-8 py-3 font-semibold text-white transition-colors hover:bg-[#ea580c]">
+                <a href={tel} className="rounded-lg bg-primary px-8 py-3 font-semibold text-white transition-colors hover:bg-primary-dark">
                   Hemen Ara
                 </a>
               )}
@@ -92,7 +92,7 @@ export default async function HizmetlerPage() {
                   href={wa}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-lg border border-[#f97316] px-8 py-3 font-semibold text-[#f97316] transition-colors hover:bg-[#f97316]/10"
+                  className="rounded-lg border border-primary px-8 py-3 font-semibold text-primary transition-colors hover:bg-primary/10"
                 >
                   WhatsApp
                 </a>

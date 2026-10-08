@@ -35,10 +35,10 @@ export default function BelgelerView({ site, about, values, team, certificates, 
     <div className="min-h-screen bg-gradient-to-br from-[#050505] via-[#0a0a0a] to-[#050505]">
       <div className="border-b border-[#222]">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link href="/" className="text-lg font-bold text-[#f4f2ef] transition-colors hover:text-[#f97316]">
+          <Link href="/" className="text-lg font-bold text-[#f4f2ef] transition-colors hover:text-primary">
             {site.name}
           </Link>
-          <Link href="/" className="text-sm text-[#999] transition-colors hover:text-[#f97316]">
+          <Link href="/" className="text-sm text-[#999] transition-colors hover:text-primary">
             ← Ana Sayfa
           </Link>
         </div>
@@ -60,7 +60,7 @@ export default function BelgelerView({ site, about, values, team, certificates, 
           <div className="mx-auto grid max-w-4xl grid-cols-2 gap-4 md:grid-cols-3">
             {stats.map((s) => (
               <div key={s.label} className="text-center">
-                <div className="mb-2 text-3xl font-bold text-[#f97316]">{s.value}</div>
+                <div className="mb-2 text-3xl font-bold text-primary">{s.value}</div>
                 <p className="text-sm text-[#999]">{s.label}</p>
               </div>
             ))}
@@ -73,7 +73,7 @@ export default function BelgelerView({ site, about, values, team, certificates, 
           <h2 className="mb-8 text-3xl font-bold text-[#f4f2ef]">Değerlerimiz</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             {values.map((v) => (
-              <motion.div key={v.title} {...fade} className="rounded-lg border border-[#222] bg-[#0f0f0f] p-6 transition-colors hover:border-[#f97316]/50">
+              <motion.div key={v.title} {...fade} className="rounded-lg border border-[#222] bg-[#0f0f0f] p-6 transition-colors hover:border-primary/50">
                 <h3 className="mb-2 text-lg font-semibold text-[#f4f2ef]">{v.title}</h3>
                 {v.description && <p className="text-[#999]">{v.description}</p>}
               </motion.div>
@@ -87,10 +87,10 @@ export default function BelgelerView({ site, about, values, team, certificates, 
           <h2 className="mb-8 text-3xl font-bold text-[#f4f2ef]">Belgeler & Sertifikalar</h2>
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {certificates.map((c) => (
-              <motion.div key={c.title} {...fade} className="overflow-hidden rounded-lg border border-[#222] bg-[#0f0f0f] transition-colors hover:border-[#f97316]/50">
+              <motion.div key={c.title} {...fade} className="overflow-hidden rounded-lg border border-[#222] bg-[#0f0f0f] transition-colors hover:border-primary/50">
                 {c.image_url && <img src={c.image_url} alt={c.title} className="h-40 w-full object-cover" loading="lazy" />}
                 <div className="p-6">
-                  {c.year && <span className="mb-3 inline-block rounded-full bg-[#f97316]/10 px-3 py-1 text-xs font-semibold text-[#f97316]">{c.year}</span>}
+                  {c.year && <span className="mb-3 inline-block rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">{c.year}</span>}
                   <h3 className="text-lg font-semibold text-[#f4f2ef]">{c.title}</h3>
                   {c.issuer && <p className="mt-1 text-sm text-[#999]">{c.issuer}</p>}
                 </div>
@@ -108,7 +108,7 @@ export default function BelgelerView({ site, about, values, team, certificates, 
               <motion.div key={m.name} {...fade} className="rounded-lg border border-[#222] bg-[#0f0f0f] p-6 text-center">
                 {m.image_url && <img src={m.image_url} alt={m.name} className="mx-auto mb-4 h-24 w-24 rounded-full object-cover" loading="lazy" />}
                 <h3 className="mb-1 text-lg font-semibold text-[#f4f2ef]">{m.name}</h3>
-                {m.role && <p className="text-sm text-[#f97316]">{m.role}</p>}
+                {m.role && <p className="text-sm text-primary">{m.role}</p>}
                 {m.specialty && <p className="mt-1 text-xs text-[#999]">{m.specialty}</p>}
               </motion.div>
             ))}
@@ -132,14 +132,14 @@ export default function BelgelerView({ site, about, values, team, certificates, 
 
       {contact.length > 0 && (
         <section className="mx-auto max-w-4xl px-6 pb-20 md:px-12">
-          <div className="rounded-lg border border-[#f97316]/20 bg-gradient-to-r from-[#f97316]/10 to-[#0f0f0f] p-8">
+          <div className="rounded-lg border border-primary/20 bg-gradient-to-r from-primary/10 to-[#0f0f0f] p-8">
             <h2 className="mb-6 text-3xl font-bold text-[#f4f2ef]">İletişim Bilgileri</h2>
             <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
               {contact.map((c) => (
                 <div key={c.label}>
                   <p className="text-sm text-[#999]">{c.label}</p>
                   {c.href ? (
-                    <a href={c.href} className="font-semibold text-[#f4f2ef] hover:text-[#f97316]">{c.value}</a>
+                    <a href={c.href} className="font-semibold text-[#f4f2ef] hover:text-primary">{c.value}</a>
                   ) : (
                     <p className="font-semibold text-[#f4f2ef]">{c.value}</p>
                   )}
@@ -147,7 +147,7 @@ export default function BelgelerView({ site, about, values, team, certificates, 
               ))}
             </div>
             {tel && (
-              <a href={tel} className="inline-block rounded-lg bg-[#f97316] px-8 py-3 font-semibold text-[#050505] transition-colors hover:bg-[#ea580c]">
+              <a href={tel} className="inline-block rounded-lg bg-primary px-8 py-3 font-semibold text-[#050505] transition-colors hover:bg-primary-dark">
                 Hemen Ara
               </a>
             )}

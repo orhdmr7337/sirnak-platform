@@ -17,7 +17,7 @@ export function ServiceContent({ content, faqs }: { content?: string | null; faq
                 {b.text}
               </h2>
             ) : b.type === "ul" ? (
-              <ul key={i} className="list-disc space-y-2 pl-6 marker:text-[#f97316]">
+              <ul key={i} className="list-disc space-y-2 pl-6 marker:text-primary">
                 {b.items.map((it, j) => (
                   <li key={j}>{it}</li>
                 ))}

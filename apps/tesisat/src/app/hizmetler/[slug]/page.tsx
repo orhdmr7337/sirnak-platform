@@ -150,7 +150,7 @@ export default async function ServiceDetailPage({
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link
             href="/"
-            className="text-lg font-bold text-white transition-colors hover:text-[#f97316]"
+            className="text-lg font-bold text-white transition-colors hover:text-primary"
           >
             {site.name}
           </Link>
@@ -167,10 +167,10 @@ export default async function ServiceDetailPage({
       <section className="mx-auto max-w-7xl px-6 py-16 md:py-24">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
-            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-[#f97316]/10">
+            <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10">
               {service.svg_path ? (
                 <svg
-                  className="h-8 w-8 text-[#f97316]"
+                  className="h-8 w-8 text-primary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -184,7 +184,7 @@ export default async function ServiceDetailPage({
                 </svg>
               ) : (
                 <svg
-                  className="h-8 w-8 text-[#f97316]"
+                  className="h-8 w-8 text-primary"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -207,7 +207,7 @@ export default async function ServiceDetailPage({
             </h1>
 
             {service.price_info && (
-              <p className="mb-6 text-lg font-medium text-[#f97316]">
+              <p className="mb-6 text-lg font-medium text-primary">
                 {service.price_info}
               </p>
             )}
@@ -238,7 +238,7 @@ export default async function ServiceDetailPage({
               {phoneUrl && (
               <a
                 href={phoneUrl}
-                className="inline-flex items-center gap-2 rounded-xl border border-[#f97316]/30 bg-[#f97316]/10 px-6 py-3.5 text-sm font-semibold text-[#f97316] transition-all hover:bg-[#f97316]/20"
+                className="inline-flex items-center gap-2 rounded-xl border border-primary/30 bg-primary/10 px-6 py-3.5 text-sm font-semibold text-primary transition-all hover:bg-primary/20"
               >
                 <svg
                   className="h-5 w-5"
@@ -290,10 +290,10 @@ export default async function ServiceDetailPage({
                 href={`/hizmetler/${related.slug}`}
                 className="glass-card glass-card-hover group block p-6"
               >
-                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-[#f97316]/10 transition-colors group-hover:bg-[#f97316]/20">
+                <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10 transition-colors group-hover:bg-primary/20">
                   {related.svg_path ? (
                     <svg
-                      className="h-5 w-5 text-[#f97316]"
+                      className="h-5 w-5 text-primary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -307,7 +307,7 @@ export default async function ServiceDetailPage({
                     </svg>
                   ) : (
                     <svg
-                      className="h-5 w-5 text-[#f97316]"
+                      className="h-5 w-5 text-primary"
                       fill="none"
                       viewBox="0 0 24 24"
                       stroke="currentColor"
@@ -328,7 +328,7 @@ export default async function ServiceDetailPage({
                   {related.description}
                 </p>
                 {related.price_info && (
-                  <p className="mt-2 text-sm font-medium text-[#f97316]">
+                  <p className="mt-2 text-sm font-medium text-primary">
                     {related.price_info}
                   </p>
                 )}

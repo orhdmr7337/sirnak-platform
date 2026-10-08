@@ -25,7 +25,7 @@
   }
 
   ::selection {
-    background: #f97316;
+    background: var(--color-primary);
     color: #050505;
   }
 }
@@ -44,13 +44,13 @@
 
   .glass-card-hover:hover {
     background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(249, 115, 22, 0.2);
+    border-color: color-mix(in srgb, var(--color-primary) 20%, transparent);
     transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(249, 115, 22, 0.08);
+    box-shadow: 0 8px 32px color-mix(in srgb, var(--color-primary) 8%, transparent);
   }
 
   .gradient-text {
-    background: linear-gradient(135deg, #f97316, #0ea5e9);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -66,7 +66,7 @@
     inset: 0;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, #f97316, #0ea5e9);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
     mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     -webkit-mask-composite: xor;
@@ -100,8 +100,8 @@
 }
 
 @keyframes glow {
-  from { box-shadow: 0 0 20px rgba(249, 115, 22, 0.1); }
-  to { box-shadow: 0 0 40px rgba(249, 115, 22, 0.2); }
+  from { box-shadow: 0 0 20px color-mix(in srgb, var(--color-primary) 10%, transparent); }
+  to { box-shadow: 0 0 40px color-mix(in srgb, var(--color-primary) 20%, transparent); }
 }
 
 @keyframes slideUp {

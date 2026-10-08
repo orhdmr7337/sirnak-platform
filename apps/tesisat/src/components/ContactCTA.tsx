@@ -130,7 +130,7 @@ export default function ContactCTA() {
               <button
                 type="submit"
                 disabled={status === "sending" || status === "sent"}
-                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-primary to-[#e85a0f] px-6 py-3.5 text-sm font-bold text-[#050505] transition-all duration-300 hover:shadow-2xl hover:shadow-primary/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
+                className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-br from-primary to-primary-dark px-6 py-3.5 text-sm font-bold text-[#050505] transition-all duration-300 hover:shadow-2xl hover:shadow-primary/50 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed active:scale-95"
               >
                 <div className="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-20 transition-opacity" />
                 {status === "sending"

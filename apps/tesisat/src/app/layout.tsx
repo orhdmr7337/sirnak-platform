@@ -46,9 +46,21 @@ export default async function RootLayout({
       })
     : [];
 
+  // Admin panelinde seçilen renkler tema değişkenlerine yazılır (Tailwind "primary"/"secondary" bunları kullanır).
+  const hex = (v?: string | null) => (v && /^#[0-9a-fA-F]{6}$/.test(v) ? v : null);
+  const primary = hex(site?.primary_color);
+  const secondary = hex(site?.secondary_color);
+  const themeCss = [
+    primary && `--color-primary:${primary};--color-primary-dark:color-mix(in srgb, ${primary} 85%, black);`,
+    secondary && `--color-secondary:${secondary};`,
+  ]
+    .filter(Boolean)
+    .join("");
+
   return (
     <html lang="tr" className={`${instrumentSans.variable} relative overflow-x-hidden`}>
       <head>
+        {themeCss && <style dangerouslySetInnerHTML={{ __html: `:root{${themeCss}}` }} />}
         <GoogleAnalytics />
         <link rel="manifest" href="/manifest.webmanifest" />
         {site?.primary_color && <meta name="theme-color" content={site.primary_color} />}

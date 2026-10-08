@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { uploadMediaFormData, deleteMedia, createRecord, deleteRecord, updateRecord } from "../actions";
+import { deleteMedia, createRecord, deleteRecord, updateRecord } from "../actions";
+import { uploadMediaDirect } from "@/lib/upload";
 import type { AdminSiteData } from "../types";
 import type { MediaFile } from "@sirnak/shared";
 import {
@@ -53,9 +54,7 @@ export default function GalleryTab({ data, loadData, showMessage }: GalleryTabPr
     if (!file) return;
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      await uploadMediaFormData(data.site.id, type === "video" ? "video" : "image", formData);
+      await uploadMediaDirect(data.site.id, type === "video" ? "video" : "image", file);
       showMessage(type === "video" ? "Video yüklendi" : "Görsel yüklendi");
       loadData();
     } catch (err: any) {
@@ -70,9 +69,7 @@ export default function GalleryTab({ data, loadData, showMessage }: GalleryTabPr
     if (!file) return;
     setUploading(true);
     try {
-      const formData = new FormData();
-      formData.append("file", file);
-      const result = await uploadMediaFormData(data.site.id, "image", formData);
+      const result = await uploadMediaDirect(data.site.id, "image", file);
       await createRecord("gallery_items", {
         site_id: data.site.id,
         title: file.name.replace(/\.[^/.]+$/, ""),
