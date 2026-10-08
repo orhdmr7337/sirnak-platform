@@ -1,10 +1,13 @@
 "use server";
 
 import { createClient } from "@supabase/supabase-js";
+import { createServerClient } from "@supabase/ssr";
+import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 function adminClient() {
   if (!supabaseUrl || !serviceRoleKey) {
@@ -24,9 +27,27 @@ async function getUserRole(userId: string): Promise<string> {
   return data.role;
 }
 
-async function requireRole(allowedRoles: string[]): Promise<void> {
-  const supabase = adminClient();
+/**
+ * Giriş yapan kullanıcıyı tarayıcının oturum çerezinden okur. Servis anahtarlı istemcinin
+ * oturumu olmadığı için kullanıcı ondan alınamaz (önceden her işlem "giriş yapın" hatası veriyordu).
+ */
+async function currentUser() {
+  if (!supabaseUrl || !anonKey) throw new Error("Missing Supabase credentials");
+  const cookieStore = await cookies();
+  const supabase = createServerClient(supabaseUrl, anonKey, {
+    cookies: {
+      getAll: () => cookieStore.getAll(),
+      setAll: () => {},
+    },
+  });
   const { data: { user } } = await supabase.auth.getUser();
+  return user;
+}
+
+const EDITORS = ["admin", "editor"];
+
+async function requireRole(allowedRoles: string[]): Promise<void> {
+  const user = await currentUser();
   if (!user) throw new Error("Giriş yapmanız gerekiyor");
   const role = await getUserRole(user.id);
   if (!allowedRoles.includes(role)) {
@@ -106,6 +127,7 @@ export async function updateSiteSettings(
   siteId: string,
   data: Record<string, unknown>
 ) {
+  await requireRole(EDITORS);
   if (!siteId || typeof siteId !== "string") throw new Error("Invalid siteId");
   const supabase = adminClient();
   const { error } = await supabase.from("sites").update(data).eq("id", siteId);
@@ -121,6 +143,7 @@ export async function upsertSiteContent(
   value: string,
   valueType = "text"
 ) {
+  await requireRole(EDITORS);
   if (!siteId || typeof siteId !== "string") throw new Error("Invalid siteId");
   if (!section || section.length > 100) throw new Error("Invalid section");
   if (!key || key.length > 100) throw new Error("Invalid key");
@@ -147,6 +170,7 @@ export async function uploadMedia(
   base64Data: string,
   mimeType: string
 ) {
+  await requireRole(EDITORS);
   if (!siteId || typeof siteId !== "string") throw new Error("Invalid siteId");
 
   const base64 = base64Data.split(",")[1];
@@ -197,6 +221,7 @@ export async function uploadMediaFormData(
   fileType: "video" | "image" | "logo" | "favicon" | "poster",
   formData: FormData
 ) {
+  await requireRole(EDITORS);
   if (!siteId || typeof siteId !== "string") throw new Error("Invalid siteId");
 
   const file = formData.get("file") as File | null;
@@ -245,6 +270,7 @@ export async function uploadMediaFormData(
 }
 
 export async function deleteMedia(id: string, storagePath: string) {
+  await requireRole(["admin"]);
   if (!id || typeof id !== "string") throw new Error("Invalid id");
 
   const supabase = adminClient();
@@ -262,6 +288,7 @@ export async function deleteMedia(id: string, storagePath: string) {
 }
 
 export async function approveTestimonial(id: string, approved: boolean) {
+  await requireRole(EDITORS);
   if (!id || typeof id !== "string") throw new Error("Invalid id");
   if (typeof approved !== "boolean") throw new Error("Invalid approved value");
   const supabase = adminClient();
@@ -278,6 +305,7 @@ export async function updateContactStatus(
   id: string,
   status: "new" | "contacted" | "completed"
 ) {
+  await requireRole(EDITORS);
   if (!id || typeof id !== "string") throw new Error("Invalid id");
   if (!["new", "contacted", "completed"].includes(status)) throw new Error("Invalid status");
   const supabase = adminClient();
