@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { deleteMedia, createRecord, deleteRecord, updateRecord } from "../actions";
+import { deleteMedia, createRecord, deleteRecord, updateRecord } from "../actions-client";
 import { uploadMediaDirect } from "@/lib/upload";
 import type { AdminSiteData } from "../types";
 import type { MediaFile } from "@sirnak/shared";

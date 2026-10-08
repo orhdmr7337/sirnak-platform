@@ -84,7 +84,7 @@ function sanitizeFileName(name: string): string {
   return name.replace(/[^a-zA-Z0-9._-]/g, "_").slice(0, 120);
 }
 
-export async function updateRecord(
+async function updateRecordImpl(
   table: string,
   id: string,
   data: Record<string, unknown>
@@ -99,7 +99,7 @@ export async function updateRecord(
   return { success: true };
 }
 
-export async function createRecord(
+async function createRecordImpl(
   table: string,
   data: Record<string, unknown>
 ) {
@@ -112,7 +112,7 @@ export async function createRecord(
   return { success: true };
 }
 
-export async function deleteRecord(table: string, id: string) {
+async function deleteRecordImpl(table: string, id: string) {
   assertTable(table);
   if (!id || typeof id !== "string") throw new Error("Invalid id");
   await requireRole(["admin"]);
@@ -123,7 +123,7 @@ export async function deleteRecord(table: string, id: string) {
   return { success: true };
 }
 
-export async function updateSiteSettings(
+async function updateSiteSettingsImpl(
   siteId: string,
   data: Record<string, unknown>
 ) {
@@ -136,7 +136,7 @@ export async function updateSiteSettings(
   return { success: true };
 }
 
-export async function upsertSiteContent(
+async function upsertSiteContentImpl(
   siteId: string,
   section: string,
   key: string,
@@ -163,7 +163,7 @@ export async function upsertSiteContent(
   return { success: true };
 }
 
-export async function uploadMedia(
+async function uploadMediaImpl(
   siteId: string,
   fileType: "video" | "image" | "logo" | "favicon" | "poster",
   fileName: string,
@@ -216,7 +216,7 @@ export async function uploadMedia(
   return { success: true, url: publicUrl };
 }
 
-export async function uploadMediaFormData(
+async function uploadMediaFormDataImpl(
   siteId: string,
   fileType: "video" | "image" | "logo" | "favicon" | "poster",
   formData: FormData
@@ -269,7 +269,7 @@ export async function uploadMediaFormData(
   return { success: true, url: publicUrl };
 }
 
-export async function deleteMedia(id: string, storagePath: string) {
+async function deleteMediaImpl(id: string, storagePath: string) {
   await requireRole(["admin"]);
   if (!id || typeof id !== "string") throw new Error("Invalid id");
 
@@ -287,7 +287,7 @@ export async function deleteMedia(id: string, storagePath: string) {
   return { success: true };
 }
 
-export async function approveTestimonial(id: string, approved: boolean) {
+async function approveTestimonialImpl(id: string, approved: boolean) {
   await requireRole(EDITORS);
   if (!id || typeof id !== "string") throw new Error("Invalid id");
   if (typeof approved !== "boolean") throw new Error("Invalid approved value");
@@ -301,7 +301,7 @@ export async function approveTestimonial(id: string, approved: boolean) {
   return { success: true };
 }
 
-export async function updateContactStatus(
+async function updateContactStatusImpl(
   id: string,
   status: "new" | "contacted" | "completed"
 ) {
@@ -316,4 +316,57 @@ export async function updateContactStatus(
   if (error) throw new Error(error.message);
   revalidatePath("/dashboard/[site]", "page");
   return { success: true };
+}
+
+// Next.js canlı ortamda sunucu eylemlerinin fırlattığı hata mesajlarını gizler
+// ("An error occurred in the Server Components render"). Bu yüzden eylemler hata fırlatmaz,
+// { ok: false, error } döner; istemci tarafı actions-client.ts bunu tekrar hataya çevirir.
+export type ActionResult<T> = { ok: true; data: T } | { ok: false; error: string };
+
+async function run<T>(fn: () => Promise<T>): Promise<ActionResult<T>> {
+  try {
+    return { ok: true, data: await fn() };
+  } catch (err) {
+    return { ok: false, error: err instanceof Error ? err.message : String(err) };
+  }
+}
+
+export async function updateRecord(...args: Parameters<typeof updateRecordImpl>) {
+  return run(() => updateRecordImpl(...args));
+}
+
+export async function createRecord(...args: Parameters<typeof createRecordImpl>) {
+  return run(() => createRecordImpl(...args));
+}
+
+export async function deleteRecord(...args: Parameters<typeof deleteRecordImpl>) {
+  return run(() => deleteRecordImpl(...args));
+}
+
+export async function updateSiteSettings(...args: Parameters<typeof updateSiteSettingsImpl>) {
+  return run(() => updateSiteSettingsImpl(...args));
+}
+
+export async function upsertSiteContent(...args: Parameters<typeof upsertSiteContentImpl>) {
+  return run(() => upsertSiteContentImpl(...args));
+}
+
+export async function uploadMedia(...args: Parameters<typeof uploadMediaImpl>) {
+  return run(() => uploadMediaImpl(...args));
+}
+
+export async function uploadMediaFormData(...args: Parameters<typeof uploadMediaFormDataImpl>) {
+  return run(() => uploadMediaFormDataImpl(...args));
+}
+
+export async function deleteMedia(...args: Parameters<typeof deleteMediaImpl>) {
+  return run(() => deleteMediaImpl(...args));
+}
+
+export async function approveTestimonial(...args: Parameters<typeof approveTestimonialImpl>) {
+  return run(() => approveTestimonialImpl(...args));
+}
+
+export async function updateContactStatus(...args: Parameters<typeof updateContactStatusImpl>) {
+  return run(() => updateContactStatusImpl(...args));
 }

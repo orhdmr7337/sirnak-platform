@@ -18,7 +18,7 @@ import {
   BlogPost,
   contentBySection,
 } from "@sirnak/shared";
-import { updateSiteSettings, upsertSiteContent } from "./actions";
+import { updateSiteSettings, upsertSiteContent } from "./actions-client";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 import MobileTabs from "@/components/MobileTabs";

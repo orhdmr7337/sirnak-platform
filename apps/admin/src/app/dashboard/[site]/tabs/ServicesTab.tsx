@@ -19,7 +19,7 @@ function textToFaqs(text: string): ServiceFaq[] {
     })
     .filter((f) => f.q && f.a);
 }
-import { createRecord, updateRecord, deleteRecord } from "../actions";
+import { createRecord, updateRecord, deleteRecord } from "../actions-client";
 import {
   Section,
   Modal,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { approveTestimonial, deleteRecord } from "../actions";
+import { approveTestimonial, deleteRecord } from "../actions-client";
 import type { AdminSiteData } from "../types";
 import type { Testimonial } from "@sirnak/shared";
 import { Section, Empty, IconBtnDelete, FilterTabs } from "./kit";

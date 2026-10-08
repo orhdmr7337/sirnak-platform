@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { AdminSiteData } from "../types";
-import { upsertSiteContent } from "../actions";
+import { upsertSiteContent } from "../actions-client";
 import {
   Section,
   Modal,

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createRecord } from "./actions";
+import { createRecord } from "./actions-client";
 import type { AdminSiteData } from "./types";
 import {
   Section,

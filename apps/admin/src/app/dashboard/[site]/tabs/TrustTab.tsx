@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { createRecord, updateRecord, deleteRecord } from "../actions";
+import { createRecord, updateRecord, deleteRecord } from "../actions-client";
 import type { AdminSiteData } from "../types";
 import type { TrustItem } from "@sirnak/shared";
 import {

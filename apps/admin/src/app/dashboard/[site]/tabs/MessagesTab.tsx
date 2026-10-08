@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { updateContactStatus } from "../actions";
+import { updateContactStatus } from "../actions-client";
 import type { AdminSiteData } from "../types";
 import type { ContactSubmission } from "@sirnak/shared";
 import { Section, Empty, FilterTabs, inputClass } from "./kit";
