@@ -1,34 +1,223 @@
 {
   "kampanya": {
-    "ust": "4 GÜNLÜK",
-    "baslik": "DEV İNDİRİM",
-    "alt": "Şırnak'ın merkez alışverişi · Kalite & Uygun Fiyat",
-    "tarih": "4 GÜN GEÇERLİ"
+    "ust": "PERŞEMBE · CUMA · CUMARTESİ",
+    "baslik": "CUMA ÖZEL",
+    "ozel": "CUMA ÖZEL",
+    "gunler": [
+      "PERŞEMBE",
+      "CUMA",
+      "CUMARTESİ"
+    ]
   },
   "iletisim": {
-    "telefonlar": ["0486 216 47 48", "0552 455 00 73"],
+    "telefonlar": [
+      "0486 216 47 48",
+      "0552 455 00 73"
+    ],
     "adres": "Yeni Mah. Saat Kulesi Yanı, Seher Sok. M. Emin Apt. No: 9/1 ŞIRNAK",
     "instagram": "@em5avm"
   },
-  "_aciklama": "eski fiyat varsa \"eski\": \"449,90\" eklenir; o zaman üstü çizili fiyat ve indirim yüzdesi otomatik çıkar. \"yildiz\": true olan ürün kapakta büyük gösterilir.",
+  "_aciklama": "eski fiyat varsa \"eski\": \"449,90\" eklenir; o zaman üstü çizili fiyat ve indirim yüzdesi otomatik çıkar. \"yildiz\": true olan ürün kapakta büyük gösterilir. \"en\": true olan markalar İngilizce büyük harfle yazılır (Cif -> CIF, Cİf değil).",
   "urunler": [
-    { "img": "zeki",       "marka": "Zeki",       "ad": "Baldo Pirinç",            "miktar": "5 kg",        "yeni": "399,99" },
-    { "img": "turkseker",  "marka": "Türk Şeker", "ad": "Toz Şeker",               "miktar": "5 kg",        "yeni": "209,99" },
-    { "img": "alwazah",    "marka": "Alwazah",    "ad": "Çay",                     "miktar": "800 g",       "yeni": "429,99" },
-    { "img": "yag",        "marka": "Komili",     "ad": "Ayçiçek Yağı",            "miktar": "5 L",         "yeni": "485,00", "yildiz": true },
-    { "img": "mahmood",    "marka": "Mahmood",    "ad": "3'ü 1 Arada Kahve",       "miktar": "48'li kutu",  "yeni": "190,00" },
-    { "img": "tahin",      "marka": "Nuh",        "ad": "Tahin",                   "miktar": "1 kg",        "yeni": "200,00" },
-    { "img": "bizbize",    "marka": "Bizbize",    "ad": "Gofret Çeşitleri",        "miktar": "800 g",       "yeni": "99,99" },
-    { "img": "omur",       "marka": "Ömür",       "ad": "Süt",                     "miktar": "1 L",         "yeni": "45,00" },
-    { "img": "oncu4300",   "marka": "Öncü",       "ad": "Domates Salçası",         "miktar": "4300 g",      "yeni": "375,00" },
-    { "img": "tereyag",    "marka": "Malatya",    "ad": "Tereyağı",                "miktar": "1 kg",        "yeni": "599,99" },
-    { "img": "icim",       "marka": "İçim",       "ad": "Süzme Peynir",            "miktar": "900 g",       "yeni": "275,00" },
-    { "img": "kanat",      "marka": "Erpiliç",    "ad": "Piliç Kanat",             "miktar": "kg · 1. kalite", "yeni": "220,00" },
-    { "img": "ton",        "marka": "Tonla",      "ad": "Ton Balığı",              "miktar": "3'lü",        "yeni": "150,00" },
-    { "img": "findik",     "marka": "Ordu Tarım", "ad": "Fındık Kreması",          "miktar": "900 g",       "yeni": "175,00" },
-    { "img": "peros",      "marka": "Peros",      "ad": "Toz Deterjan",            "miktar": "10 kg",       "yeni": "375,00" },
-    { "img": "omo",        "marka": "Omo",        "ad": "Toz Deterjan",            "miktar": "10 kg",       "yeni": "475,00" },
-    { "img": "turcohavlu", "marka": "Turco",      "ad": "Yüzey Temizlik Havlusu",  "miktar": "100'lü",      "yeni": "75,00" },
-    { "img": "turcobez",   "marka": "Baby Turco", "ad": "Bebek Bezi",              "miktar": "ekonomik paket", "yeni": "130,00" }
+    {
+      "img": "zeki",
+      "marka": "Zeki",
+      "ad": "Baldo Pirinç",
+      "miktar": "5 kg",
+      "yeni": "399,99"
+    },
+    {
+      "img": "turkseker",
+      "marka": "Türk Şeker",
+      "ad": "Toz Şeker",
+      "miktar": "5 kg",
+      "yeni": "209,99"
+    },
+    {
+      "img": "alwazah",
+      "marka": "Alwazah",
+      "ad": "Çay",
+      "miktar": "800 g",
+      "yeni": "429,99",
+      "en": true
+    },
+    {
+      "img": "yag",
+      "marka": "Komili",
+      "ad": "Ayçiçek Yağı",
+      "miktar": "5 L",
+      "yeni": "485,00",
+      "yildiz": true
+    },
+    {
+      "img": "mahmood",
+      "marka": "Mahmood",
+      "ad": "3'ü 1 Arada Kahve",
+      "miktar": "48'li kutu",
+      "yeni": "190,00"
+    },
+    {
+      "img": "tahin",
+      "marka": "Nuh",
+      "ad": "Tahin",
+      "miktar": "1 kg",
+      "yeni": "200,00"
+    },
+    {
+      "img": "bizbize",
+      "marka": "Bizbize",
+      "ad": "Gofret Çeşitleri",
+      "miktar": "800 g",
+      "yeni": "99,99"
+    },
+    {
+      "img": "omur",
+      "marka": "Ömür",
+      "ad": "Süt",
+      "miktar": "1 L",
+      "yeni": "45,00"
+    },
+    {
+      "img": "oncu4300",
+      "marka": "Öncü",
+      "ad": "Domates Salçası",
+      "miktar": "4300 g",
+      "yeni": "375,00"
+    },
+    {
+      "img": "tereyag",
+      "marka": "Malatya",
+      "ad": "Tereyağı",
+      "miktar": "1 kg",
+      "yeni": "599,99"
+    },
+    {
+      "img": "icim",
+      "marka": "İçim",
+      "ad": "Süzme Peynir",
+      "miktar": "900 g",
+      "yeni": "275,00"
+    },
+    {
+      "img": "kanat",
+      "marka": "Erpiliç",
+      "ad": "Piliç Kanat",
+      "miktar": "kg · 1. kalite",
+      "yeni": "220,00"
+    },
+    {
+      "img": "ton",
+      "marka": "Tonla",
+      "ad": "Ton Balığı",
+      "miktar": "3'lü",
+      "yeni": "150,00"
+    },
+    {
+      "img": "findik",
+      "marka": "Ordu Tarım",
+      "ad": "Fındık Kreması",
+      "miktar": "900 g",
+      "yeni": "175,00"
+    },
+    {
+      "img": "peros",
+      "marka": "Peros",
+      "ad": "Toz Deterjan",
+      "miktar": "10 kg",
+      "yeni": "375,00"
+    },
+    {
+      "img": "omo",
+      "marka": "Omo",
+      "ad": "Toz Deterjan",
+      "miktar": "10 kg",
+      "yeni": "475,00",
+      "en": true
+    },
+    {
+      "img": "turcohavlu",
+      "marka": "Turco",
+      "ad": "Yüzey Temizlik Havlusu",
+      "miktar": "100'lü",
+      "yeni": "75,00"
+    },
+    {
+      "img": "turcobez",
+      "marka": "Baby Turco",
+      "ad": "Bebek Bezi",
+      "miktar": "ekonomik paket",
+      "yeni": "130,00"
+    },
+    {
+      "img": "clear",
+      "marka": "Clear",
+      "ad": "Şampuan",
+      "miktar": "350 ml",
+      "yeni": "130,00",
+      "en": true
+    },
+    {
+      "img": "dalin",
+      "marka": "Dalin",
+      "ad": "Bebek Şampuanı",
+      "miktar": "700 ml",
+      "yeni": "150,00",
+      "en": true
+    },
+    {
+      "img": "bingo",
+      "marka": "Bingo Soft",
+      "ad": "Yumuşatıcı",
+      "miktar": "5 L",
+      "yeni": "175,00",
+      "en": true
+    },
+    {
+      "img": "sparx",
+      "marka": "Sparx",
+      "ad": "Bulaşık Makinesi Tableti",
+      "miktar": "60'lı",
+      "yeni": "275,00",
+      "en": true
+    },
+    {
+      "img": "berrak",
+      "marka": "Berrak",
+      "ad": "Kağıt Havlu",
+      "miktar": "12'li",
+      "yeni": "110,00"
+    },
+    {
+      "img": "cif",
+      "marka": "Cif",
+      "ad": "Krem Amonyaklı",
+      "miktar": "1,5 L",
+      "yeni": "95,00",
+      "en": true
+    },
+    {
+      "img": "vs",
+      "marka": "Victoria's Secret",
+      "ad": "Vücut Spreyi",
+      "miktar": "250 ml",
+      "yeni": "100,00",
+      "en": true
+    },
+    {
+      "img": "signal",
+      "marka": "Signal White System",
+      "ad": "Diş Macunu",
+      "miktar": "75 ml",
+      "yeni": "75,00",
+      "en": true
+    },
+    {
+      "img": "kotex",
+      "marka": "Kotex",
+      "ad": "Ultra Gece Ped Çeşitleri",
+      "miktar": "",
+      "yeni": "90,00",
+      "en": true
+    }
   ]
 }

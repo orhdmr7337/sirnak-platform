@@ -28,36 +28,36 @@ const ICON = {
   box: '<svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2l9 5v10l-9 5-9-5V7zm0 2.3L6.2 7.5 12 10.7l5.8-3.2zM5 9.2v6.6l6 3.3v-6.6zm14 0l-6 3.3v6.6l6-3.3z"/></svg>',
 };
 
+const K = data.kampanya;
+const tag = (p) => (p.eski ? `<div class="badge">-%${pct(p)}</div>` : `<div class="tag">${esc(K.ozel)}</div>`);
+
 function card(p) {
   return `
   <div class="card">
-    ${p.eski ? `<div class="badge">-%${pct(p)}</div>` : ''}
-    <div class="shot"><img src="../../img/png/${p.img}.png" alt=""></div>
-    <div class="meta">
-      <div class="brand">${esc(p.marka)}</div>
-      <div class="name">${esc(p.ad)} <span>${esc(p.miktar)}</span></div>
+    ${tag(p)}
+    <div class="shot">
+      <img src="../../img/png/${p.img}.png" alt="">
+      <div class="new">${p.eski ? `<s>${p.eski} ₺</s>` : ''}${price(p.yeni)}</div>
     </div>
-    <div class="prices">
-      ${p.eski ? `<div class="old"><small>YERİNE</small><s>${p.eski} ₺</s></div>` : '<div class="special">4 GÜNE<br>ÖZEL</div>'}
-      <div class="new"><small>SADECE</small>${price(p.yeni)}</div>
+    <div class="meta">
+      <div class="brand"${p.en ? ' lang="en"' : ''}>${esc(p.marka)}</div>
+      <div class="name">${esc(p.ad)} <span>${esc(p.miktar)}</span></div>
     </div>
   </div>`;
 }
 
 function hero(p) {
   return `
-  <div class="hero">
+  <div class="card hero">
     <div class="ribbon">${p.eski ? 'EN BÜYÜK İNDİRİM' : 'KAMPANYANIN YILDIZI'}</div>
     <div class="hero-shot"><div class="glow"></div><img src="../../img/png/${p.img}.png" alt=""></div>
     <div class="hero-info">
-      <div class="brand">${esc(p.marka)}</div>
+      <div class="brand"${p.en ? ' lang="en"' : ''}>${esc(p.marka)}</div>
       <div class="hero-name">${esc(p.ad)}</div>
       <div class="hero-qty">${esc(p.miktar)}</div>
       ${p.eski ? `<div class="hero-old"><small>YERİNE</small><s>${p.eski} ₺</s></div>` : ''}
       <div class="hero-new"><small>SADECE</small>${price(p.yeni, 'xl')}</div>
     </div>
-    ${p.eski ? `<div class="sticker"><b>%${pct(p)}</b><span>İNDİRİM</span></div>`
-             : '<div class="sticker"><b>4</b><span>GÜNE<br>ÖZEL</span></div>'}
   </div>`;
 }
 
@@ -67,7 +67,6 @@ const footer = (no, total) => `
       <span>${ICON.truck}Ücretsiz Servis</span>
       <span>${ICON.card}Kredi Kartı Geçerli</span>
       <span>${ICON.park}Ücretsiz Otopark</span>
-      <span>${ICON.box}81 İle Kargo</span>
     </div>
     <div class="contact">
       <div class="phones">${ICON.phone}${data.iletisim.telefonlar.join('<em>•</em>')}</div>
@@ -83,21 +82,7 @@ const shell = (cls, body) => `<!doctype html><html lang="tr"><head><meta charset
 <link rel="stylesheet" href="../../style.css"></head>
 <body><main class="page ${cls}"><div class="bg"></div>${body}</main></body></html>`;
 
-function coverPage(h, items, total) {
-  return shell('cover', `
-  <header class="top">
-    <img class="logo" src="../../logo/em5-yazi.png" alt="EM5 AVM">
-    <div class="valid"><b>4</b><span>GÜN<br>GEÇERLİ</span></div>
-  </header>
-  <section class="title">
-    <div class="kicker">${esc(data.kampanya.ust)}</div>
-    <h1>${esc(data.kampanya.baslik)}</h1>
-    <p>${esc(data.kampanya.alt)}</p>
-  </section>
-  ${hero(h)}
-  <section class="grid row3">${items.map(card).join('')}</section>
-  ${footer(1, total)}`);
-}
+const days = `<div class="days">${K.gunler.map((g) => `<span>${esc(g)}</span>`).join('')}</div>`;
 
 const promo = `
   <div class="card promo">
@@ -109,28 +94,46 @@ const promo = `
     </div>
   </div>`;
 
+// 4 sütunlu ızgara; boş kalan hücreye servis kartı konur
+function grid(cells, capacity) {
+  if (cells.length < capacity) cells = [...cells, promo];
+  return cells.join('');
+}
+
+function coverPage(h, items, total) {
+  return shell('cover', `
+  <header class="top">
+    <img class="logo" src="../../logo/em5-yazi.png" alt="EM5 AVM">
+    ${days}
+  </header>
+  <section class="title">
+    <div class="kicker">${esc(K.ust)}</div>
+    <h1>${esc(K.baslik)}</h1>
+  </section>
+  <section class="grid g4 r3">${hero(h)}${grid(items.map(card), COVER_N)}</section>
+  ${footer(1, total)}`);
+}
+
 function gridPage(items, no, total) {
-  // son sayfa 9'dan azsa boş kalan yere servis kartı konur, satır sayısı ürüne göre ayarlanır
-  const cells = items.length < 9 ? [...items.map(card), promo] : items.map(card);
-  const rows = Math.ceil(cells.length / 3);
   return shell('inner', `
   <header class="bar">
     <img class="logo" src="../../logo/em5-yazi.png" alt="EM5 AVM">
-    <div class="bar-title"><span>${esc(data.kampanya.ust)}</span>${esc(data.kampanya.baslik)}</div>
-    <div class="valid sm"><b>4</b><span>GÜN<br>GEÇERLİ</span></div>
+    <div class="bar-title"><span>${esc(K.ust)}</span>${esc(K.baslik)}</div>
+    ${days}
   </header>
-  <section class="grid g3" style="grid-template-rows: repeat(${rows}, 1fr)">${cells.join('')}</section>
+  <section class="grid g4 r4">${grid(items.map(card), PAGE_N)}</section>
   ${footer(no, total)}`);
 }
 
-// Kapakta büyük gösterilecek ürün: "yildiz" işaretli olan, yoksa en yüksek indirimli
+// Kapak: 4x3 ızgara, yıldız ürün 2 hücre kaplar -> 10 ürün daha. İç sayfalar: 4x4 = 16 ürün.
+const COVER_N = 10, PAGE_N = 16;
 const list = [...data.urunler];
 const star = list.findIndex((p) => p.yildiz);
 const heroIdx = star >= 0 ? star : list.every((p) => p.eski) ? list.reduce((b, p, i) => (pct(p) > pct(list[b]) ? i : b), 0) : 0;
 const [heroItem] = list.splice(heroIdx, 1);
-const coverItems = list.splice(0, 3);
+const coverItems = list.splice(0, COVER_N);
 const chunks = [];
-while (list.length) chunks.push(list.splice(0, 9));
+while (list.length) chunks.push(list.splice(0, PAGE_N));
 const total = 1 + chunks.length;
 
 const pages = [coverPage(heroItem, coverItems, total), ...chunks.map((c, i) => gridPage(c, i + 2, total))];
