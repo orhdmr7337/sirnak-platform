@@ -1,0 +1,29 @@
+{
+  "kampanya": {
+    "ust": "4 GÜNLÜK",
+    "baslik": "DEV İNDİRİM",
+    "alt": "Şırnak'ın merkez alışverişi · Kalite & Uygun Fiyat",
+    "tarih": "4 GÜN GEÇERLİ"
+  },
+  "iletisim": {
+    "telefonlar": ["0486 216 47 48", "0552 455 00 73"],
+    "adres": "Yeni Mah. Saat Kulesi Yanı, Seher Sok. M. Emin Apt. No: 9/1 ŞIRNAK",
+    "instagram": "@em5avm"
+  },
+  "not": "ÖRNEK FİYATLAR — gerçek liste gelince değişecek",
+  "urunler": [
+    { "img": "cay",      "marka": "Çaykur",          "ad": "Tiryaki Çayı",            "miktar": "1 kg",        "eski": "349,90", "yeni": "269,90" },
+    { "img": "sut",      "marka": "Pınar",           "ad": "Süt",                     "miktar": "1 L",         "eski": "39,95",  "yeni": "32,50" },
+    { "img": "yag",      "marka": "Komili",          "ad": "Ayçiçek Yağı",            "miktar": "5 L",         "eski": "449,90", "yeni": "379,90" },
+    { "img": "pirinc",   "marka": "Tat",             "ad": "Baldo Pirinç",            "miktar": "2 kg",        "eski": "159,90", "yeni": "129,90" },
+    { "img": "salca",    "marka": "Öncü",            "ad": "Domates Salçası",         "miktar": "1650 g",      "eski": "189,90", "yeni": "154,90" },
+    { "img": "pilic",    "marka": "Banvit",          "ad": "Bütün Piliç",             "miktar": "kg",          "eski": "139,90", "yeni": "109,90" },
+    { "img": "kahve",    "marka": "Mehmet Efendi",   "ad": "Türk Kahvesi",            "miktar": "100 g",       "eski": "89,90",  "yeni": "74,90" },
+    { "img": "kola",     "marka": "Coca-Cola",       "ad": "Orijinal Tat",            "miktar": "2,5 L",       "eski": "69,90",  "yeni": "54,90" },
+    { "img": "soda",     "marka": "Kızılay",         "ad": "Doğal Maden Suyu",        "miktar": "6 x 200 ml",  "eski": "64,90",  "yeni": "49,90" },
+    { "img": "seker",    "marka": "Torku",           "ad": "Kristal Toz Şeker",       "miktar": "5 kg",        "eski": "219,90", "yeni": "184,90" },
+    { "img": "un",       "marka": "Söke",            "ad": "Un",                      "miktar": "5 kg",        "eski": "149,90", "yeni": "119,90" },
+    { "img": "yumurta",  "marka": "Güres",           "ad": "Yumurta M Boy",           "miktar": "30'lu",       "eski": "219,90", "yeni": "179,90" },
+    { "img": "margarin", "marka": "Bizim",           "ad": "Paket Margarin",          "miktar": "250 g",       "eski": "54,90",  "yeni": "42,90" }
+  ]
+}
