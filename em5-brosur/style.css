@@ -170,3 +170,51 @@ footer svg { width: 1.05em; height: 1.05em; flex: none; }
   content: ''; position: absolute; left: -4px; right: -4px; top: 50%; height: 3px;
   background: var(--red); border-radius: 2px; transform: rotate(-11deg);
 }
+
+/* ================= AÇIK TEMA ================= */
+html, body { background: #fff8ec; }
+.page { color: var(--ink); }
+.bg {
+  background:
+    radial-gradient(70% 45% at 50% 58%, rgba(255,255,255,.55), transparent 75%),
+    url('bg/arka-plan.jpg') center / cover no-repeat,
+    #fff8ec;
+}
+.top .logo, .bar .logo { filter: drop-shadow(0 4px 8px rgba(80,40,0,.25)); }
+.valid { box-shadow: 0 8px 20px rgba(180,110,0,.28), inset 0 -3px 0 rgba(0,0,0,.08); }
+.valid b { background: var(--red); color: #fff; }
+.valid span { color: var(--ink); }
+
+.kicker { color: var(--red); }
+.kicker::before, .kicker::after { background: var(--red); }
+h1 {
+  background: linear-gradient(180deg, #ff4a3d 0%, var(--red) 55%, #b80d1d 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  -webkit-text-stroke: 0;
+  filter: drop-shadow(0 0 0 #fff) drop-shadow(4px 0 0 #fff) drop-shadow(-4px 0 0 #fff) drop-shadow(0 4px 0 #fff) drop-shadow(0 -4px 0 #fff)
+          drop-shadow(0 7px 0 #1f4fbf) drop-shadow(0 16px 20px rgba(31,79,191,.28));
+}
+.title p {
+  display: inline-block; color: var(--ink); font-weight: 600;
+  background: rgba(255,255,255,.85); padding: 9px 22px; border-radius: 999px;
+  box-shadow: 0 4px 14px rgba(120,80,20,.12);
+}
+
+.hero { box-shadow: 0 22px 46px rgba(120,70,10,.18), 0 0 0 1px rgba(0,0,0,.03); }
+.card { box-shadow: 0 12px 26px rgba(120,70,10,.15), 0 0 0 1px rgba(0,0,0,.03); }
+.sticker { box-shadow: 0 10px 22px rgba(180,110,0,.3), inset 0 0 0 6px rgba(255,255,255,.6); }
+.badge { box-shadow: 0 4px 10px rgba(180,110,0,.2); }
+
+.bar-title { color: var(--red); text-shadow: 0 3px 0 #fff, 0 6px 14px rgba(31,79,191,.2); }
+.bar-title span { color: #1f4fbf; }
+
+footer {
+  background: rgba(255,255,255,.93); border-top: 4px solid var(--red);
+  box-shadow: 0 -10px 30px rgba(120,70,10,.12); color: var(--ink);
+}
+.services { color: var(--red); }
+.phones em { color: var(--red); }
+.phones svg, .insta svg, .addr svg { color: #1f4fbf; }
+.addr { color: #3b4357; }
+.legal { color: #7a8194; }
+.legal b { color: var(--ink); }
