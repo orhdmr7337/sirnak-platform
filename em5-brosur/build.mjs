@@ -31,14 +31,14 @@ const ICON = {
 function card(p) {
   return `
   <div class="card">
-    <div class="badge">-%${pct(p)}</div>
+    ${p.eski ? `<div class="badge">-%${pct(p)}</div>` : ''}
     <div class="shot"><img src="../../img/png/${p.img}.png" alt=""></div>
     <div class="meta">
       <div class="brand">${esc(p.marka)}</div>
       <div class="name">${esc(p.ad)} <span>${esc(p.miktar)}</span></div>
     </div>
     <div class="prices">
-      <div class="old"><small>YERİNE</small><s>${p.eski} ₺</s></div>
+      ${p.eski ? `<div class="old"><small>YERİNE</small><s>${p.eski} ₺</s></div>` : '<div class="special">4 GÜNE<br>ÖZEL</div>'}
       <div class="new"><small>SADECE</small>${price(p.yeni)}</div>
     </div>
   </div>`;
@@ -47,16 +47,17 @@ function card(p) {
 function hero(p) {
   return `
   <div class="hero">
-    <div class="ribbon">EN BÜYÜK İNDİRİM</div>
+    <div class="ribbon">${p.eski ? 'EN BÜYÜK İNDİRİM' : 'KAMPANYANIN YILDIZI'}</div>
     <div class="hero-shot"><div class="glow"></div><img src="../../img/png/${p.img}.png" alt=""></div>
     <div class="hero-info">
       <div class="brand">${esc(p.marka)}</div>
       <div class="hero-name">${esc(p.ad)}</div>
       <div class="hero-qty">${esc(p.miktar)}</div>
-      <div class="hero-old"><small>YERİNE</small><s>${p.eski} ₺</s></div>
+      ${p.eski ? `<div class="hero-old"><small>YERİNE</small><s>${p.eski} ₺</s></div>` : ''}
       <div class="hero-new"><small>SADECE</small>${price(p.yeni, 'xl')}</div>
     </div>
-    <div class="sticker"><b>%${pct(p)}</b><span>İNDİRİM</span></div>
+    ${p.eski ? `<div class="sticker"><b>%${pct(p)}</b><span>İNDİRİM</span></div>`
+             : '<div class="sticker"><b>4</b><span>GÜNE<br>ÖZEL</span></div>'}
   </div>`;
 }
 
@@ -98,20 +99,34 @@ function coverPage(h, items, total) {
   ${footer(1, total)}`);
 }
 
+const promo = `
+  <div class="card promo">
+    <img class="promo-cart" src="../../logo/em5-araba.png" alt="">
+    <div class="promo-text">
+      <small>SİPARİŞİNİZ KAPINIZDA</small>
+      <b>ÜCRETSİZ<br>SERVİS</b>
+      <span>${ICON.phone}${data.iletisim.telefonlar[1]}</span>
+    </div>
+  </div>`;
+
 function gridPage(items, no, total) {
+  // son sayfa 9'dan azsa boş kalan yere servis kartı konur, satır sayısı ürüne göre ayarlanır
+  const cells = items.length < 9 ? [...items.map(card), promo] : items.map(card);
+  const rows = Math.ceil(cells.length / 3);
   return shell('inner', `
   <header class="bar">
     <img class="logo" src="../../logo/em5-yazi.png" alt="EM5 AVM">
     <div class="bar-title"><span>${esc(data.kampanya.ust)}</span>${esc(data.kampanya.baslik)}</div>
     <div class="valid sm"><b>4</b><span>GÜN<br>GEÇERLİ</span></div>
   </header>
-  <section class="grid g3">${items.map(card).join('')}</section>
+  <section class="grid g3" style="grid-template-rows: repeat(${rows}, 1fr)">${cells.join('')}</section>
   ${footer(no, total)}`);
 }
 
-// En yüksek indirimli ürün kapakta büyük gösterilir
+// Kapakta büyük gösterilecek ürün: "yildiz" işaretli olan, yoksa en yüksek indirimli
 const list = [...data.urunler];
-const heroIdx = list.reduce((b, p, i) => (pct(p) > pct(list[b]) ? i : b), 0);
+const star = list.findIndex((p) => p.yildiz);
+const heroIdx = star >= 0 ? star : list.every((p) => p.eski) ? list.reduce((b, p, i) => (pct(p) > pct(list[b]) ? i : b), 0) : 0;
 const [heroItem] = list.splice(heroIdx, 1);
 const coverItems = list.splice(0, 3);
 const chunks = [];
@@ -120,6 +135,7 @@ const total = 1 + chunks.length;
 
 const pages = [coverPage(heroItem, coverItems, total), ...chunks.map((c, i) => gridPage(c, i + 2, total))];
 
+fs.rmSync(OUT, { recursive: true, force: true });
 fs.mkdirSync(path.join(OUT, 'html'), { recursive: true });
 fs.mkdirSync(path.join(OUT, 'master'), { recursive: true });
 const browser = await chromium.launch();
